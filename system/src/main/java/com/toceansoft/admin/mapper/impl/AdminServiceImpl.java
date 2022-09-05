@@ -55,4 +55,10 @@ public class AdminServiceImpl implements AdminService{
         }
         return adminList.get(0);
     }
+
+    @Override
+    public int changePassword(String username, String password) {
+
+        return 0;
+    }
 }

@@ -1,13 +1,16 @@
 package com.toceansoft.admin.service;
 
 import com.toceansoft.admin.entity.Admin;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 /**
  * 管理员服务层接口
  */
+
 public interface AdminService {
+
         /**
          * 增加
          * @param admin
@@ -51,4 +54,12 @@ public interface AdminService {
          */
         public Admin selectById(Long id);
         public Admin selectByUsername(String username);
+
+
+        /**
+         * 修改密码
+         * @param password,username
+         * @return
+         */
+        public int changePassword(String username,String password);
 }

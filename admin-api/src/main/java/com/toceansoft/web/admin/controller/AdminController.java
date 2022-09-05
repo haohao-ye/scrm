@@ -8,6 +8,7 @@ import com.toceansoft.common.util.JWTUtils;
 import com.toceansoft.common.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,8 @@ public class AdminController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;//
 
     /**
      * 登录接口
@@ -40,7 +43,8 @@ public class AdminController {
 
 
         //验证用户名和密码
-        if(null==tmp||!tmp.getPassword().equals(admin.getPassword())){
+        String unVeriedPassword=encoder.encode(admin.getPassword());//加密未验证的密码
+        if(null==tmp|| encoder.matches(unVeriedPassword,tmp.getPassword())){
             return R.fail(50001,"用户名或密码错误");
         }
 
@@ -57,6 +61,13 @@ public class AdminController {
         data.put("token",token);
         return  R.ok(20000,data);
     }
+//
+//    @PutMapping("")
+//
+//    public int ChangePassWord(){
+//
+//        redisTemplate.opsForValue().get();
+//    }
 
     /**
      * 管理员信息接口
@@ -130,6 +141,10 @@ public class AdminController {
             return R.fail(0,"已存在");
         }
         //密码加密
+        String encodedPw=encoder.encode(admin.getPassword());
+//        System.out.println(encodedPw);
+        admin.setPassword(encodedPw);//将密码设为加密后的密码
+
 
         int rows=adminService.insert(admin);
         if(rows<=0){
