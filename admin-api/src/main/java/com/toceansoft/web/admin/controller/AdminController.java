@@ -61,13 +61,6 @@ public class AdminController {
         data.put("token",token);
         return  R.ok(20000,data);
     }
-//
-//    @PutMapping("")
-//
-//    public int ChangePassWord(){
-//
-//        redisTemplate.opsForValue().get();
-//    }
 
     /**
      * 管理员信息接口
