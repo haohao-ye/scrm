@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toceansoft.admin.mapper.AdminMapper">
+    <resultMap type="Admin" id="AdminResult">
+        <result property="id"           column="id"       />
+        <result property="username"     column="username"    />
+        <result property="password"     column="password"     />
+        <result property="nickname"     column="nickname"  />
+        <result property="phoneNumber"   column="phone_number"          />
+        <result property="avatar"         column="avatar"          />
+        <result property="delFlag"         column="del_flag"          />
+        <result property="createBy"       column="create_by"       />
+        <result property="createTime"     column="create_time"     />
+        <result property="updateBy"       column="update_by"       />
+        <result property="updateTime"     column="update_time"     />
+        <result property="remark"         column="remark"          />
+    </resultMap>
+
+    <sql id="selectVo">
+        select id, username,password, nickname, phone_number, avatar,
+        del_flag, create_by, create_time, update_by, update_time,remark
+        from t_admin
+    </sql>
+    <select id="selectList" resultMap="AdminResult" parameterType="Admin">
+        <include refid="selectVo"/>
+        <where>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectById"  resultMap="AdminResult" parameterType="Long">
+        <include refid="selectVo"/>
+        where id=#{id}
+    </select>
+    
+
+    <!--插入-->
+    <insert id="insert" parameterType="Admin" useGeneratedKeys="true" keyProperty="id">
+        insert into t_admin
+        <!--检查参数的字段-->
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username!=null and username!=''">
+                username,
+            </if>
+            <if test="password!=null and password!=''">
+                password,
+            </if>
+            <if test="nickname!=null and nickname!=''">
+                nickname,
+            </if>
+            <if test="phoneNumber!=null and phoneNumber!=''">
+                phone_number
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark,
+            </if>
+        </trim>
+        <trim  suffixOverrides=",">
+        <!--检查值-->
+        select
+            <if test="username!=null and username!=''">
+                '${username}',
+            </if>
+            <if test="password!=null and password!=''">
+                '${password}',
+            </if>
+            <if test="nickname!=null and nickname!=''">
+                '${nickname}',
+            </if>
+            <if test="phoneNumber!=null and phoneNumber!=''">
+                '${phoneNumber}',
+            </if>
+            <if test="remark!=null and remark!=''">
+                '${remark}'
+            </if>
+        </trim>
+        from dual
+        where not exists(select *from t_admin where username=#{username})
+    </insert>
+
+
+    <!--修改-->
+    <update id="update" parameterType="admin" >
+        update t_admin
+        <set>
+            <if test="username!=null and username!=''">
+                username=#{username},
+            </if>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+            <if test="nickname!=null and nickname!=''">
+                nickname=#{nickname},
+            </if>
+            <if test="phoneNumber!=null and phoneNumber!=''">
+                phone_number=#{phoneNumber},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark=#{remark},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+
+
+
+    <delete id="delete">
+        delete from t_admin where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")" >
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
