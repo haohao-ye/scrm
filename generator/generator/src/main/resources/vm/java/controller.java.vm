@@ -1,0 +1,87 @@
+package ${packageName}.controller;
+
+import java.util.List;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.toceansoft.common.util.R;
+import ${packageName}.entity.${ClassName};
+import ${packageName}.service.I${ClassName}Service;
+
+/**
+ * ${functionName}Controller
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("/api/${moduleName}/${businessName}")
+public class ${ClassName}Controller
+{
+    @Autowired
+    private I${ClassName}Service ${className}Service;
+
+    /**
+     * 查询${functionName}列表
+     */
+    @GetMapping("/list")
+#if($table.crud || $table.sub)
+    public R list(${ClassName} ${className}, @RequestParam int pageNum, @RequestParam int pageSize)
+    {
+        PageHelper.startPage(pageNum, pageSize); //指定分页
+        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+        PageInfo pageInfo = new PageInfo(list); //构建分页对象
+        return R.ok(20000, pageInfo);//返回分页对象
+    }
+#end
+
+
+    /**
+     * 获取${functionName}详细信息
+     */
+    @GetMapping(value = "/{${pkColumn.javaField}}")
+    public R getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
+    {
+        return R.ok(20000,${className}Service.select${ClassName}ById(${pkColumn.javaField}));
+    }
+
+    /**
+     * 新增${functionName}
+     */
+    @PostMapping
+    public R add(@RequestBody ${ClassName} ${className})
+    {
+        int rows = ${className}Service.insert${ClassName}(${className});
+        if (rows <= 0 ) {
+            return R.fail(50002, "添加失败");
+        }
+        return R.ok(20000, null);
+    }
+
+    /**
+     * 修改${functionName}
+     */
+    @PutMapping
+    public R edit(@RequestBody ${ClassName} ${className})
+    {
+         int rows = ${className}Service.update${ClassName}(${className});
+        if (rows <= 0 ) {
+            return R.fail(50002, "修改失败");
+        }
+        return R.ok(20000, null);
+    }
+
+    /**
+     * 删除${functionName}
+     */
+	@DeleteMapping("/{${pkColumn.javaField}s}")
+    public R remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
+    {
+        int rows = ${className}Service.delete${ClassName}ByIds(${pkColumn.javaField}s);
+         if (rows <= 0 ) {
+            return R.fail(50002, "删除失败");
+        }
+        return R.ok(20000, null);
+    }
+}

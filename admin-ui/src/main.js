@@ -14,6 +14,15 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import Pagination from "@/components/Pagination";
+
+
+Vue.component('Pagination', Pagination)
+
+import { parseTime, resetForm, addDateRange } from "@/utils/common";
+Vue.prototype.parseTime = parseTime
+Vue.prototype.resetForm = resetForm
+Vue.prototype.addDateRange = addDateRange
 
 /**
  * If you don't want to use mock-server

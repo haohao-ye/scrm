@@ -99,6 +99,34 @@ export const constantRoutes = [
     }
   ]
 },
+
+{
+  path: '/tool',
+  component: Layout,
+  name: 'Tool',
+  meta: {title: '系统工具', icon: 'el-icon-s-tools'},
+  children:[
+    {
+      path: 'gen',
+      name: 'Gen',
+      component: ()=>import('@/views/tool/gen'),
+      meta: {title:'代码生成',icon:'el-icon-document'}
+    }
+  ]
+},
+{
+  path: '/gen',
+  component: Layout,
+  hidden: true,
+  children: [
+    {
+      path: 'edit/:tableId(\\d+)',
+      component: (resolve) => require(['@/views/tool/gen/editTable'], resolve),
+      name: 'GenEdit',
+      meta: { title: '修改生成配置' }
+    }
+  ]
+},
  
 
   // 404 page must be placed at the end !!!
