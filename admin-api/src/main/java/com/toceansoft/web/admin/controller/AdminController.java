@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.admin.service.AdminService;
+import com.toceansoft.common.entity.PasswordInfo;
 import com.toceansoft.common.util.JWTUtils;
 import com.toceansoft.common.util.R;
 import com.toceansoft.task.entity.Task;
@@ -32,7 +33,7 @@ public class AdminController {
     private RedisTemplate redisTemplate;
 
     @Autowired
-    private BCryptPasswordEncoder encoder;//
+    private BCryptPasswordEncoder encoder;//加密
 
     @Autowired
     private TaskController taskController;
@@ -68,19 +69,24 @@ public class AdminController {
 
     /**
      *修改密码
-     * @param admin
+     * @param passwordInfo,req
      * @return
      */
     @RequestMapping("/changepw")
 
-    public R ChangePassword(Admin admin){
-        Admin tmp=adminService.selectByUsername(admin.getUsername());
-
-
-        //验证用户原密码
+    public R ChangePassword(PasswordInfo passwordInfo,HttpServletRequest req){
+        //获得request请求
+        //获得token
+        String token=req.getHeader("X-Token");
+        String username =JWTUtils.getUsername(token);
+        Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
         String oldPassword=admin.getPassword();
-        if(null==tmp|| encoder.matches(oldPassword,tmp.getPassword())){
+        //验证用户原密码
+        if(null==oldPassword|| encoder.matches(oldPassword,passwordInfo.getNewPassword())){
             return R.fail(50001,"原密码错误");
+        }
+        if(!passwordInfo.getNewPassword().equals(passwordInfo.getVeriedPassword())){
+            return R.fail(50001,"密码确认失败");
         }
         String newPassword=encoder.encode(admin.getNewPassword());
         adminService.changePassword(admin.getId(),newPassword);
@@ -151,7 +157,9 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public R add(@RequestBody Admin admin){
+    public R add(@RequestBody Admin admin,HttpServletRequest req){
+        String token=req.getHeader("X-Token");
+        String username =JWTUtils.getUsername(token);
         Admin queryCond=new Admin();
         queryCond.setUsername(admin.getUsername());
         List<Admin> adminList=adminService.selectList(queryCond);

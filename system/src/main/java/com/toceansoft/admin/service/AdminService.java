@@ -58,8 +58,8 @@ public interface AdminService {
 
         /**
          * 修改密码
-         * @param password,username
+         * @param id,username
          * @return
          */
-        public void changePassword(Long username,String newPassword);
+        public void changePassword(Long id,String newPassword);
 }

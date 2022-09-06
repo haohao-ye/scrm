@@ -114,6 +114,21 @@ export const constantRoutes = [
     }
   ]
 },
+
+{
+  path: '/dept',
+  component: Layout,
+  name: 'Dept',
+  meta: {title: '部门列表', icon: 'el-icon-s-tools'},
+  children:[
+    {
+      path: 'dept',
+      name: 'Dept',
+      component: ()=>import('@/views/dept/dept'),
+      meta: {title:'部门管理',icon:'el-icon-document'}
+    }
+  ]
+},
 {
   path: '/gen',
   component: Layout,
