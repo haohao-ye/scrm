@@ -12,9 +12,10 @@ spring:
     username: root
     password: 8022
 
+#每添加一个新的实体/mapper，都需要在这里配置路径
 mybatis:
-  mapper-locations: classpath:mapper/admin/*.xml
-  type-aliases-package: com.toceansoft.admin.entity
+  mapper-locations: classpath:mapper/admin/*.xml, classpath:mapper/task/*.xml
+  type-aliases-package: com.toceansoft.admin.entity, com.toceansoft.task.entity
 
 pagehelper:
   helper-dialect: mysql
