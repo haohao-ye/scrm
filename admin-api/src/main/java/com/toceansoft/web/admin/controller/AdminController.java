@@ -48,8 +48,14 @@ public class AdminController {
         Admin tmp=adminService.selectByUsername(admin.getUsername());
 
 
+//        System.out.println(admin.getPassword());
+//        System.out.println(tmp.getPassword());
         //验证用户名和密码
-        if(null==tmp|| !encoder.matches(admin.getPassword(),tmp.getPassword())){
+        /*if(  null==tmp  || !encoder.matches(admin.getPassword(),tmp.getPassword())){
+            return R.fail(50001,"用户名或密码错误");
+        }*/
+
+        if(  null==tmp  || !admin.getPassword().equals(tmp.getPassword())){
             return R.fail(50001,"用户名或密码错误");
         }
 
@@ -104,14 +110,16 @@ public class AdminController {
         //获得token
         String token=req.getHeader("X-Token");
         String username =JWTUtils.getUsername(token);
+        //从Regis缓存中读取当前登录的用户
         Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
-        System.out.println(admin.getUsername()+"       "+admin.getPassword());
+//        System.out.println(admin.getUsername()+"       "+admin.getPassword());
 
+        //读取登录用户信息
         Map<String,Object> data=new HashMap<>();
-        data.put("introdution","I am a super administrator") ;
-        data.put("name","Admin")   ;
-        data.put("avatar","https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202009%2F23%2F20200923185609_rQUdj.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1664419642&t=bcfd3d02ead349f51737ebbb1ee30739") ;
-        data.put("roles",new String[]{"admin"});
+        data.put("introdution",admin.getRemark()) ;
+        data.put("name",admin.getNickname())   ;
+        data.put("avatar",admin.getAvatar()) ;
+        data.put("roles",admin.getUsername());
         return  R.ok(20000,data); 
     }
 
