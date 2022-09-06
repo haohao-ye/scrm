@@ -6,6 +6,8 @@ import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.admin.service.AdminService;
 import com.toceansoft.common.util.JWTUtils;
 import com.toceansoft.common.util.R;
+import com.toceansoft.task.entity.Task;
+import com.toceansoft.web.task.controller.TaskController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,6 +33,9 @@ public class AdminController {
 
     @Autowired
     private BCryptPasswordEncoder encoder;//
+
+    @Autowired
+    private TaskController taskController;
 
     /**
      * 登录接口
@@ -163,6 +168,47 @@ public class AdminController {
         return R.ok(20000,"chenggong");
     }
 
+
+
+    /**
+     * 获取用户的任务列表
+     * @param userId
+     * @return
+     */
+    @GetMapping("/task")
+    public R listTask(Long userId){
+        return  taskController.list(userId);
+    }
+
+    /**
+     * 批量删除用户的任务
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("/task/{ids}")
+    public R deleteTask(Long[] ids){
+        return taskController.delete(ids);
+    }
+
+    /**
+     * 修改用的单个任务
+     * @param task
+     * @return
+     */
+    @PutMapping("/task/update")
+    public R updateTask(Task task){
+        return taskController.update(task);
+    }
+
+    /**
+     * 添加个人任务
+     * @param task
+     * @return
+     */
+    @PostMapping("/task")
+    public R addTask(Task task){
+        return taskController.add(task);
+    }
 
 
 }
