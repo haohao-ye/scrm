@@ -1,4 +1,4 @@
-package com.toceansoft.admin.mapper.impl;
+package com.toceansoft.admin.service.impl;
 
 import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.admin.mapper.AdminMapper;
