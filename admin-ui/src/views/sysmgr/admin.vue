@@ -22,6 +22,7 @@
         <el-button size="small" icon="el-icon-plus" @click="add()">添加</el-button>
         <el-button size="small" icon="el-icon-delete" @click="del()">删除</el-button>
         <el-button size="small" icon="el-icon-refresh" @click="search()">刷新</el-button>
+        <el-button size="small" icon="el-icon-edit" @click="editPw()">修改密码</el-button>
       </el-row>
       <div class="mt-15">
         <el-table
@@ -97,6 +98,39 @@
         <el-button size="small">取消</el-button>
         <el-button size="small" type="primary" @click="submit">确定</el-button>
       </div>
+
+    </el-dialog >
+
+    <el-dialog :title="formTitlePw"
+      :visible.sync="formShowPw"
+      :close-on-click-modal="false">
+       <div>
+        <el-form :model="formPw" label-width="150px">
+            <el-row>
+          <el-col :span="12">
+            <el-form-item label="原密码" prop="password">
+              <el-input size="small" />
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="新密码" prop="newpassword">
+              <el-input size="small" />
+            </el-form-item>
+          </el-col>
+
+        </el-row>
+        </el-form>
+      </div>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small">取消</el-button>
+        <el-button size="small" type="primary" @click="submit">确定</el-button>
+      </div>
+
     </el-dialog>
   </div>
 </template>
@@ -215,6 +249,16 @@ export default {
         phoneNumber: "",
         remark: ""
       }
+    },
+    
+    editPw(){
+      this.formShowPw=true;
+      this.formTitlePw="修改密码";
+      this.form={
+        password:"",
+        new_password:"",
+      }
+
     },
     edit(id){ //打开弹出框，并且查询数据的数据
       getAdmin(id).then(res=>{

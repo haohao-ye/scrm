@@ -61,5 +61,5 @@ public interface AdminService {
          * @param password,username
          * @return
          */
-        public int changePassword(String username,String password);
+        public void changePassword(Long username,String newPassword);
 }

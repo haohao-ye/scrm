@@ -21,5 +21,6 @@ public class Admin implements Serializable {
     private String updateBy;
     private String updateTime;
     private String remark;
+    private String newPassword;
 
 }

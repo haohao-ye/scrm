@@ -43,8 +43,7 @@ public class AdminController {
 
 
         //验证用户名和密码
-        String unVeriedPassword=encoder.encode(admin.getPassword());//加密未验证的密码
-        if(null==tmp|| encoder.matches(unVeriedPassword,tmp.getPassword())){
+        if(null==tmp|| !encoder.matches(admin.getPassword(),tmp.getPassword())){
             return R.fail(50001,"用户名或密码错误");
         }
 
@@ -60,6 +59,27 @@ public class AdminController {
         Map<String,Object> data=new HashMap<>();
         data.put("token",token);
         return  R.ok(20000,data);
+    }
+
+    /**
+     *修改密码
+     * @param admin
+     * @return
+     */
+    @RequestMapping("/changepw")
+
+    public R ChangePassword(Admin admin){
+        Admin tmp=adminService.selectByUsername(admin.getUsername());
+
+
+        //验证用户原密码
+        String oldPassword=admin.getPassword();
+        if(null==tmp|| encoder.matches(oldPassword,tmp.getPassword())){
+            return R.fail(50001,"原密码错误");
+        }
+        String newPassword=encoder.encode(admin.getNewPassword());
+        adminService.changePassword(admin.getId(),newPassword);
+        return R.ok(20000,"修改成功");
     }
 
     /**

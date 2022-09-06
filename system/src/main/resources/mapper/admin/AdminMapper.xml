@@ -106,6 +106,17 @@
         where id=#{id}
     </update>
 
+    <!--修改密码-->
+    <update id="changePassword" >
+        update t_admin
+        <set>
+            <if test="password!=null and password!=''">
+                password=#{password}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
 
 
 

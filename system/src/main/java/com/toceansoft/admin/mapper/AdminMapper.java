@@ -36,4 +36,7 @@ public interface AdminMapper {
      * @return
      */
     public Admin selectById(Long id);
+
+    public void changePassword(@Param("id") Long id,@Param("newPassword") String newPassword);
+
 }
