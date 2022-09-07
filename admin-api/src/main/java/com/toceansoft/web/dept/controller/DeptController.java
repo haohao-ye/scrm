@@ -68,8 +68,14 @@ public class DeptController
         Dept dept1=new Dept();
         dept1.setDeptName(dept.getDeptName());
 
-        if(null!=dept&&deptService.selectDeptList(dept1).size()>0){
-            return R.fail(0,"已存在");
+        if(null!=dept){
+            for (Dept d:deptService.selectDeptList(dept1)
+                 ) {
+                if (d.getDeptName().equals(dept.getDeptName())
+                ) {
+                    return R.fail(0,"已存在");
+                }
+            }
         }
         int rows = deptService.insertDept(dept);
         if (rows <= 0 ) {

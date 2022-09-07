@@ -26,11 +26,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
         </where>
     </select>
+
+
     
     <select id="selectDeptById" parameterType="Long" resultMap="DeptResult">
         <include refid="selectDeptVo"/>
         where dept_no = #{deptNo}
     </select>
+
         
     <insert id="insertDept" parameterType="Dept" useGeneratedKeys="true" keyProperty="deptNo">
         insert into t_dept

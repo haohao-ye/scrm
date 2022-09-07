@@ -70,8 +70,17 @@ public class GoodsController
         goods.setUpdateTime(new Date());
         Goods goods1=new Goods();
         goods1.setName(goods.getName());
-        if(null!=goods&&goodsService.selectGoodsList(goods1).size()>0){
-            return R.fail(0,"已存在");
+//        if(null!=goods&&goodsService.selectGoodsList(goods1).size()>0){
+//            return R.fail(0,"已存在");
+//        }
+        if(null!=goods){
+            for (Goods d:goodsService.selectGoodsList(goods1)//遍历模糊查找后是否有相等的
+            ) {
+                if (d.getName().equals(goods.getName())
+                ) {
+                    return R.fail(0,"已存在");
+                }
+            }
         }
 
         int rows = goodsService.insertGoods(goods);
