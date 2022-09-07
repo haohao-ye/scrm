@@ -68,23 +68,22 @@ public class EmployeeController
         Long head =Long.parseLong(dateFormat.format(date))*100;
         System.out.println(head);
         Long id = Long.valueOf(employeeService.counter(employee));
-
         employee.setId(head+id);
+
         //提取身份证里员工生日，自动生成初始密码
         employee.setPassword(employee.getIdNum().substring(6,14));
-        int rows = employeeService.insertEmployee(employee);
-        if (rows <= 0 ) {
-            return R.fail(50002, "添加失败");
-        }
+
         String token=req.getHeader("X-Token");
         String username = JWTUtils.getUsername(token);
         Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
         employee.setUpdateBy(admin.getUsername());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //获取当前时间
-        date = new Date(System.currentTimeMillis());
-        employee.setUpdateTime(date);
         employee.setCreateBy(admin.getUsername());
+
+        int rows = employeeService.insertEmployee(employee);
+        if (rows <= 0 ) {
+            return R.fail(50002, "添加失败");
+        }
+
         return R.ok(20000, null);
     }
 
@@ -94,10 +93,6 @@ public class EmployeeController
     @PutMapping
     public R edit(@RequestBody Employee employee,HttpServletRequest req)
     {
-         int rows = employeeService.updateEmployee(employee);
-        if (rows <= 0 ) {
-            return R.fail(50002, "修改失败");
-        }
         String token=req.getHeader("X-Token");
         String username = JWTUtils.getUsername(token);
         Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
@@ -106,6 +101,12 @@ public class EmployeeController
         //获取当前时间
         Date date = new Date(System.currentTimeMillis());
         employee.setUpdateTime(date);
+
+        int rows = employeeService.updateEmployee(employee);
+        if (rows <= 0 ) {
+            return R.fail(50002, "修改失败");
+        }
+
         return R.ok(20000, null);
     }
 
@@ -115,21 +116,17 @@ public class EmployeeController
 	@DeleteMapping("/{ids}")
     public R remove(@PathVariable Long[] ids,HttpServletRequest req)
     {
-        int rows = employeeService.deleteEmployeeByIds(ids);
-         if (rows <= 0 ) {
-            return R.fail(50002, "删除失败");
-        }
         String token=req.getHeader("X-Token");
         String username = JWTUtils.getUsername(token);
         Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //获取当前时间
-        Date date = new Date(System.currentTimeMillis());
         for (Long id :ids
         ) {
             Employee employee = employeeService.selectEmployeeById(id);
             employee.setUpdateBy(admin.getUsername());
-            employee.setUpdateTime(date);
+        }
+        int rows = employeeService.deleteEmployeeByIds(ids);
+         if (rows <= 0 ) {
+            return R.fail(50002, "删除失败");
         }
         return R.ok(20000, null);
     }
