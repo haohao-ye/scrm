@@ -161,6 +161,21 @@ export const constantRoutes = [
 },
 
 {
+  path: '/employee',
+  component: Layout,
+  name: 'employee',
+  meta: {title: '员工管理', icon: 'el-icon-user'},
+  children:[
+    {
+      path: 'employee',
+      name: '员工管理',
+      component: ()=>import('@/views/employee/index'),
+      meta: {title:'员工管理',icon:'el-icon-user'}
+    }
+  ]
+},
+
+{
   path: '/gen',
   component: Layout,
   hidden: true,

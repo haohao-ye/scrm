@@ -5,11 +5,16 @@ import java.util.Date;
 import java.util.List;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.toceansoft.admin.entity.Admin;
+import com.toceansoft.common.util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import com.toceansoft.common.util.R;
 import com.toceansoft.inform.entity.Inform;
 import com.toceansoft.inform.service.IInformService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 通知Controller
@@ -23,6 +28,9 @@ public class InformController
 {
     @Autowired
     private IInformService informService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 查询通知列表
@@ -50,18 +58,22 @@ public class InformController
      * 新增通知
      */
     @PostMapping
-    public R add(@RequestBody Inform inform)
+    public R add(@RequestBody Inform inform, HttpServletRequest req)
     {
-        inform.setCreateBy("admin");
-        inform.setUpdateBy("admin");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        //获取当前时间
-        Date date = new Date(System.currentTimeMillis());
-        inform.setUpdateTime(date);
+
         int rows = informService.insertInform(inform);
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");
         }
+        String token=req.getHeader("X-Token");
+        String username = JWTUtils.getUsername(token);
+        Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
+        inform.setUpdateBy(admin.getUsername());
+        inform.setCreateBy(admin.getUsername());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //获取当前时间
+        Date date = new Date(System.currentTimeMillis());
+        inform.setUpdateTime(date);
         return R.ok(20000, null);
     }
 
@@ -69,12 +81,20 @@ public class InformController
      * 修改通知
      */
     @PutMapping
-    public R edit(@RequestBody Inform inform)
+    public R edit(@RequestBody Inform inform,HttpServletRequest req)
     {
          int rows = informService.updateInform(inform);
         if (rows <= 0 ) {
             return R.fail(50002, "修改失败");
         }
+        String token=req.getHeader("X-Token");
+        String username = JWTUtils.getUsername(token);
+        Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
+        inform.setUpdateBy(admin.getUsername());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //获取当前时间
+        Date date = new Date(System.currentTimeMillis());
+        inform.setUpdateTime(date);
         return R.ok(20000, null);
     }
 
@@ -82,12 +102,26 @@ public class InformController
      * 删除通知
      */
 	@DeleteMapping("/{ids}")
-    public R remove(@PathVariable Long[] ids)
+    public R remove(@PathVariable Long[] ids,HttpServletRequest req)
     {
+
         int rows = informService.deleteInformByIds(ids);
          if (rows <= 0 ) {
             return R.fail(50002, "删除失败");
         }
+        String token=req.getHeader("X-Token");
+        String username = JWTUtils.getUsername(token);
+        Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //获取当前时间
+        Date date = new Date(System.currentTimeMillis());
+        for (Long id :ids
+        ) {
+            Inform inform = informService.selectInformById(id);
+            inform.setUpdateBy(admin.getUsername());
+            inform.setUpdateTime(date);
+        }
         return R.ok(20000, null);
     }
+
 }
