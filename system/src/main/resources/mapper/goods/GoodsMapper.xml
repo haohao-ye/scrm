@@ -30,14 +30,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
-            <if test="price != null "> and price = #{price}</if>
+            <if test="price != null "> and price &lt;= #{price}</if>
             <if test="lable != null  and lable != ''"> and lable = #{lable}</if>
             <if test="brand != null  and brand != ''"> and brand = #{brand}</if>
-            <if test="inventory != null "> and inventory &gt;= #{inventory}</if>
+            <if test="inventory != null "> and inventory &lt;= #{inventory}</if>
             <if test="color != null  and color != ''"> and color = #{color}</if>
-            <if test="discount != null "> and discount &lt;= #{discount}</if>
+            <if test="discount != null "> and discount = #{discount}</if>
             <if test="creatTime != null "> and creat_time = #{creatTime}</if>
             <if test="creatBy != null  and creatBy != ''"> and creat_by = #{creatBy}</if>
+            and del_flag!=1
         </where>
     </select>
     
@@ -46,12 +47,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
-
-        
-    <insert id="insertGoods" >
-        insert into `t_goods`
+    <insert id="insertGoods" parameterType="Goods" useGeneratedKeys="true" keyProperty="id">
+        insert into t_goods
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null and id !=''">id,</if>
+
             <if test="name != null and name != ''">name,</if>
             <if test="type != null and type != ''">type,</if>
             <if test="price != null">price,</if>
@@ -61,13 +60,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="color != null">color,</if>
             <if test="discount != null">discount,</if>
             <if test="creatTime != null">creat_time,</if>
-            <if test="creatBy != null and creatBy != ''">creat_by,</if>
+            <if test="creatBy != null">creat_by,</if>
             <if test="updateTime != null">update_time,</if>
-            <if test="updateBy != null and updateBy != ''">update_by,</if>
-            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="delFlag != null">del_flag,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
+
             <if test="name != null and name != ''">#{name},</if>
             <if test="type != null and type != ''">#{type},</if>
             <if test="price != null">#{price},</if>
@@ -77,10 +76,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="color != null">#{color},</if>
             <if test="discount != null">#{discount},</if>
             <if test="creatTime != null">#{creatTime},</if>
-            <if test="creatBy != null and creatBy != ''">#{creatBy},</if>
+            <if test="creatBy != null">#{creatBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
-            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
-            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="delFlag != null">#{delFlag},</if>
          </trim>
     </insert>
 
@@ -96,22 +95,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="color != null">color = #{color},</if>
             <if test="discount != null">discount = #{discount},</if>
             <if test="creatTime != null">creat_time = #{creatTime},</if>
-            <if test="creatBy != null and creatBy != ''">creat_by = #{creatBy},</if>
+            <if test="creatBy != null">creat_by = #{creatBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
-            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
         </trim>
         where id = #{id}
     </update>
 
-    <delete id="deleteGoodsById" parameterType="Long">
-        delete from t_goods where id = #{id}
-    </delete>
+    <!--将删除标志改为1，表示放到回收站-->
+    <update id="deleteGoodsById">
+        update t_goods set del_flag = 1 where id =#{id}
+    </update>
 
-    <delete id="deleteGoodsByIds" parameterType="String">
-        delete from t_goods where id in 
+<!--    <delete id="deleteGoodsById" parameterType="Long">-->
+<!--        delete from t_goods where id = #{id}-->
+<!--    </delete>-->
+
+    <!--批量将删除标志设为1-->
+    <update id="deleteGoodsByIds">
+        update t_goods set del_flag=1 where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
-    </delete>
+    </update>
+
+<!--    <delete id="deleteGoodsByIds" parameterType="String">-->
+<!--        delete from t_goods where id in -->
+<!--        <foreach item="id" collection="array" open="(" separator="," close=")">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+
 </mapper>

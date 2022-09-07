@@ -61,19 +61,15 @@ public class InformController
     public R add(@RequestBody Inform inform, HttpServletRequest req)
     {
 
-        int rows = informService.insertInform(inform);
-        if (rows <= 0 ) {
-            return R.fail(50002, "添加失败");
-        }
         String token=req.getHeader("X-Token");
         String username = JWTUtils.getUsername(token);
         Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
         inform.setUpdateBy(admin.getUsername());
         inform.setCreateBy(admin.getUsername());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //获取当前时间
-        Date date = new Date(System.currentTimeMillis());
-        inform.setUpdateTime(date);
+        int rows = informService.insertInform(inform);
+        if (rows <= 0 ) {
+            return R.fail(50002, "添加失败");
+        }
         return R.ok(20000, null);
     }
 
@@ -83,18 +79,14 @@ public class InformController
     @PutMapping
     public R edit(@RequestBody Inform inform,HttpServletRequest req)
     {
-         int rows = informService.updateInform(inform);
-        if (rows <= 0 ) {
-            return R.fail(50002, "修改失败");
-        }
         String token=req.getHeader("X-Token");
         String username = JWTUtils.getUsername(token);
         Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
         inform.setUpdateBy(admin.getUsername());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //获取当前时间
-        Date date = new Date(System.currentTimeMillis());
-        inform.setUpdateTime(date);
+         int rows = informService.updateInform(inform);
+        if (rows <= 0 ) {
+            return R.fail(50002, "修改失败");
+        }
         return R.ok(20000, null);
     }
 
@@ -105,22 +97,19 @@ public class InformController
     public R remove(@PathVariable Long[] ids,HttpServletRequest req)
     {
 
-        int rows = informService.deleteInformByIds(ids);
-         if (rows <= 0 ) {
-            return R.fail(50002, "删除失败");
-        }
         String token=req.getHeader("X-Token");
         String username = JWTUtils.getUsername(token);
         Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //获取当前时间
-        Date date = new Date(System.currentTimeMillis());
         for (Long id :ids
         ) {
             Inform inform = informService.selectInformById(id);
             inform.setUpdateBy(admin.getUsername());
-            inform.setUpdateTime(date);
         }
+        int rows = informService.deleteInformByIds(ids);
+         if (rows <= 0 ) {
+            return R.fail(50002, "删除失败");
+        }
+
         return R.ok(20000, null);
     }
 

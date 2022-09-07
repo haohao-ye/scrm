@@ -22,6 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectDeptVo"/>
         <where>  
             <if test="deptName != null  and deptName != ''"> and dept_name like concat('%', #{deptName}, '%')</if>
+            and del_flag != 1
+
         </where>
     </select>
     
@@ -63,14 +65,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where dept_no = #{deptNo}
     </update>
 
-    <delete id="deleteDeptById" parameterType="Long">
-        delete from t_dept where dept_no = #{deptNo}
-    </delete>
+    <!--将删除标志改为1，表示放到回收站-->
+    <update id="deleteDeptById">
+        update t_dept set del_flag = 1 where dept_no =#{deptNo}
+    </update>
+<!--    <delete id="deleteDeptById" parameterType="Long">-->
+<!--        delete from t_dept where dept_no = #{deptNo}-->
+<!--    </delete>-->
 
-    <delete id="deleteDeptByIds" parameterType="String">
-        delete from t_dept where dept_no in 
+    <!--批量将删除标志设为1-->
+    <update id="deleteDeptByIds">
+        update t_dept set del_flag=1 where dept_no in
         <foreach item="deptNo" collection="array" open="(" separator="," close=")">
             #{deptNo}
         </foreach>
-    </delete>
+    </update>
+<!--    <delete id="deleteDeptByIds" parameterType="String">-->
+<!--        delete from t_dept where dept_no in -->
+<!--        <foreach item="deptNo" collection="array" open="(" separator="," close=")">-->
+<!--            #{deptNo}-->
+<!--        </foreach>-->
+<!--    </delete>-->
 </mapper>

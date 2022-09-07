@@ -9,10 +9,17 @@ import com.toceansoft.goods.entity.Goods;
 import com.toceansoft.goods.service.IGoodsService;
 
 /**
+<<<<<<< HEAD
+ * 商品管理Service业务层处理
+ * 
+ * @author ygy
+ * @date Wed Sep 07 14:22:42 CST 2022
+=======
  * 商品Service业务层处理
  * 
  * @author YeGuanYao
  * @date Wed Sep 07 09:30:41 CST 2022
+>>>>>>> 7e1c3c25025c072b8ff2ffbb79b920c5f07eec1a
  */
 @Service
 public class GoodsServiceImpl implements IGoodsService 
@@ -21,10 +28,17 @@ public class GoodsServiceImpl implements IGoodsService
     private GoodsMapper goodsMapper;
 
     /**
+<<<<<<< HEAD
+     * 查询商品管理
+     * 
+     * @param id 商品管理ID
+     * @return 商品管理
+=======
      * 查询商品
      * 
      * @param id 商品ID
      * @return 商品
+>>>>>>> 7e1c3c25025c072b8ff2ffbb79b920c5f07eec1a
      */
     @Override
     public Goods selectGoodsById(Long id)
@@ -33,10 +47,17 @@ public class GoodsServiceImpl implements IGoodsService
     }
 
     /**
+<<<<<<< HEAD
+     * 查询商品管理列表
+     * 
+     * @param goods 商品管理
+     * @return 商品管理
+=======
      * 查询商品列表
      * 
      * @param goods 商品
      * @return 商品
+>>>>>>> 7e1c3c25025c072b8ff2ffbb79b920c5f07eec1a
      */
     @Override
     public List<Goods> selectGoodsList(Goods goods)
@@ -45,9 +66,15 @@ public class GoodsServiceImpl implements IGoodsService
     }
 
     /**
+<<<<<<< HEAD
+     * 新增商品管理
+     * 
+     * @param goods 商品管理
+=======
      * 新增商品
      * 
      * @param goods 商品
+>>>>>>> 7e1c3c25025c072b8ff2ffbb79b920c5f07eec1a
      * @return 结果
      */
     @Override
@@ -57,9 +84,15 @@ public class GoodsServiceImpl implements IGoodsService
     }
 
     /**
+<<<<<<< HEAD
+     * 修改商品管理
+     * 
+     * @param goods 商品管理
+=======
      * 修改商品
      * 
      * @param goods 商品
+>>>>>>> 7e1c3c25025c072b8ff2ffbb79b920c5f07eec1a
      * @return 结果
      */
     @Override
@@ -70,9 +103,15 @@ public class GoodsServiceImpl implements IGoodsService
     }
 
     /**
+<<<<<<< HEAD
+     * 批量删除商品管理
+     * 
+     * @param ids 需要删除的商品管理ID
+=======
      * 批量删除商品
      * 
      * @param ids 需要删除的商品ID
+>>>>>>> 7e1c3c25025c072b8ff2ffbb79b920c5f07eec1a
      * @return 结果
      */
     @Override
@@ -82,9 +121,15 @@ public class GoodsServiceImpl implements IGoodsService
     }
 
     /**
+<<<<<<< HEAD
+     * 删除商品管理信息
+     * 
+     * @param id 商品管理ID
+=======
      * 删除商品信息
      * 
      * @param id 商品ID
+>>>>>>> 7e1c3c25025c072b8ff2ffbb79b920c5f07eec1a
      * @return 结果
      */
     @Override
