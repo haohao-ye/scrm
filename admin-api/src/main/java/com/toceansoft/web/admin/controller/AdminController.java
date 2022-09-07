@@ -51,9 +51,9 @@ public class AdminController {
 //        System.out.println(admin.getPassword());
 //        System.out.println(tmp.getPassword());
         //验证用户名和密码
-        /*if(  null==tmp  || !encoder.matches(admin.getPassword(),tmp.getPassword())){
+        if(  null==tmp  || !encoder.matches(admin.getPassword(),tmp.getPassword())){
             return R.fail(50001,"用户名或密码错误");
-        }*/
+        }
 
         if(  null==tmp  || !admin.getPassword().equals(tmp.getPassword())){
             return R.fail(50001,"用户名或密码错误");
