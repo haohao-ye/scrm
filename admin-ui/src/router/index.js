@@ -129,6 +129,22 @@ export const constantRoutes = [
     }
   ]
 },
+
+{
+  path: '/inform',
+  component: Layout,
+  name: 'Inform',
+  meta: {title: '通知管理', icon: 'el-icon-message-solid'},
+  children:[
+    {
+      path: 'inform',
+      name: 'Inform',
+      component: ()=>import('@/views/inform/index'),
+      meta: {title:'通知管理',icon:'el-icon-message-solid'}
+    }
+  ]
+},
+
 {
   path: '/gen',
   component: Layout,
