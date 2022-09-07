@@ -173,7 +173,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入价格" />
+          <el-input v-model.number="form.price" placeholder="请输入价格" />
         </el-form-item>
         <el-form-item label="标签" prop="lable">
           <el-input v-model="form.lable" placeholder="请输入标签" />
@@ -272,9 +272,7 @@ export default {
         inventory: [
           { required: true, message: "库存不能为空", trigger: "blur" }
         ],
-        discount:[
-          { type: 'number', message: "活动编码是数值", trigger: "change"}
-        ],
+        
         creatTime: [
           { required: true, message: "创建时间不能为空", trigger: "blur" }
         ],
