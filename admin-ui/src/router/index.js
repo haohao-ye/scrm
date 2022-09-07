@@ -90,6 +90,12 @@ export const constantRoutes = [
       name:'Admin',
       component:()=>import('@/views/sysmgr/admin'),
       meta:{title:'系统管理员',icon:'el-icon-platform-eleme'}
+    },
+    {
+      path:'admin1',
+      name:'Admin1',
+      component:()=>import('@/views/sysmgr/admin1'),
+      meta:{title:'系统管理员',icon:'el-icon-platform-eleme'}
     }
   ]
 },
@@ -125,16 +131,30 @@ export const constantRoutes = [
 },
 
 {
+  path: '/inform',
+  component: Layout,
+  name: 'Inform',
+  meta: {title: '通知管理', icon: 'el-icon-message-solid'},
+  children:[
+    {
+      path: 'inform',
+      name: 'Inform',
+      component: ()=>import('@/views/inform/index'),
+      meta: {title:'通知管理',icon:'el-icon-message-solid'}
+    }
+  ]
+},
+
+{
   path: '/goods',
   component: Layout,
-  name: 'Goods',
-  meta: {title: '商品', icon: 'el-icon-s-goods'},
+  name: 'goods',
+  meta: {title: '商品管理', icon: 'el-icon-s-goods'},
   children:[
     {
       path: 'goods',
-      name: 'Goods',
+      name: '商品列表',
       component: ()=>import('@/views/goods/goods'),
-
       meta: {title:'商品管理',icon:'el-icon-s-goods'}
     }
   ]
@@ -154,6 +174,23 @@ export const constantRoutes = [
     }
   ]
 },
+
+{
+    path: '/orders',
+    component: Layout,
+    name: 'Orders',
+    meta: {title: '订单列表', icon: 'el-icon-s-tools'},
+    children:[
+      {
+        path: 'orders',
+        name: 'Orders',
+        component: ()=>import('@/views/orders/orders'),
+        meta: {title:'订单管理',icon:'el-icon-s-data'}
+      }
+    ]
+  },
+
+
 {
   path: '/gen',
   component: Layout,
