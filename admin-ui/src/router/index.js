@@ -90,12 +90,6 @@ export const constantRoutes = [
       name:'Admin',
       component:()=>import('@/views/sysmgr/admin'),
       meta:{title:'系统管理员',icon:'el-icon-platform-eleme'}
-    },
-    {
-      path:'admin1',
-      name:'Admin1',
-      component:()=>import('@/views/sysmgr/admin1'),
-      meta:{title:'系统管理员',icon:'el-icon-platform-eleme'}
     }
   ]
 },
@@ -126,6 +120,21 @@ export const constantRoutes = [
       name: 'Dept',
       component: ()=>import('@/views/dept/dept'),
       meta: {title:'部门管理',icon:'el-icon-document'}
+    }
+  ]
+},
+
+{
+  path: '/goods',
+  component: Layout,
+  name: 'Goods',
+  meta: {title: '商品管理', icon: 'el-icon-s-tools'},
+  children:[
+    {
+      path: 'goods',
+      name: 'Goods',
+      component: ()=>import('@/views/goods/goods'),
+      meta: {title:'商品列表',icon:'el-icon-sold-out'}
     }
   ]
 },
