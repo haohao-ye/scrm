@@ -176,6 +176,21 @@ export const constantRoutes = [
 },
 
 {
+    path: '/orders',
+    component: Layout,
+    name: 'Orders',
+    meta: {title: '订单列表', icon: 'el-icon-s-tools'},
+    children:[
+      {
+        path: 'orders',
+        name: 'Orders',
+        component: ()=>import('@/views/orders/orders'),
+        meta: {title:'订单管理',icon:'el-icon-document-copy'}
+      }
+    ]
+  },
+
+{
   path: '/gen',
   component: Layout,
   hidden: true,
