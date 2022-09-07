@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="discount != null "> and discount = #{discount}</if>
             <if test="creatTime != null "> and creat_time = #{creatTime}</if>
             <if test="creatBy != null  and creatBy != ''"> and creat_by = #{creatBy}</if>
+            and del_flag!=1
         </where>
     </select>
     
@@ -45,10 +46,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectGoodsVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertGoods" parameterType="Goods" useGeneratedKeys="true" keyProperty="id">
         insert into t_goods
         <trim prefix="(" suffix=")" suffixOverrides=",">
+
             <if test="name != null and name != ''">name,</if>
             <if test="type != null and type != ''">type,</if>
             <if test="price != null">price,</if>
@@ -64,6 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="delFlag != null">del_flag,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+
             <if test="name != null and name != ''">#{name},</if>
             <if test="type != null and type != ''">#{type},</if>
             <if test="price != null">#{price},</if>
@@ -123,4 +126,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--            #{id}-->
 <!--        </foreach>-->
 <!--    </delete>-->
+
 </mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toceansoft.inform.mapper.InformMapper">
+    
+    <resultMap type="Inform" id="InformResult">
+        <result property="id"    column="id"    />
+        <result property="infoTitle"    column="info_title"    />
+        <result property="infoAdm"    column="info_adm"    />
+        <result property="infoSol"    column="info_sol"    />
+        <result property="infoInv"    column="info_inv"    />
+        <result property="infoBody"    column="info_body"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deadline"    column="deadline"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectInformVo">
+        select id, info_title, info_adm, info_sol, info_inv, info_body, create_by, create_time, update_by, update_time, deadline, del_flag from t_inform
+    </sql>
+
+    <select id="selectInformList" parameterType="Inform" resultMap="InformResult">
+        <include refid="selectInformVo"/>
+        <where>  
+            <if test="infoTitle != null  and infoTitle != ''"> and info_title like concat('%', #{infoTitle}, '%')</if>
+            <if test="infoBody != null  and infoBody != ''"> and info_body like concat('%', #{infoBody}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectInformById" parameterType="Long" resultMap="InformResult">
+        <include refid="selectInformVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertInform" parameterType="Inform" useGeneratedKeys="true" keyProperty="id">
+        insert into t_inform
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="infoTitle != null and infoTitle != ''">info_title,</if>
+            <if test="infoAdm != null and infoAdm != ''">info_adm,</if>
+            <if test="infoSol != null and infoSol != ''">info_sol,</if>
+            <if test="infoInv != null and infoInv != ''">info_inv,</if>
+            <if test="infoBody != null and infoBody != ''">info_body,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deadline != null">deadline,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="infoTitle != null and infoTitle != ''">#{infoTitle},</if>
+            <if test="infoAdm != null and infoAdm != ''">#{infoAdm},</if>
+            <if test="infoSol != null and infoSol != ''">#{infoSol},</if>
+            <if test="infoInv != null and infoInv != ''">#{infoInv},</if>
+            <if test="infoBody != null and infoBody != ''">#{infoBody},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deadline != null">#{deadline},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateInform" parameterType="Inform">
+        update t_inform
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="infoTitle != null and infoTitle != ''">info_title = #{infoTitle},</if>
+            <if test="infoAdm != null and infoAdm != ''">info_adm = #{infoAdm},</if>
+            <if test="infoSol != null and infoSol != ''">info_sol = #{infoSol},</if>
+            <if test="infoInv != null and infoInv != ''">info_inv = #{infoInv},</if>
+            <if test="infoBody != null and infoBody != ''">info_body = #{infoBody},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deadline != null">deadline = #{deadline},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteInformById" parameterType="Long">
+        delete from t_inform where id = #{id}
+    </delete>
+
+    <delete id="deleteInformByIds" parameterType="String">
+        delete from t_inform where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -9,6 +9,7 @@ import com.toceansoft.common.util.JWTUtils;
 import com.toceansoft.dept.entity.Dept;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+
 import org.springframework.web.bind.annotation.*;
 import com.toceansoft.common.util.R;
 import com.toceansoft.goods.entity.Goods;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  * 
  * @author ygy
  * @date Wed Sep 07 14:22:42 CST 2022
+
  */
 @RestController
 @RequestMapping("/api/goods/goods")
@@ -55,7 +57,7 @@ public class GoodsController
     }
 
     /**
-     * 新增商品管理
+     * 新增商品
      */
     @PostMapping
     public R add(@RequestBody Goods goods, HttpServletRequest req)
@@ -71,6 +73,7 @@ public class GoodsController
         if(null!=goods&&goodsService.selectGoodsList(goods1).size()>0){
             return R.fail(0,"已存在");
         }
+
         int rows = goodsService.insertGoods(goods);
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");
@@ -79,7 +82,8 @@ public class GoodsController
     }
 
     /**
-     * 修改商品管理
+
+     * 修改商品
      */
     @PutMapping
     public R edit(@RequestBody Goods goods)
@@ -92,7 +96,7 @@ public class GoodsController
     }
 
     /**
-     * 删除商品管理
+     * 删除商品
      */
 	@DeleteMapping("/{ids}")
     public R remove(@PathVariable Long[] ids)

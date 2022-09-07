@@ -8,10 +8,17 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.toceansoft.common.entity.BaseEntity;
 
 /**
+<<<<<<< HEAD
  * 商品管理对象 t_goods
  *
  * @author ygy
  * @date Wed Sep 07 14:22:42 CST 2022
+=======
+ * 商品对象 t_goods
+ *
+ * @author YeGuanYao
+ * @date Wed Sep 07 09:30:41 CST 2022
+>>>>>>> 7e1c3c25025c072b8ff2ffbb79b920c5f07eec1a
  */
 @Data
 public class Goods extends BaseEntity
@@ -30,6 +37,7 @@ public class Goods extends BaseEntity
     /** 价格 */
     private Double price;
 
+
     /** 标签 */
     private String lable;
 
@@ -37,6 +45,7 @@ public class Goods extends BaseEntity
     private String brand;
 
     /** 库存 */
+
     private Long inventory;
 
     /** 颜色 */
@@ -44,6 +53,7 @@ public class Goods extends BaseEntity
 
     /** 折扣 */
     private Long discount;
+
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")

@@ -1,6 +1,8 @@
 import request from '@/utils/request'
 
-// 查询商品管理列表
+
+// 查询商品列表
+
 export function listGoods(query) {
   return request({
     url: '/api/goods/goods/list',
@@ -10,6 +12,7 @@ export function listGoods(query) {
 }
 
 // 查询商品管理详细
+
 export function getGoods(id) {
   return request({
     url: '/api/goods/goods/' + id,
@@ -17,7 +20,8 @@ export function getGoods(id) {
   })
 }
 
-// 新增商品管理
+
+// 新增商品
 export function addGoods(data) {
   return request({
     url: '/api/goods/goods',
@@ -26,7 +30,7 @@ export function addGoods(data) {
   })
 }
 
-// 修改商品管理
+// 修改商品
 export function updateGoods(data) {
   return request({
     url: '/api/goods/goods',
@@ -35,7 +39,8 @@ export function updateGoods(data) {
   })
 }
 
-// 删除商品管理
+
+// 删除商品
 export function delGoods(id) {
   return request({
     url: '/api/goods/goods/' + id,
@@ -43,7 +48,7 @@ export function delGoods(id) {
   })
 }
 
-// 导出商品管理
+// 导出商品
 export function exportGoods(query) {
   return request({
     url: '/api/goods/goods/export',

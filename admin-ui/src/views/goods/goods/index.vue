@@ -2,6 +2,7 @@
   <div class="app-container">
   <el-card>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+
       <el-form-item label="名称" prop="name">
         <el-input
           v-model="queryParams.name"
@@ -65,6 +66,7 @@
         <el-input
           v-model="queryParams.discount"
           placeholder="请输入折扣"
+
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -87,6 +89,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -137,6 +140,7 @@
       <el-table-column label="库存" align="center" prop="inventory" />
       <el-table-column label="颜色" align="center" prop="color" />
       <el-table-column label="折扣" align="center" prop="discount" />
+
       <el-table-column label="创建时间" align="center" prop="creatTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.creatTime, '{y}-{m}-{d}') }}</span>
@@ -182,6 +186,7 @@
         </el-form-item>
         <el-form-item label="价格" prop="price">
           <el-input v-model="form.price" placeholder="请输入价格" />
+
         </el-form-item>
         <el-form-item label="标签" prop="lable">
           <el-input v-model="form.lable" placeholder="请输入标签" />
@@ -191,6 +196,7 @@
         </el-form-item>
         <el-form-item label="库存" prop="inventory">
           <el-input v-model.number="form.inventory" placeholder="请输入库存" />
+
         </el-form-item>
         <el-form-item label="颜色" prop="color">
           <el-input v-model="form.color" placeholder="请输入颜色" />
@@ -199,6 +205,7 @@
           <el-input v-model.number="form.discount" placeholder="请输入优惠活动编号" />
         </el-form-item>
         <!-- <el-form-item label="创建时间" prop="creatTime">
+
           <el-date-picker clearable size="small"
             v-model="form.creatTime"
             type="date"
@@ -212,6 +219,7 @@
         <!-- <el-form-item label="删除标签(0是未删除，1是已删除)" prop="delFlag">
           <el-input v-model="form.delFlag" placeholder="请输入删除标签(0是未删除，1是已删除)" />
         </el-form-item> -->
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -242,7 +250,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 商品管理表格数据
+
+      // 商品表格数据
       goodsList: [],
       // 弹出层标题
       title: "",
@@ -276,6 +285,7 @@ export default {
         price: [
           { required: true, message: "价格不能为空", trigger: "blur" },
           {pattern:'^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$', message: "价格必须为数值" }
+
         ],
         brand: [
           { required: true, message: "品牌不能为空", trigger: "blur" }
@@ -284,8 +294,9 @@ export default {
           { required: true, message: "库存不能为空", trigger: "blur" }
         ],
         discount:[
-          {type:"number" ,trigger: "blur"}
+          {type:"number"}
         ],
+
       }
     };
   },
@@ -294,6 +305,7 @@ export default {
   },
   methods: {
     /** 查询商品管理列表 */
+
     getList() {
       this.loading = true;
       listGoods(this.queryParams).then(response => {
@@ -347,7 +359,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加商品管理";
+      this.title = "添加商品";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -356,7 +368,7 @@ export default {
       getGoods(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改商品管理";
+        this.title = "修改商品";
       });
     },
     /** 提交按钮 */
@@ -382,7 +394,8 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除商品管理编号为"' + ids + '"的数据项?', "警告", {
+
+      this.$confirm('是否确认删除商品编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -396,7 +409,8 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有商品管理数据项?', "警告", {
+
+      this.$confirm('是否确认导出所有商品数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
