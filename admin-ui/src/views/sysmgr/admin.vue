@@ -22,7 +22,6 @@
         <el-button size="small" icon="el-icon-plus" @click="add()">添加</el-button>
         <el-button size="small" icon="el-icon-delete" @click="del()">删除</el-button>
         <el-button size="small" icon="el-icon-refresh" @click="search()">刷新</el-button>
-        <el-button size="small" icon="el-icon-edit" @click="editPw()">修改密码</el-button>
       </el-row>
       <div class="mt-15">
         <el-table
@@ -51,9 +50,9 @@
           :page-size="searchForm.pageSize"
           :page-sizes="[2,10, 20, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper"
-          @size-change="sizeChange"
-          @current-change="currChange"
-          
+          @size-change="sizeChange()"
+          @current-change="currentChange()"
+
         />
       </div>
     </el-card>
@@ -98,39 +97,6 @@
         <el-button size="small">取消</el-button>
         <el-button size="small" type="primary" @click="submit">确定</el-button>
       </div>
-
-    </el-dialog >
-
-    <el-dialog :title="formTitlePw"
-      :visible.sync="formShowPw"
-      :close-on-click-modal="false">
-       <div>
-        <el-form :model="formPw" label-width="150px">
-            <el-row>
-          <el-col :span="12">
-            <el-form-item label="原密码" prop="password">
-              <el-input size="small" />
-            </el-form-item>
-          </el-col>
-
-        </el-row>
-
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="新密码" prop="newpassword">
-              <el-input size="small" />
-            </el-form-item>
-          </el-col>
-
-        </el-row>
-        </el-form>
-      </div>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button size="small">取消</el-button>
-        <el-button size="small" type="primary" @click="submit">确定</el-button>
-      </div>
-
     </el-dialog>
   </div>
 </template>
@@ -146,7 +112,7 @@ export default {
         username: "",
         phoneNumber: "",
         pageNo: 1,
-        pageSize: 2
+        pageSize: 10
       },
       list: [
         {
@@ -191,12 +157,12 @@ export default {
   },
   methods: {
     sizeChange(val){
-      this.searchForm.pageSize=val;
-      this.search();
+        this.searchForm.pageSize=val;
+        this.search();
     },
-    currChange(val){
-      this.searchForm.pageNo=val;
-      this.search();
+    currentChange(val){
+        this.searchForm.pageNo=val;
+        this.search();
     },
     search() {
       //查询
@@ -231,7 +197,6 @@ export default {
             }
           }).catch(err => {})
           //删除之后重新加载数据
-          this.search();
         })
         .catch(err => {
           console.log("222");
@@ -250,17 +215,8 @@ export default {
         remark: ""
       }
     },
-    
-    editPw(){
-      this.formShowPw=true;
-      this.formTitlePw="修改密码";
-      this.form={
-        password:"",
-        new_password:"",
-      }
-
-    },
     edit(id){ //打开弹出框，并且查询数据的数据
+        console.log(getAdmin.id)
       getAdmin(id).then(res=>{
         if(res.code == 20000){
           this.form = res.data;
@@ -272,6 +228,7 @@ export default {
     },
     submit() { //提交
       console.log(this.$refs['ruleForm'],'9999')
+      console.log(this.form.data)
       this.$refs['ruleForm'].validate(valid => {
         if (valid) {
           if(this.form.id && this.form.id > 0){ //id有值表示修改
@@ -291,7 +248,7 @@ export default {
             }
           }).catch(err=>{});
           }
-          
+
         } else {
           console.log("error submit!!");
           return false;

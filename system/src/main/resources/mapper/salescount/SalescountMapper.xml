@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toceansoft.salescount.mapper.SalescountMapper">
+    
+    <resultMap type="Salescount" id="SalescountResult">
+        <result property="countId"    column="count_id"    />
+        <result property="salesmanId"    column="salesman_id"    />
+        <result property="completedSales"    column="completed_sales"    />
+        <result property="taskSales"    column="task_sales"    />
+        <result property="progress"    column="progress"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="delLable"    column="del_lable"    />
+    </resultMap>
+
+    <sql id="selectSalescountVo">
+        select count_id, salesman_id, 
+completed_sales, task_sales, progress, create_by, create_time, del_lable from t_salescount
+    </sql>
+
+    <select id="selectSalescountList" parameterType="Salescount" resultMap="SalescountResult">
+        <include refid="selectSalescountVo"/>
+        <where>  
+            <if test="salesmanId != null "> and salesman_id = #{salesmanId}</if>
+            <if test="completedSales != null "> and completed_sales = #{completedSales}</if>
+            <if test="taskSales != null "> and task_sales = #{taskSales}</if>
+            <if test="progress != null  and progress != ''"> and progress = #{progress}</if>
+        </where>
+    </select>
+    
+    <select id="selectSalescountById" parameterType="Long" resultMap="SalescountResult">
+        <include refid="selectSalescountVo"/>
+        where count_id = #{countId}
+    </select>
+        
+    <insert id="insertSalescount" parameterType="Salescount" useGeneratedKeys="true" keyProperty="countId">
+        insert into t_salescount
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="salesmanId != null">salesman_id,</if>
+            <if test="completedSales != null">completed_sales,</if>
+            <if test="taskSales != null">task_sales,</if>
+            <if test="progress != null">progress,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="delLable != null">del_lable,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="salesmanId != null">#{salesmanId},</if>
+            <if test="completedSales != null">#{completedSales},</if>
+            <if test="taskSales != null">#{taskSales},</if>
+            <if test="progress != null">#{progress},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="delLable != null">#{delLable},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSalescount" parameterType="Salescount">
+        update t_salescount
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="salesmanId != null">salesman_id = #{salesmanId},</if>
+            <if test="completedSales != null">completed_sales = #{completedSales},</if>
+            <if test="taskSales != null">task_sales = #{taskSales},</if>
+            <if test="progress != null">progress = #{progress},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="delLable != null">del_lable = #{delLable},</if>
+        </trim>
+        where count_id = #{countId}
+    </update>
+
+    <delete id="deleteSalescountById" parameterType="Long">
+        delete from t_salescount where count_id = #{countId}
+    </delete>
+
+    <delete id="deleteSalescountByIds" parameterType="String">
+        delete from t_salescount where count_id in 
+        <foreach item="countId" collection="array" open="(" separator="," close=")">
+            #{countId}
+        </foreach>
+    </delete>
+</mapper>

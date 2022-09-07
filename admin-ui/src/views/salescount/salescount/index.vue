@@ -2,24 +2,51 @@
   <div class="app-container">
   <el-card>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="姓名" prop="name">
+      <el-form-item label="统计项id" prop="countId">
         <el-input
-          v-model="queryParams.name"
-          placeholder="请输入姓名"
+          v-model="queryParams.countId"
+          placeholder="请输入统计项id"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所在位置" prop="location">
+      <el-form-item label="销售员id" prop="salesmanId">
         <el-input
-          v-model="queryParams.location"
-          placeholder="请输入所在位置"
+          v-model="queryParams.salesmanId"
+          placeholder="请输入销售员id"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <!-- <el-form-item label="已完成销售额" prop="completedSales">
+        <el-input
+          v-model="queryParams.completedSales"
+          placeholder="请输入已完成销售额"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="任务销售额" prop="taskSales">
+        <el-input
+          v-model="queryParams.taskSales"
+          placeholder="请输入任务销售额"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="任务进程" prop="progress">
+        <el-input
+          v-model="queryParams.progress"
+          placeholder="请输入任务进程"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item> -->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -59,11 +86,13 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="deptList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="salescountList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="姓名" align="center" prop="name" />
-      <el-table-column label="所在位置" align="center" prop="location" />
+      <el-table-column label="统计项id" align="center" prop="countId" />
+      <el-table-column label="销售员id" align="center" prop="salesmanId" />
+      <el-table-column label="已完成销售额" align="center" prop="completedSales" />
+      <el-table-column label="任务销售额" align="center" prop="taskSales" />
+      <el-table-column label="任务进程" align="center" prop="progress" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -81,7 +110,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -90,15 +119,24 @@
       @pagination="getList"
     />
 </el-card>
-    <!-- 添加或修改部门对话框 -->
+    <!-- 添加或修改销售统计对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入姓名" />
+        <el-form-item label="销售员id" prop="salesmanId">
+          <el-input v-model="form.salesmanId" placeholder="请输入销售员id" />
         </el-form-item>
-        <el-form-item label="所在位置" prop="location">
-          <el-input v-model="form.location" placeholder="请输入所在位置" />
+        <el-form-item label="已完成销售额" prop="completedSales">
+          <el-input v-model="form.completedSales" placeholder="请输入已完成销售额" />
         </el-form-item>
+        <el-form-item label="任务销售额" prop="taskSales">
+          <el-input v-model="form.taskSales" placeholder="请输入任务销售额" />
+        </el-form-item>
+        <el-form-item label="任务进程" prop="progress">
+          <el-input v-model="form.progress" placeholder="请输入任务进程" />
+        </el-form-item>
+        <!-- <el-form-item label="删除标签" prop="delLable">
+          <el-input v-model="form.delLable" placeholder="请输入删除标签" />
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -109,10 +147,10 @@
 </template>
 
 <script>
-import { listDept, getDept, delDept, addDept, updateDept, exportDept } from "@/api/dept/dept";
+import { listSalescount, getSalescount, delSalescount, addSalescount, updateSalescount, exportSalescount } from "@/api/salescount/salescount";
 
 export default {
-  name: "Dept",
+  name: "Salescount",
   components: {
   },
   data() {
@@ -129,8 +167,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 部门表格数据
-      deptList: [],
+      // 销售统计表格数据
+      salescountList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -139,21 +177,18 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
-        location: null,
+        countId: null,
+        salesmanId: null,
+        completedSales: null,
+        taskSales: null,
+        progress: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        name: [
-          { required: true, message: "姓名不能为空", trigger: "blur" }
-        ],
-        createBy: [
-          { required: true, message: "创建人不能为空", trigger: "blur" }
-        ],
-        createTime: [
-          { required: true, message: "创建时间不能为空", trigger: "blur" }
+        salesmanId: [
+          { required: true, message: "销售员id不能为空", trigger: "blur" }
         ],
       }
     };
@@ -162,11 +197,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询部门列表 */
+    /** 查询销售统计列表 */
     getList() {
       this.loading = true;
-      listDept(this.queryParams).then(response => {
-        this.deptList = response.data.list;
+      listSalescount(this.queryParams).then(response => {
+        this.salescountList = response.data.list;
         this.total = response.data.total;
         this.loading = false;
       });
@@ -179,13 +214,14 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        id: null,
-        name: null,
-        location: null,
+        countId: null,
+        salesmanId: null,
+        completedSales: null,
+        taskSales: null,
+        progress: null,
         createBy: null,
         createTime: null,
-        updateBy: null,
-        updateTime: null
+        delLable: null
       };
       this.resetForm("form");
     },
@@ -201,7 +237,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
+      this.ids = selection.map(item => item.countId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -209,30 +245,30 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加部门";
+      this.title = "添加销售统计";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id || this.ids
-      getDept(id).then(response => {
+      const countId = row.countId || this.ids
+      getSalescount(countId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改部门";
+        this.title = "修改销售统计";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.id != null) {
-            updateDept(this.form).then(response => {
+          if (this.form.countId != null) {
+            updateSalescount(this.form).then(response => {
               this.$message("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addDept(this.form).then(response => {
+            addSalescount(this.form).then(response => {
               this.$message("新增成功");
               this.open = false;
               this.getList();
@@ -243,13 +279,13 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$confirm('是否确认删除部门编号为"' + ids + '"的数据项?', "警告", {
+      const countIds = row.countId || this.ids;
+      this.$confirm('是否确认删除销售统计编号为"' + countIds + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delDept(ids);
+          return delSalescount(countIds);
         }).then(() => {
           this.getList();
           this.$message("删除成功");
@@ -258,12 +294,12 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有部门数据项?', "警告", {
+      this.$confirm('是否确认导出所有销售统计数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return exportDept(queryParams);
+          return exportSalescount(queryParams);
         }).then(response => {
           this.download(response.msg);
         })

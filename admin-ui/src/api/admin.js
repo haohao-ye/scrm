@@ -21,9 +21,7 @@ export function logout() {
     url: '/api/admin/logout',
     method: 'post'
   })
-
 }
-
 
 export function listAdmin(params){
   return request({
@@ -32,26 +30,24 @@ export function listAdmin(params){
     params
   })
 }
-
 export function getAdmin(id){
   return request({
     url: '/api/admin/'+id,
-    method:'get',
-    id
+    method:'get'
   })
 }
+
 export function addAdmin(data) {
   return request({
-    url: '/api/admin/add',
+    url: '/api/admin',
     method: 'post',
     data
   })
-
 }
 
 export function editAdmin(data) {
   return request({
-    url: '/api/admin/edit',
+    url: '/api/admin/update',
     method: 'put',
     data
   })
@@ -63,4 +59,3 @@ export function delAdmin(ids) {
     method: 'delete'
   })
 }
-

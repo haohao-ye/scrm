@@ -10,9 +10,9 @@ export function listDept(query) {
 }
 
 // 查询部门详细
-export function getDept(deptNo) {
+export function getDept(id) {
   return request({
-    url: '/api/dept/dept/' + deptNo,
+    url: '/api/dept/dept/' + id,
     method: 'get'
   })
 }
@@ -36,9 +36,9 @@ export function updateDept(data) {
 }
 
 // 删除部门
-export function delDept(deptNo) {
+export function delDept(id) {
   return request({
-    url: '/api/dept/dept/' + deptNo,
+    url: '/api/dept/dept/' + id,
     method: 'delete'
   })
 }
