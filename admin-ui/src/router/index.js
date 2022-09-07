@@ -149,13 +149,13 @@ export const constantRoutes = [
   path: '/goods',
   component: Layout,
   name: 'goods',
-  meta: {title: '商品管理', icon: 'el-icon-message-solid'},
+  meta: {title: '商品管理', icon: 'el-icon-s-goods'},
   children:[
     {
       path: 'goods',
       name: '商品列表',
       component: ()=>import('@/views/goods/goods'),
-      meta: {title:'商品管理',icon:'el-icon-message-solid'}
+      meta: {title:'商品管理',icon:'el-icon-s-goods'}
     }
   ]
 },
