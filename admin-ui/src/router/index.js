@@ -128,13 +128,29 @@ export const constantRoutes = [
   path: '/goods',
   component: Layout,
   name: 'Goods',
-  meta: {title: '商品', icon: 'el-icon-s-tools'},
+  meta: {title: '商品', icon: 'el-icon-s-goods'},
   children:[
     {
       path: 'goods',
       name: 'Goods',
       component: ()=>import('@/views/goods/goods'),
-      meta: {title:'商品管理',icon:'el-icon-document'}
+
+      meta: {title:'商品管理',icon:'el-icon-s-goods'}
+    }
+  ]
+},
+
+{
+  path: '/employee',
+  component: Layout,
+  name: 'employee',
+  meta: {title: '员工管理', icon: 'el-icon-user'},
+  children:[
+    {
+      path: 'employee',
+      name: '员工管理',
+      component: ()=>import('@/views/employee/index'),
+      meta: {title:'员工管理',icon:'el-icon-user'}
     }
   ]
 },
@@ -151,7 +167,7 @@ export const constantRoutes = [
     }
   ]
 },
- 
+
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

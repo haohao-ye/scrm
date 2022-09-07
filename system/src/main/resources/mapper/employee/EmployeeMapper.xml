@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toceansoft.employee.mapper.EmployeeMapper">
+    
+    <resultMap type="Employee" id="EmployeeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="idNum"    column="id_num"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="password"    column="password"    />
+        <result property="deptName"    column="dept_name"    />
+    </resultMap>
+
+    <sql id="selectEmployeeVo">
+        select id, name, id_num, phone_number, password, dept_name from t_employee
+    </sql>
+
+    <select id="selectEmployeeList" parameterType="Employee" resultMap="EmployeeResult">
+        <include refid="selectEmployeeVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat('%', #{deptName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectEmployeeById" parameterType="Long" resultMap="EmployeeResult">
+        <include refid="selectEmployeeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEmployee" parameterType="Employee">
+        insert into t_employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="idNum != null and idNum != ''">id_num,</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number,</if>
+            <if test="password != null and password != ''">password,</if>
+            <if test="deptName != null and deptName != ''">dept_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="idNum != null and idNum != ''">#{idNum},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">#{phoneNumber},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            <if test="deptName != null and deptName != ''">#{deptName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmployee" parameterType="Employee">
+        update t_employee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="idNum != null and idNum != ''">id_num = #{idNum},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="deptName != null and deptName != ''">dept_name = #{deptName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEmployeeById" parameterType="Long">
+        delete from t_employee where id = #{id}
+    </delete>
+
+    <delete id="deleteEmployeeByIds" parameterType="String">
+        delete from t_employee where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="counter" parameterType="Employee" resultType="java.lang.Integer">
+        select count(*) from t_employee
+    </select>
+</mapper>
