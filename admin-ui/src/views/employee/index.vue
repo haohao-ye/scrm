@@ -80,6 +80,12 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
           >删除</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-warning-outline"
+            @click="resetPw(scope.row)"
+          >重置密码</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -124,7 +130,7 @@
 </template>
 
 <script>
-import { listEmployee, getEmployee, delEmployee, addEmployee, updateEmployee, exportEmployee } from "@/api/employee/employee";
+import { listEmployee, getEmployee, delEmployee, addEmployee, updateEmployee, exportEmployee ,resetPassword} from "@/api/employee/employee";
 import { listDept } from "@/api/dept/dept"
 export default {
   name: "Employee",
@@ -255,13 +261,32 @@ export default {
         this.getDeptList();
       });
     },
+    /** 重置密码按钮操作 */
+     resetPw(row) {
+      const id = row.id || this.id;
+      console.log(id);
+      this.$confirm('是否确认重置员工管理编号为"' + id + '"的密码?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(()=> {
+          getEmployee(id).then(response =>{
+            this.form = response.data;
+            console.log(this.form);
+            resetPassword(this.form);
+          })
+        }).then(() => {
+          this.$message("重置成功");
+        })
+    },
+
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
             updateEmployee(this.form).then(response => {
-              console.log(this.form);
+              // console.log(this.form);
               this.$message("修改成功");
               this.open = false;
               this.getList();
@@ -302,7 +327,8 @@ export default {
         }).then(response => {
           this.download(response.msg);
         })
-    }
+    },
+
   }
 };
 </script>

@@ -131,4 +131,19 @@ public class EmployeeController
         }
         return R.ok(20000, null);
     }
+
+    /**
+     * 重置员工登录密码
+     * @return
+     */
+    @PutMapping("/resetPw")
+    public R resetPw(@RequestBody Employee employee, HttpServletRequest req){
+        //提取身份证里员工生日，重置为初始密码:yyyymmdd
+        employee.setPassword(employee.getIdNum().substring(6,14));
+        int rows = employeeService.updateEmployee(employee);
+        if (rows <= 0 ) {
+            return R.fail(50002, "重置密码失败！");
+        }
+        return R.ok(20000, null);
+    }
 }
