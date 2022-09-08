@@ -10,24 +10,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="idNum"    column="id_num"    />
         <result property="phoneNumber"    column="phone_number"    />
         <result property="password"    column="password"    />
+        <result property="deptId"    column="dept_id"    />
         <result property="deptName"    column="dept_name"    />
     </resultMap>
 
     <sql id="selectEmployeeVo">
-        select id, name, id_num, phone_number, password, dept_name from t_employee
+        select e.id, e.name, e.id_num, e.phone_number, e.password, e.dept_id ,d.dept_name as dept_name
+        from t_employee e left join t_dept d on e.dept_id = d.id
     </sql>
 
     <select id="selectEmployeeList" parameterType="Employee" resultMap="EmployeeResult">
         <include refid="selectEmployeeVo"/>
         <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="deptName != null  and deptName != ''"> and dept_name like concat('%', #{deptName}, '%')</if>
+            <if test="deptId != null  and deptId != ''"> and dept_id = #{deptId}</if>
         </where>
     </select>
     
     <select id="selectEmployeeById" parameterType="Long" resultMap="EmployeeResult">
         <include refid="selectEmployeeVo"/>
-        where id = #{id}
+        where e.id = #{id}
     </select>
         
     <insert id="insertEmployee" parameterType="Employee">
@@ -38,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="idNum != null and idNum != ''">id_num,</if>
             <if test="phoneNumber != null and phoneNumber != ''">phone_number,</if>
             <if test="password != null and password != ''">password,</if>
-            <if test="deptName != null and deptName != ''">dept_name,</if>
+            <if test="deptId != null and deptId != ''">dept_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
@@ -46,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="idNum != null and idNum != ''">#{idNum},</if>
             <if test="phoneNumber != null and phoneNumber != ''">#{phoneNumber},</if>
             <if test="password != null and password != ''">#{password},</if>
-            <if test="deptName != null and deptName != ''">#{deptName},</if>
+            <if test="deptId != null and deptId != ''">#{deptId},</if>
          </trim>
     </insert>
 
@@ -57,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="idNum != null and idNum != ''">id_num = #{idNum},</if>
             <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
             <if test="password != null and password != ''">password = #{password},</if>
-            <if test="deptName != null and deptName != ''">dept_name = #{deptName},</if>
+            <if test="deptId != null and deptId != ''">dept_id = #{deptId},</if>
         </trim>
         where id = #{id}
     </update>

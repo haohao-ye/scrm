@@ -102,6 +102,7 @@ public class EmployeeController
         Date date = new Date(System.currentTimeMillis());
         employee.setUpdateTime(date);
 
+//        System.out.println(employee);
         int rows = employeeService.updateEmployee(employee);
         if (rows <= 0 ) {
             return R.fail(50002, "修改失败");

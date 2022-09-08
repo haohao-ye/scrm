@@ -12,9 +12,13 @@
         />
       </el-form-item>
       <el-form-item label="员工部门" prop="deptName">
-        <el-select v-model="queryParams.deptName" placeholder="请选择员工部门" clearable size="small">
-          <el-option label="销售部" value="销售部" />
-          <el-option label="后勤部" value="后勤部" />
+        <el-select v-model="queryParams.deptId" placeholder="请选择员工部门" clearable size="small">
+          <el-option  
+            v-for="item in deptList"
+            :key="item.id" 
+            :label="item.deptName"   
+            :value="item.id">
+          </el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -101,10 +105,14 @@
           <el-input v-model="form.idNum" placeholder="请输入员工身份证" />
         </el-form-item>
         <el-form-item label="员工部门">
-          <el-radio-group v-model="form.deptName">
-            <el-radio label="销售部">销售部</el-radio>
-            <el-radio label="后勤部">后勤部</el-radio>
-          </el-radio-group>
+          <el-select v-model="form.deptId" placeholder="请选择员工部门">
+            <el-option  
+            v-for="item in deptList"
+            :key="item.id" 
+            :label="item.deptName"   
+            :value="item.id">
+          </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -117,7 +125,7 @@
 
 <script>
 import { listEmployee, getEmployee, delEmployee, addEmployee, updateEmployee, exportEmployee } from "@/api/employee/employee";
-
+import { listDept } from "@/api/dept/dept"
 export default {
   name: "Employee",
   components: {
@@ -147,7 +155,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
         name: null,
-        deptName: null
+        deptId: null
       },
       // 表单参数
       form: {},
@@ -168,13 +176,24 @@ export default {
         deptName: [
           { required: true, message: "员工部门不能为空", trigger: "blur" }
         ]
-      }
+      },
+      deptList:[],
     };
   },
   created() {
     this.getList();
+    this.getDeptList();
   },
   methods: {
+
+
+    /**查询部门列表 */
+    getDeptList(){
+      listDept(this.queryParams).then(response => {
+        // console.log(this.deptList);
+        this.deptList = response.data.list;
+      });
+    },
     /** 查询员工管理列表 */
     getList() {
       this.loading = true;
@@ -204,6 +223,7 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
+      // console.log(this.queryParams);
       this.getList();
     },
     /** 重置按钮操作 */
@@ -222,6 +242,7 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加员工管理";
+      this.getDeptList();
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -231,6 +252,7 @@ export default {
         this.form = response.data;
         this.open = true;
         this.title = "修改员工管理";
+        this.getDeptList();
       });
     },
     /** 提交按钮 */
@@ -239,6 +261,7 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateEmployee(this.form).then(response => {
+              console.log(this.form);
               this.$message("修改成功");
               this.open = false;
               this.getList();
