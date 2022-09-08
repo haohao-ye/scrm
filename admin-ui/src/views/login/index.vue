@@ -133,6 +133,15 @@ $bg:#283443;
 $light_gray:#fff;
 $cursor: #fff;
 
+@font-face {
+  font-family:AliRegular;
+  src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+}
+@font-face {
+  font-family:AliBold;
+  src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+}
+
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
     color: $cursor;
@@ -141,6 +150,8 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+
   .el-input {
     display: inline-block;
     height: 47px;
@@ -177,11 +188,21 @@ $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
+@font-face {
+  font-family:AliRegular;
+  src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+}
+@font-face {
+  font-family:AliBold;
+  src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+}
+
 .login-container {
   min-height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+  font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
 
   .login-form {
     position: relative;

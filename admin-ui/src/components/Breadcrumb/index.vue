@@ -64,14 +64,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@font-face {
+  font-family:AliRegular;
+  src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+}
+@font-face {
+  font-family:AliBold;
+  src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+}
+  
 .app-breadcrumb.el-breadcrumb {
   display: inline-block;
   font-size: 14px;
   line-height: 50px;
   margin-left: 8px;
+  font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
 
   .no-redirect {
-    color: #97a8be;
+    color: #409EFF;
     cursor: text;
   }
 }

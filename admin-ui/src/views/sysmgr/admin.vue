@@ -269,5 +269,18 @@ export default {
 </script>
 
 <!-- css -->
-<style scoped>
+<style lang="scss" scoped>
+@font-face {
+  font-family:AliRegular;
+  src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+}
+@font-face {
+  font-family:AliBold;
+  src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+}
+
+.app-container {
+  font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+}
+
 </style>
