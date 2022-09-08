@@ -8,44 +8,26 @@ import com.toceansoft.common.entity.BaseEntity;
 /**
  * 销售统计对象 t_salescount
  *
- * @author hhh
- * @date Wed Sep 07 16:38:16 CST 2022
+ * @author zengqf
+ * @date Thu Sep 08 15:08:48 CST 2022
  */
 @Data
 public class Salescount extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 统计项id */
-    private Long countId;
+    /** 商品id */
+    private Long goodsId;
 
-    /** 销售员id */
-    private Long salesmanId;
-
-    /** 已完成销售额 */
-    private Long completedSales;
-
-    /** 任务销售额 */
-    private Long taskSales;
-
-    /** 任务进程 */
-    private String progress;
-
-    /** 删除标签 */
-    private String delLable;
+    /** 总销售额 */
+    private Long totalSales;
 
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("countId", getCountId())
-            .append("salesmanId", getSalesmanId())
-            .append(" completedSales", getCompletedSales())
-            .append("taskSales", getTaskSales())
-            .append("progress", getProgress())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("delLable", getDelLable())
+            .append("goodsId", getGoodsId())
+            .append("totalSales", getTotalSales())
             .toString();
     }
 }

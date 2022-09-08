@@ -185,7 +185,7 @@ export const constantRoutes = [
         path: 'orders',
         name: 'Orders',
         component: ()=>import('@/views/orders/orders'),
-        meta: {title:'订单管理',icon:'el-icon-s-data'}
+        meta: {title:'订单管理',icon:'el-icon-document-copy'}
       }
     ]
   },
@@ -201,7 +201,7 @@ export const constantRoutes = [
           path: 'salescount',
           name: 'Salescount',
           component: ()=>import('@/views/salescount/salescount'),
-          meta: {title:'销售统计',icon:'el-icon-document-copy'}
+          meta: {title:'销售统计',icon:'el-icon-s-data'}
         }
       ]
     },
