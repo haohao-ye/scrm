@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_dept`;
 CREATE TABLE `t_dept`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '部门id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '部门id',
   `dept_name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '部门名称',
   `create_by` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
