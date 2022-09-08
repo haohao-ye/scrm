@@ -2,19 +2,10 @@
   <div class="app-container">
   <el-card>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="姓名" prop="name">
+      <el-form-item label="部门名称" prop="deptName">
         <el-input
-          v-model="queryParams.name"
-          placeholder="请输入姓名"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所在位置" prop="location">
-        <el-input
-          v-model="queryParams.location"
-          placeholder="请输入所在位置"
+          v-model="queryParams.deptName"
+          placeholder="请输入部门名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -61,9 +52,9 @@
 
     <el-table v-loading="loading" :data="deptList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="姓名" align="center" prop="name" />
-      <el-table-column label="所在位置" align="center" prop="location" />
+      <el-table-column label="部门id" align="center" prop="id" />
+      <el-table-column label="部门名称" align="center" prop="deptName" />
+      <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -81,7 +72,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -93,11 +84,11 @@
     <!-- 添加或修改部门对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入姓名" />
+        <el-form-item label="部门名称" prop="deptName">
+          <el-input v-model="form.deptName" placeholder="请输入部门名称" />
         </el-form-item>
-        <el-form-item label="所在位置" prop="location">
-          <el-input v-model="form.location" placeholder="请输入所在位置" />
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -139,21 +130,14 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
-        location: null,
+        deptName: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        name: [
-          { required: true, message: "姓名不能为空", trigger: "blur" }
-        ],
-        createBy: [
-          { required: true, message: "创建人不能为空", trigger: "blur" }
-        ],
-        createTime: [
-          { required: true, message: "创建时间不能为空", trigger: "blur" }
+        deptName: [
+          { required: true, message: "部门名称不能为空", trigger: "blur" }
         ],
       }
     };
@@ -180,12 +164,12 @@ export default {
     reset() {
       this.form = {
         id: null,
-        name: null,
-        location: null,
+        deptName: null,
         createBy: null,
         createTime: null,
         updateBy: null,
-        updateTime: null
+        updateTime: null,
+        remark: null
       };
       this.resetForm("form");
     },

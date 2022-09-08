@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="brand"    column="brand"    />
         <result property="inventory"    column="inventory"    />
         <result property="color"    column="color"    />
-        <result property="discount"    column="discount"    />
+        <result property="activity_id"    column="activity_id"    />
         <result property="creatTime"    column="creat_time"    />
         <result property="creatBy"    column="creat_by"    />
         <result property="updateTime"    column="update_time"    />
@@ -22,7 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectGoodsVo">
-        select id, name, type, price, lable, brand, inventory, color, discount, creat_time, creat_by, update_time, update_by, del_flag from t_goods
+        select g.id, g.name, g.type, g.price, g.lable, g.brand, g.inventory, g.color, g.activity_id, g.creat_time, g.creat_by, g.update_time, g.update_by, g.del_flag,a.name
+        as activity_name from t_goods g left join t_activity a on g.activity_id=a.id
     </sql>
 
     <select id="selectGoodsList" parameterType="Goods" resultMap="GoodsResult">
@@ -35,16 +36,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="brand != null  and brand != ''"> and brand = #{brand}</if>
             <if test="inventory != null "> and inventory &lt;= #{inventory}</if>
             <if test="color != null  and color != ''"> and color = #{color}</if>
-            <if test="discount != null "> and discount = #{discount}</if>
+            <if test="activity_id != null "> and activity_id = #{activity_id}</if>
             <if test="creatTime != null "> and creat_time = #{creatTime}</if>
             <if test="creatBy != null  and creatBy != ''"> and creat_by = #{creatBy}</if>
-            and del_flag!=1
+            and g.del_flag!=1
         </where>
     </select>
     
     <select id="selectGoodsById" parameterType="Long" resultMap="GoodsResult">
         <include refid="selectGoodsVo"/>
-        where id = #{id}
+        where g.id = #{id}
     </select>
 
     <insert id="insertGoods" parameterType="Goods" useGeneratedKeys="true" keyProperty="id">
@@ -58,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="brand != null and brand != ''">brand,</if>
             <if test="inventory != null">inventory,</if>
             <if test="color != null">color,</if>
-            <if test="discount != null">discount,</if>
+            <if test="activity_id != null">activity_id,</if>
             <if test="creatTime != null">creat_time,</if>
             <if test="creatBy != null">creat_by,</if>
             <if test="updateTime != null">update_time,</if>
@@ -74,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="brand != null and brand != ''">#{brand},</if>
             <if test="inventory != null">#{inventory},</if>
             <if test="color != null">#{color},</if>
-            <if test="discount != null">#{discount},</if>
+            <if test="activity_id != null">#{activity_id},</if>
             <if test="creatTime != null">#{creatTime},</if>
             <if test="creatBy != null">#{creatBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
@@ -93,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="brand != null and brand != ''">brand = #{brand},</if>
             <if test="inventory != null">inventory = #{inventory},</if>
             <if test="color != null">color = #{color},</if>
-            <if test="discount != null">discount = #{discount},</if>
+            <if test="activity_id != null">activity_id = #{activity_id},</if>
             <if test="creatTime != null">creat_time = #{creatTime},</if>
             <if test="creatBy != null">creat_by = #{creatBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>

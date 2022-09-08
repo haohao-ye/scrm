@@ -17,7 +17,7 @@ public class Dept extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 部门id */
-    private Long deptNo;
+    private Long id;
 
     /** 部门名称 */
     private String deptName;
@@ -26,7 +26,7 @@ public class Dept extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("deptNo", getDeptNo())
+            .append("id", getId())
             .append("deptName", getDeptName())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())

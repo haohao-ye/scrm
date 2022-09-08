@@ -47,10 +47,10 @@ public class DeptController
     /**
      * 获取部门详细信息
      */
-    @GetMapping(value = "/{deptNo}")
-    public R getInfo(@PathVariable("deptNo") Long deptNo)
+    @GetMapping(value = "/{id}")
+    public R getInfo(@PathVariable("id") Long id)
     {
-        return R.ok(20000,deptService.selectDeptById(deptNo));
+        return R.ok(20000,deptService.selectDeptById(id));
     }
 
     /**
@@ -105,10 +105,10 @@ public class DeptController
     /**
      * 删除部门
      */
-	@DeleteMapping("/{deptNos}")
-    public R remove(@PathVariable Long[] deptNos)
+	@DeleteMapping("/{ids}")
+    public R remove(@PathVariable Long[] ids)
     {
-        int rows = deptService.deleteDeptByIds(deptNos);
+        int rows = deptService.deleteDeptByIds(ids);
          if (rows <= 0 ) {
             return R.fail(50002, "删除失败");
         }
