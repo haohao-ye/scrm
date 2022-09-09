@@ -2,6 +2,7 @@ package com.toceansoft.goods.service.impl;
 
 import java.util.List;
 import com.toceansoft.common.util.DateUtils;
+import com.toceansoft.goods.entity.EntryOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.toceansoft.goods.mapper.GoodsMapper;
@@ -136,5 +137,10 @@ public class GoodsServiceImpl implements IGoodsService
     public int deleteGoodsById(Long id)
     {
         return goodsMapper.deleteGoodsById(id);
+    }
+
+    @Override
+    public  int updateByOrder(EntryOrder order){
+        return goodsMapper.updateByOrder(order);
     }
 }
