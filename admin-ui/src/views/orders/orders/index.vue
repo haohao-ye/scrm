@@ -47,15 +47,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <!-- <el-form-item label="总额" prop="totalAmount">
-        <el-input
-          v-model="queryParams.totalAmount"
-          placeholder="请输入总额"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        /> -->
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -342,3 +333,19 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  @font-face {
+    font-family:AliRegular;
+    src:url('../../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+  }
+  @font-face {
+    font-family:AliBold;
+    src:url('../../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+  }
+  
+  .app-container {
+    font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  }
+  
+  </style>

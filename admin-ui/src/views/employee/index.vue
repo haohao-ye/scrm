@@ -58,6 +58,16 @@
           @click="handleDelete"
         >删除</el-button>
       </el-col>
+        <el-col :span="1.5">
+        <el-button
+          type="danger"
+          plain
+          icon="el-icon-delete"
+          size="mini"
+          :disabled="multiple"
+          @click="handleExport"
+        >导出</el-button>
+      </el-col>
     </el-row>
 
     <el-table v-loading="loading" :data="employeeList" @selection-change="handleSelectionChange">
@@ -234,7 +244,8 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
+      this.resetForm("queryParams");
+      this.queryParams.deptId='';
       this.handleQuery();
     },
     // 多选框选中数据
@@ -332,3 +343,19 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  @font-face {
+    font-family:AliRegular;
+    src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+  }
+  @font-face {
+    font-family:AliBold;
+    src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+  }
+  
+  .app-container {
+    font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  }
+  
+  </style>
