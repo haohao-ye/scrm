@@ -11,28 +11,28 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="活动类别" prop="type">
+      <el-form-item label="活动类别" prop="type" label-width="100px">
         <el-select v-model="queryParams.type" placeholder="请选择活动类别" clearable size="small">
           <el-option label="请选择字典生成" value="12" />
         </el-select>
       </el-form-item>
-      <el-form-item label="活动开始时间" prop="endTime">
-        <el-date-picker clearable size="small"
+      <el-form-item label="活动开始时间" prop="endTime" label-width="100px">
+        <el-date-picker clearable size="small "
           v-model="queryParams.endTime"
           type="date"
           value-format="yyyy-MM-dd"
           placeholder="选择活动开始时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="活动结束时间" prop="startTime">
-        <el-date-picker clearable size="small"
+      <el-form-item label="活动结束时间" prop="startTime" label-width="100px">
+        <el-date-picker clearable size="small "
           v-model="queryParams.startTime"
           type="date"
           value-format="yyyy-MM-dd"
           placeholder="选择活动结束时间">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="活动负责人" prop="leaderId">
+      <el-form-item label="活动负责人" prop="leaderId" label-width="100px">
         <el-input
           v-model="queryParams.leaderId"
           placeholder="请输入活动负责人"
@@ -41,23 +41,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="创建时间" prop="creatTime">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.creatTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择创建时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="创建人" prop="creatBy">
-        <el-input
-          v-model="queryParams.creatBy"
-          placeholder="请输入创建人"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -137,7 +121,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -406,10 +390,9 @@ export default {
     font-family:AliBold;
     src:url('../../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
   }
-  
+
   .app-container {
     font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
   }
-  
+
   </style>
-  

@@ -206,20 +206,20 @@ export const constantRoutes = [
   },
 
 
-  {
-    path: '/salecount',
-    component: Layout,
-    name: 'Salescount',
-    meta: { title: '销售统计', icon: 'el-icon-s-tools' },
-    children: [
-      {
-        path: 'salescount',
-        name: 'Salescount',
-        component: () => import('@/views/salescount/salescount'),
-        meta: { title: '销售统计', icon: 'el-icon-document-copy' }
-      }
-    ]
-  },
+  // {
+  //   path: '/salecount',
+  //   component: Layout,
+  //   name: 'Salescount',
+  //   meta: { title: '销售统计', icon: 'el-icon-s-tools' },
+  //   children: [
+  //     {
+  //       path: 'salescount',
+  //       name: 'Salescount',
+  //       component: () => import('@/views/salescount/salescount'),
+  //       meta: { title: '销售统计', icon: 'el-icon-document-copy' }
+  //     }
+  //   ]
+  // },
 
   {
     path: '/gen',

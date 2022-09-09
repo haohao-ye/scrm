@@ -27,7 +27,6 @@
         <el-table
           :data="list"
           style="width:100%"
-          :border="true"
           @selection-change="selectionChange"
         >
           <el-table-column type="selection" width="60" />
@@ -37,8 +36,18 @@
           <el-table-column prop="phoneNumber" label="手机" />
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="edit(scope.row.id)">修改</el-button>
-              <el-button size="mini" @click="del(scope.row.id)">删除</el-button>
+              <el-button
+                size="mini"
+                type="text"
+                icon="el-icon-edit" 
+                @click="edit(scope.row.id)"
+              >修改</el-button>
+              <el-button 
+                size="mini"
+                type="text"
+                icon="el-icon-delete"
+                @click="del(scope.row.id)"
+              >删除</el-button>
             </template>
           </el-table-column>
         </el-table>
