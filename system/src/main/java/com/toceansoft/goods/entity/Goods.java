@@ -52,7 +52,7 @@ public class Goods extends BaseEntity
     private String color;
 
     /** 折扣 */
-    private Long discount;
+    private Long activity_id;
 
 
     /** 创建时间 */
@@ -77,7 +77,7 @@ public class Goods extends BaseEntity
             .append("brand", getBrand())
             .append("inventory", getInventory())
             .append("color", getColor())
-            .append("discount", getDiscount())
+            .append("activity_id", getActivity_id())
             .append("creatTime", getCreatTime())
             .append("creatBy", getCreatBy())
             .append("updateTime", getUpdateTime())

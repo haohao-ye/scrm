@@ -34,6 +34,9 @@ public class Employee extends BaseEntity
     /** 员工部门 */
     private String deptName;
 
+    /** 员工部门id */
+    private Long deptId;
+
 
     @Override
     public String toString() {
@@ -44,6 +47,7 @@ public class Employee extends BaseEntity
             .append("phoneNumber", getPhoneNumber())
             .append("password", getPassword())
             .append("deptName", getDeptName())
+            .append("deptId",getDeptId())
             .toString();
     }
 }

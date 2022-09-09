@@ -51,3 +51,12 @@ export function exportEmployee(query) {
     params: query
   })
 }
+
+// 重置员工密码
+export function resetPassword(data) {
+  return request({
+    url: '/api/employee/employee/resetPw',
+    method: 'Put',
+    data:data
+  })
+}

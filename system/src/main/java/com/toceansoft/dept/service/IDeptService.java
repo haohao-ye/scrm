@@ -14,10 +14,10 @@ public interface IDeptService
     /**
      * 查询部门
      * 
-     * @param deptNo 部门ID
+     * @param id 部门ID
      * @return 部门
      */
-    public Dept selectDeptById(Long deptNo);
+    public Dept selectDeptById(Long id);
 
     /**
      * 查询部门列表
@@ -46,16 +46,16 @@ public interface IDeptService
     /**
      * 批量删除部门
      * 
-     * @param deptNos 需要删除的部门ID
+     * @param ids 需要删除的部门ID
      * @return 结果
      */
-    public int deleteDeptByIds(Long[] deptNos);
+    public int deleteDeptByIds(Long[] ids);
 
     /**
      * 删除部门信息
      * 
-     * @param deptNo 部门ID
+     * @param id 部门ID
      * @return 结果
      */
-    public int deleteDeptById(Long deptNo);
+    public int deleteDeptById(Long id);
 }

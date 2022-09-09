@@ -12,9 +12,13 @@
         />
       </el-form-item>
       <el-form-item label="员工部门" prop="deptName">
-        <el-select v-model="queryParams.deptName" placeholder="请选择员工部门" clearable size="small">
-          <el-option label="销售部" value="销售部" />
-          <el-option label="后勤部" value="后勤部" />
+        <el-select v-model="queryParams.deptId" placeholder="请选择员工部门" clearable size="small">
+          <el-option  
+            v-for="item in deptList"
+            :key="item.id" 
+            :label="item.deptName"   
+            :value="item.id">
+          </el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -54,6 +58,16 @@
           @click="handleDelete"
         >删除</el-button>
       </el-col>
+        <el-col :span="1.5">
+        <el-button
+          type="info"
+          plain
+          icon="el-icon-document"
+          size="mini"
+          :disabled="multiple"
+          @click="handleExport"
+        >导出</el-button>
+      </el-col>
     </el-row>
 
     <el-table v-loading="loading" :data="employeeList" @selection-change="handleSelectionChange">
@@ -76,6 +90,12 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
           >删除</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-warning-outline"
+            @click="resetPw(scope.row)"
+          >重置密码</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -101,10 +121,14 @@
           <el-input v-model="form.idNum" placeholder="请输入员工身份证" />
         </el-form-item>
         <el-form-item label="员工部门">
-          <el-radio-group v-model="form.deptName">
-            <el-radio label="销售部">销售部</el-radio>
-            <el-radio label="后勤部">后勤部</el-radio>
-          </el-radio-group>
+          <el-select v-model="form.deptId" placeholder="请选择员工部门">
+            <el-option  
+            v-for="item in deptList"
+            :key="item.id" 
+            :label="item.deptName"   
+            :value="item.id">
+          </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -116,8 +140,8 @@
 </template>
 
 <script>
-import { listEmployee, getEmployee, delEmployee, addEmployee, updateEmployee, exportEmployee } from "@/api/employee/employee";
-
+import { listEmployee, getEmployee, delEmployee, addEmployee, updateEmployee, exportEmployee ,resetPassword} from "@/api/employee/employee";
+import { listDept } from "@/api/dept/dept"
 export default {
   name: "Employee",
   components: {
@@ -147,7 +171,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
         name: null,
-        deptName: null
+        deptId: null
       },
       // 表单参数
       form: {},
@@ -168,13 +192,24 @@ export default {
         deptName: [
           { required: true, message: "员工部门不能为空", trigger: "blur" }
         ]
-      }
+      },
+      deptList:[],
     };
   },
   created() {
     this.getList();
+    this.getDeptList();
   },
   methods: {
+
+
+    /**查询部门列表 */
+    getDeptList(){
+      listDept(this.queryParams).then(response => {
+        // console.log(this.deptList);
+        this.deptList = response.data.list;
+      });
+    },
     /** 查询员工管理列表 */
     getList() {
       this.loading = true;
@@ -204,11 +239,13 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
+      // console.log(this.queryParams);
       this.getList();
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
+      this.resetForm("queryParams");
+      this.queryParams.deptId='';
       this.handleQuery();
     },
     // 多选框选中数据
@@ -222,6 +259,7 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加员工管理";
+      this.getDeptList();
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -231,14 +269,35 @@ export default {
         this.form = response.data;
         this.open = true;
         this.title = "修改员工管理";
+        this.getDeptList();
       });
     },
+    /** 重置密码按钮操作 */
+     resetPw(row) {
+      const id = row.id || this.id;
+      console.log(id);
+      this.$confirm('是否确认重置员工管理编号为"' + id + '"的密码?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(()=> {
+          getEmployee(id).then(response =>{
+            this.form = response.data;
+            console.log(this.form);
+            resetPassword(this.form);
+          })
+        }).then(() => {
+          this.$message("重置成功");
+        })
+    },
+
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
             updateEmployee(this.form).then(response => {
+              // console.log(this.form);
               this.$message("修改成功");
               this.open = false;
               this.getList();
@@ -279,7 +338,24 @@ export default {
         }).then(response => {
           this.download(response.msg);
         })
-    }
+    },
+
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  @font-face {
+    font-family:AliRegular;
+    src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+  }
+  @font-face {
+    font-family:AliBold;
+    src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+  }
+  
+  .app-container {
+    font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  }
+  
+  </style>

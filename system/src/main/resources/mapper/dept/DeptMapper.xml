@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.toceansoft.dept.mapper.DeptMapper">
     
     <resultMap type="Dept" id="DeptResult">
-        <result property="deptNo"    column="dept_no"    />
+        <result property="id"    column="id"    />
         <result property="deptName"    column="dept_name"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectDeptVo">
-        select dept_no, dept_name, create_by, create_time, update_by, update_time, remark from t_dept
+        select id, dept_name, create_by, create_time, update_by, update_time, remark from t_dept
     </sql>
 
     <select id="selectDeptList" parameterType="Dept" resultMap="DeptResult">
@@ -26,16 +26,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
         </where>
     </select>
+
+
     
     <select id="selectDeptById" parameterType="Long" resultMap="DeptResult">
         <include refid="selectDeptVo"/>
-        where dept_no = #{deptNo}
+        where id = #{id}
     </select>
+
         
-    <insert id="insertDept" parameterType="Dept" useGeneratedKeys="true" keyProperty="deptNo">
+    <insert id="insertDept" parameterType="Dept" useGeneratedKeys="true" keyProperty="id">
         insert into t_dept
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="deptName != null and deptName != ''">dept_name,</if>
+            <if test="deptName != null">dept_name,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
@@ -62,28 +65,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
         </trim>
-        where dept_no = #{deptNo}
+        where id = #{id}
     </update>
 
     <!--将删除标志改为1，表示放到回收站-->
     <update id="deleteDeptById">
-        update t_dept set del_flag = 1 where dept_no =#{deptNo}
+        update t_dept set del_flag = 1 where id =#{id}
     </update>
 <!--    <delete id="deleteDeptById" parameterType="Long">-->
-<!--        delete from t_dept where dept_no = #{deptNo}-->
+<!--        delete from t_dept where id = #{id}-->
 <!--    </delete>-->
 
     <!--批量将删除标志设为1-->
     <update id="deleteDeptByIds">
-        update t_dept set del_flag=1 where dept_no in
-        <foreach item="deptNo" collection="array" open="(" separator="," close=")">
-            #{deptNo}
+        update t_dept set del_flag=1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </update>
 <!--    <delete id="deleteDeptByIds" parameterType="String">-->
-<!--        delete from t_dept where dept_no in -->
-<!--        <foreach item="deptNo" collection="array" open="(" separator="," close=")">-->
-<!--            #{deptNo}-->
+<!--        delete from t_dept where id in -->
+<!--        <foreach item="id" collection="array" open="(" separator="," close=")">-->
+<!--            #{id}-->
 <!--        </foreach>-->
 <!--    </delete>-->
 </mapper>

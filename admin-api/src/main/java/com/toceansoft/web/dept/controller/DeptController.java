@@ -47,10 +47,10 @@ public class DeptController
     /**
      * 获取部门详细信息
      */
-    @GetMapping(value = "/{deptNo}")
-    public R getInfo(@PathVariable("deptNo") Long deptNo)
+    @GetMapping(value = "/{id}")
+    public R getInfo(@PathVariable("id") Long id)
     {
-        return R.ok(20000,deptService.selectDeptById(deptNo));
+        return R.ok(20000,deptService.selectDeptById(id));
     }
 
     /**
@@ -68,8 +68,14 @@ public class DeptController
         Dept dept1=new Dept();
         dept1.setDeptName(dept.getDeptName());
 
-        if(null!=dept&&deptService.selectDeptList(dept1).size()>0){
-            return R.fail(0,"已存在");
+        if(null!=dept){
+            for (Dept d:deptService.selectDeptList(dept1)
+                 ) {
+                if (d.getDeptName().equals(dept.getDeptName())
+                ) {
+                    return R.fail(0,"已存在");
+                }
+            }
         }
         int rows = deptService.insertDept(dept);
         if (rows <= 0 ) {
@@ -99,10 +105,10 @@ public class DeptController
     /**
      * 删除部门
      */
-	@DeleteMapping("/{deptNos}")
-    public R remove(@PathVariable Long[] deptNos)
+	@DeleteMapping("/{ids}")
+    public R remove(@PathVariable Long[] ids)
     {
-        int rows = deptService.deleteDeptByIds(deptNos);
+        int rows = deptService.deleteDeptByIds(ids);
          if (rows <= 0 ) {
             return R.fail(50002, "删除失败");
         }

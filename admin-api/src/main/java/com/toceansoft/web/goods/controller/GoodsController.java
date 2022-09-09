@@ -7,6 +7,8 @@ import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.common.util.JWTUtils;
 import com.toceansoft.dept.entity.Dept;
+import com.toceansoft.goods.entity.EntryOrder;
+import com.toceansoft.orders.entity.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -70,8 +72,17 @@ public class GoodsController
         goods.setUpdateTime(new Date());
         Goods goods1=new Goods();
         goods1.setName(goods.getName());
-        if(null!=goods&&goodsService.selectGoodsList(goods1).size()>0){
-            return R.fail(0,"已存在");
+//        if(null!=goods&&goodsService.selectGoodsList(goods1).size()>0){
+//            return R.fail(0,"已存在");
+//        }
+        if(null!=goods){
+            for (Goods d:goodsService.selectGoodsList(goods1)//遍历模糊查找后是否有相等的
+            ) {
+                if (d.getName().equals(goods.getName())
+                ) {
+                    return R.fail(0,"已存在");
+                }
+            }
         }
 
         int rows = goodsService.insertGoods(goods);
@@ -81,11 +92,19 @@ public class GoodsController
         return R.ok(20000, null);
     }
 
-    /**
+    @PutMapping
+    public R entryGoods(@RequestBody EntryOrder entryOrder){
+        int rows=goodsService.updateByOrder(entryOrder);
+        if (rows <= 0 ) {
+            return R.fail(50002, "入库失败");
+        }
+        return R.ok(20000, null);
+    }
 
+    /**
      * 修改商品
      */
-    @PutMapping
+    @PutMapping("/order")
     public R edit(@RequestBody Goods goods)
     {
          int rows = goodsService.updateGoods(goods);
