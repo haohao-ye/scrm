@@ -1,6 +1,8 @@
 package com.toceansoft.goods.mapper;
 
 import java.util.List;
+
+import com.toceansoft.goods.entity.EntryOrder;
 import org.apache.ibatis.annotations.Mapper;
 import com.toceansoft.goods.entity.Goods;
 
@@ -65,4 +67,12 @@ public interface GoodsMapper
      * @return 结果
      */
     public int deleteGoodsByIds(Long[] ids);
+
+    /**
+     * 订单入库
+     * @param entryOrder
+     * @return
+     */
+    public int updateByOrder(EntryOrder entryOrder);
+
 }

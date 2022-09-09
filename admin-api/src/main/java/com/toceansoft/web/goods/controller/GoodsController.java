@@ -7,6 +7,8 @@ import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.common.util.JWTUtils;
 import com.toceansoft.dept.entity.Dept;
+import com.toceansoft.goods.entity.EntryOrder;
+import com.toceansoft.orders.entity.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -90,10 +92,19 @@ public class GoodsController
         return R.ok(20000, null);
     }
 
+    @PutMapping
+    public R entryGoods(@RequestBody EntryOrder entryOrder){
+        int rows=goodsService.updateByOrder(entryOrder);
+        if (rows <= 0 ) {
+            return R.fail(50002, "入库失败");
+        }
+        return R.ok(20000, null);
+    }
+
     /**
      * 修改商品
      */
-    @PutMapping
+    @PutMapping("/order")
     public R edit(@RequestBody Goods goods)
     {
          int rows = goodsService.updateGoods(goods);
