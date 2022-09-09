@@ -41,7 +41,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -121,7 +121,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -390,10 +390,9 @@ export default {
     font-family:AliBold;
     src:url('../../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
   }
-  
+
   .app-container {
     font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
   }
-  
+
   </style>
-  
