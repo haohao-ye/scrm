@@ -10,7 +10,7 @@ spring:
     url: jdbc:mysql://localhost:3306/myscrm_db?characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class: com.mysql.cj.jdbc.Driver
     username: root
-    password: 835306
+    password: 8022
 
 #每添加一个新的实体/mapper，都需要在这里配置路径
 #mybatis:
