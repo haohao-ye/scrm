@@ -27,7 +27,7 @@
         <el-table
           :data="list"
           style="width:100%"
-          :border="true"
+          :border="false"
           @selection-change="selectionChange"
         >
           <el-table-column type="selection" width="60" />
