@@ -59,3 +59,12 @@ export function delAdmin(ids) {
     method: 'delete'
   })
 }
+
+
+export function resetPw(data) {
+  return request({
+    url: '/api/admin/resetPw',
+    method: 'put',
+    data
+  })
+}
