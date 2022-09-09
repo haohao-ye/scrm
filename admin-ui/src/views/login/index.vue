@@ -1,6 +1,10 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on"
+    <el-form ref="loginForm" 
+      :model="loginForm" 
+      :rules="loginRules" 
+      class="login-form" 
+      auto-complete="on"
       label-position="left">
 
       <div class="title-container">
@@ -28,11 +32,11 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin">Login</el-button>
-
+<!-- 
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
-      </div>
+      </div> -->
 
     </el-form>
   </div>
@@ -147,6 +151,7 @@ $cursor: #fff;
     input {
       background: transparent;
       border: 0px;
+      font-size: 16px;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
@@ -191,6 +196,7 @@ $light_gray: #eee;
   background-color: $bg;
   overflow: hidden;
   font-family: "AliRegular", "Source Han Sans CN", "Microsoft YaHei";
+  background-image: url("../../assets/home1.jpg");
 
   .login-form {
     position: relative;
@@ -225,8 +231,8 @@ $light_gray: #eee;
     position: relative;
 
     .title {
-      font-size: 26px;
-      color: $light_gray;
+      font-size: 40px;
+      color: #fff;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;

@@ -20,9 +20,9 @@
     <!-- 列表栏 -->
     <el-card class="mt-15">
       <el-row>
-        <el-button size="small" icon="el-icon-plus" @click="add()">添加</el-button>
-        <el-button size="small" icon="el-icon-delete" @click="del()">删除</el-button>
-        <el-button size="small" icon="el-icon-refresh" @click="search()">刷新</el-button>
+        <el-button type="primary" plain size="mini" icon="el-icon-plus" @click="add()">新增</el-button>
+        <el-button type="danger" plain size="mini" icon="el-icon-delete" @click="del()">删除</el-button>
+        <el-button type="success" plain size="mini" icon="el-icon-refresh" @click="search()">刷新</el-button>
       </el-row>
       <div class="mt-15">
         <el-table
