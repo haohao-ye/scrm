@@ -13,6 +13,7 @@
         <el-form-item label>
           <el-button size="small" @click="search()">查询</el-button>
           <el-button size="small" @click="reset()">重置</el-button>
+          
         </el-form-item>
       </el-form>
     </el-card>
@@ -48,7 +49,14 @@
                 icon="el-icon-delete"
                 @click="del(scope.row.id)"
               >删除</el-button>
+              <el-button 
+                size="mini"
+                type="text"
+                icon="el-icon-warning-outline"
+                @click="resetPassword(scope.row.id)"
+              >重置密码</el-button>
             </template>
+            
           </el-table-column>
         </el-table>
       </div>
@@ -111,7 +119,7 @@
 
 <!-- js -->
 <script>
-import { getAdmin, listAdmin, addAdmin, delAdmin, editAdmin } from "@/api/admin";
+import { getAdmin, listAdmin, addAdmin, delAdmin, editAdmin ,resetPw} from "@/api/admin";
 export default {
   name: "Admin",
   data() {
@@ -152,7 +160,7 @@ export default {
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 6, max: 16, message: "长度在 5 到 16 个字符", trigger: "blur" }
+          { min: 4, max: 16, message: "长度在 4 到 16 个字符", trigger: "blur" }
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
@@ -165,6 +173,28 @@ export default {
     this.search();
   },
   methods: {
+
+     resetPassword(id){
+      // console.log(id);
+      getAdmin(id).then(res=>{
+        this.form = res.data
+        // console.log(this.form);
+      }).catch(err=>{});
+      this.$confirm('是否确认重置管理员编号为"' + id + '"的密码?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(()=> {
+          resetPw(this.form).then(res=>{
+            if(res.code === 20000){
+              this.$message("重置成功");
+              this.formShow = false;//关闭弹出框
+            }
+          })
+        })
+      
+    },
+
     sizeChange(val){
         this.searchForm.pageSize=val;
         this.search();

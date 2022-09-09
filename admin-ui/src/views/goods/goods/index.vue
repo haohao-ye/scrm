@@ -27,7 +27,7 @@
             <el-option label="请选择字典生成" value="" />
           </el-select>
         </el-form-item>
-        <el-form-item label="价格" prop="price">
+        <!-- <el-form-item label="价格" prop="price">
           <el-input
             v-model="queryParams.price"
             placeholder="请输入价格"
@@ -35,7 +35,7 @@
             size="small"
             @keyup.enter.native="handleQuery"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="标签" prop="lable">
           <el-input
             v-model="queryParams.lable"
@@ -54,7 +54,7 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="库存" prop="inventory">
+        <!-- <el-form-item label="库存" prop="inventory">
           <el-input
             v-model="queryParams.inventory"
             placeholder="请输入库存"
@@ -62,8 +62,8 @@
             size="small"
             @keyup.enter.native="handleQuery"
           />
-        </el-form-item>
-        <el-form-item label="颜色" prop="color">
+        </el-form-item> -->
+        <!-- <el-form-item label="颜色" prop="color">
           <el-input
             v-model="queryParams.color"
             placeholder="请输入颜色"
@@ -71,7 +71,7 @@
             size="small"
             @keyup.enter.native="handleQuery"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="营销活动" prop="activity_id">
           <el-select v-model="form.activity_id" placeholder="选择活动编号" @click.native="optionSelect">
             <el-option
@@ -83,7 +83,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="创建时间" prop="creatTime">
+        <!-- <el-form-item label="创建时间" prop="creatTime">
           <el-date-picker
             clearable
             size="small"
@@ -93,8 +93,8 @@
             placeholder="选择创建时间"
           >
           </el-date-picker>
-        </el-form-item>
-        <el-form-item label="创建人" prop="creatBy">
+        </el-form-item> -->
+        <!-- <el-form-item label="创建人" prop="creatBy">
           <el-input
             v-model="queryParams.creatBy"
             placeholder="请输入创建人"
@@ -102,7 +102,7 @@
             size="small"
             @keyup.enter.native="handleQuery"
           />
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item>
           <el-button

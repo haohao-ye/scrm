@@ -13,10 +13,10 @@
       </el-form-item>
       <el-form-item label="员工部门" prop="deptName">
         <el-select v-model="queryParams.deptId" placeholder="请选择员工部门" clearable size="small">
-          <el-option  
+          <el-option
             v-for="item in deptList"
-            :key="item.id" 
-            :label="item.deptName"   
+            :key="item.id"
+            :label="item.deptName"
             :value="item.id">
           </el-option>
         </el-select>
@@ -99,7 +99,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -122,10 +122,10 @@
         </el-form-item>
         <el-form-item label="员工部门">
           <el-select v-model="form.deptId" placeholder="请选择员工部门">
-            <el-option  
+            <el-option
             v-for="item in deptList"
-            :key="item.id" 
-            :label="item.deptName"   
+            :key="item.id"
+            :label="item.deptName"
             :value="item.id">
           </el-option>
           </el-select>
@@ -330,7 +330,7 @@ export default {
     handleExport() {
       const queryParams = this.queryParams;
       this.$confirm('是否确认导出所有员工管理数据项?', "警告", {
-          confirmButtonText: "确定",
+          confirmButtonText: "确定(未完成)",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
@@ -353,9 +353,9 @@ export default {
     font-family:AliBold;
     src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
   }
-  
+
   .app-container {
     font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
   }
-  
+
   </style>
