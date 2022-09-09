@@ -82,8 +82,7 @@
         where not exists(select *from t_admin where username=#{username})
     </insert>
 
-    INSERT into t_salescount (goods_id,completed_sale) SELECT goods_id,SUM(total_amount) completed_sales
-    FROM t_orders
+
 
 
     <!--修改-->
