@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.toceansoft.activity.mapper.ActivityMapper;
 import com.toceansoft.activity.entity.Activity;
-import com.toceansoft.activity.service.IActivityService;
+import com.toceansoft.activity.service.ActivityService;
 
 /**
  * 营销活动Service业务层处理
@@ -15,7 +15,7 @@ import com.toceansoft.activity.service.IActivityService;
  * @date Thu Sep 08 10:20:59 CST 2022
  */
 @Service
-public class ActivityServiceImpl implements IActivityService 
+public class ActivityServiceImpl implements ActivityService
 {
     @Autowired
     private ActivityMapper activityMapper;
