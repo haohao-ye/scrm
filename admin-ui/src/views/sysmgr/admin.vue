@@ -101,7 +101,6 @@
           <el-input v-model="form.remark" type="textarea" />
         </el-form-item>
       </el-form>
-
       <div slot="footer" class="dialog-footer">
         <el-button size="small">取消</el-button>
         <el-button size="small" type="primary" @click="submit">确定</el-button>
@@ -146,7 +145,8 @@ export default {
         password: "",
         nickname: "",
         phoneNumber: "",
-        remark: ""
+        remark: "",
+        // imageUrl: ""
       },
       formTitle: "",
       rules: {
@@ -272,24 +272,23 @@ export default {
         pageSize: 10
       };
       this.search();
-    }
+    },
   }
 };
 </script>
 
 <!-- css -->
 <style lang="scss" scoped>
-@font-face {
-  font-family:AliRegular;
-  src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
-}
-@font-face {
-  font-family:AliBold;
-  src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
-}
+  @font-face {
+    font-family:AliRegular;
+    src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+  }
+  @font-face {
+    font-family:AliBold;
+    src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+  }
 
-.app-container {
-  font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
-}
-
+  .app-container {
+    font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  }
 </style>
