@@ -1,6 +1,7 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on"
+      label-position="left">
 
       <div class="title-container">
         <h3 class="title">Login Form</h3>
@@ -10,38 +11,23 @@
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
+        <el-input ref="username" v-model="loginForm.username" placeholder="Username" name="username" type="text"
+          tabindex="1" auto-complete="on" />
       </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="Password"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
+        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
+          placeholder="Password" name="password" tabindex="2" auto-complete="on" @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+        @click.native.prevent="handleLogin">Login</el-button>
 
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
@@ -88,7 +74,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -129,17 +115,18 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#283443;
-$light_gray:#fff;
+$bg: #283443;
+$light_gray: #fff;
 $cursor: #fff;
 
 @font-face {
-  font-family:AliRegular;
-  src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+  font-family: AliRegular;
+  src: url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
 }
+
 @font-face {
-  font-family:AliBold;
-  src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+  font-family: AliBold;
+  src: url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
 }
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -150,7 +137,7 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
-  font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  font-family: "AliRegular", "Source Han Sans CN", "Microsoft YaHei";
 
   .el-input {
     display: inline-block;
@@ -184,17 +171,18 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+$bg: #2d3a4b;
+$dark_gray: #889aa4;
+$light_gray: #eee;
 
 @font-face {
-  font-family:AliRegular;
-  src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+  font-family: AliRegular;
+  src: url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
 }
+
 @font-face {
-  font-family:AliBold;
-  src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+  font-family: AliBold;
+  src: url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
 }
 
 .login-container {
@@ -202,7 +190,7 @@ $light_gray:#eee;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
-  font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  font-family: "AliRegular", "Source Han Sans CN", "Microsoft YaHei";
 
   .login-form {
     position: relative;
