@@ -83,20 +83,20 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/sysmgr/admin',
     name: 'Sysadmin',
-    meta: { title: '系统管理', icon: 'el-icon-platform-eleme' },
+    meta: { title: '成员管理', icon: 'el-icon-user-solid' },
     children: [
       {
         path: 'admin',
         name: 'Admin',
         component: () => import('@/views/sysmgr/admin'),
-        meta: { title: '系统管理员', icon: 'el-icon-platform-eleme' }
+        meta: { title: '系统管理员', icon: 'el-icon-user-solid' }
       },
-      {
-        path: 'admin1',
-        name: 'Admin1',
-        component: () => import('@/views/sysmgr/admin1'),
-        meta: { title: '系统管理员', icon: 'el-icon-platform-eleme' }
-      }
+      // {
+      //   path: 'admin1',
+      //   name: 'Admin1',
+      //   component: () => import('@/views/sysmgr/admin1'),
+      //   meta: { title: '成员管理', icon: 'el-icon-platform-eleme' }
+      // }
     ]
   },
 
@@ -125,7 +125,7 @@ export const constantRoutes = [
         path: 'dept',
         name: 'Dept',
         component: () => import('@/views/dept/dept'),
-        meta: { title: '部门管理', icon: 'el-icon-document' }
+        meta: { title: '部门管理', icon: 'el-icon-s-check' }
       }
     ]
   },
