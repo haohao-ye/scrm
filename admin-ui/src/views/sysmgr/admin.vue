@@ -60,7 +60,7 @@
           </el-table-column>
         </el-table>
       </div>
-      <div style="text-align:center; margin-top:10px">
+      <!-- <div style="text-align:center; margin-top:10px">
         <el-pagination
           :total="total"
           :current-page="searchForm.pageNo"
@@ -69,9 +69,14 @@
           layout="total, sizes, prev, pager, next, jumper"
           @size-change="sizeChange()"
           @current-change="currentChange()"
-
         />
-      </div>
+      </div> -->
+      <pagination
+          v-show="total>0" 
+          :total="total" 
+          :page.sync="searchForm.pageNo" 
+          :limit.sync="searchForm.pageSize"
+        />
     </el-card>
 
     <el-dialog
@@ -173,8 +178,7 @@ export default {
     this.search();
   },
   methods: {
-
-     resetPassword(id){
+    resetPassword(id){
       // console.log(id);
       getAdmin(id).then(res=>{
         this.form = res.data
@@ -193,15 +197,6 @@ export default {
           })
         })
       
-    },
-
-    sizeChange(val){
-        this.searchForm.pageSize=val;
-        this.search();
-    },
-    currentChange(val){
-        this.searchForm.pageNo=val;
-        this.search();
     },
     search() {
       //查询
