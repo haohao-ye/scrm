@@ -1,5 +1,8 @@
 package com.toceansoft.web.employee.controller;
 
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.jar.JarFile;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,6 +11,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.common.util.JWTUtils;
+import io.jsonwebtoken.io.IOException;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import java.io.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +44,7 @@ public class EmployeeController
 
     @Autowired
     private RedisTemplate redisTemplate;
+
 
     /**
      * 查询员工管理列表
@@ -144,6 +157,43 @@ public class EmployeeController
         if (rows <= 0 ) {
             return R.fail(50002, "重置密码失败！");
         }
+        return R.ok(20000, null);
+    }
+
+    /**
+     * 导入excel
+     * @return
+     */
+    @PutMapping("/{path}")
+    public R getImport(String fileName,HttpServletRequest req) throws IOException, java.io.IOException {
+        File file = new File(fileName);
+        if(!file.exists()){
+            throw new IOException("文件不存在");
+        }
+        FileInputStream fin = new FileInputStream(String.valueOf(file));
+        HSSFWorkbook workbook = new HSSFWorkbook(fin);
+        //循环工作簿
+        List<Employee> employees= new ArrayList<>();
+        //取第一行的下一行
+        HSSFSheet sheet = workbook.getSheetAt(0);
+        for (int i = sheet.getFirstRowNum()+1; i<=sheet.getLastRowNum(); i++) {
+            //获取行
+            HSSFRow row = sheet.getRow(i);
+            if (row == null)
+                continue;
+            Employee employee = new Employee();
+            employee.setName(row.getCell(0).getStringCellValue());//名字
+            employee.setPhoneNumber(row.getCell(1).getStringCellValue());//手机号码
+            employee.setIdNum(row.getCell(2).getStringCellValue());//身份证
+            employee.setDeptName(row.getCell(3).getStringCellValue());//部门名
+            employees.add(employee);
+            add(employee,req);
+            int rows = employeeService.updateEmployee(employee);
+            if (rows <= 0 ) {
+                return R.fail(50002, "导入失败");
+            }
+        }
+
         return R.ok(20000, null);
     }
 }
