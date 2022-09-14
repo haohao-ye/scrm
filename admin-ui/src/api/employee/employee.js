@@ -46,9 +46,9 @@ export function delEmployee(id) {
 // 导入员工管理
 export function importEmployee(data) {
   return request({
-    url: '/api/employee/employee/getimport',
+    url: '/api/employee/employee/getImport',
     method: 'put',
-    data:data
+    params: data
   })
 }
 

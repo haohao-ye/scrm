@@ -20,6 +20,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import java.io.File;
+
+import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -164,8 +166,9 @@ public class EmployeeController
      * 导入excel
      * @return
      */
-    @PutMapping("/{path}")
+    @PutMapping("/getImport")
     public R getImport(String fileName,HttpServletRequest req) throws IOException, java.io.IOException {
+        System.out.println(fileName);
         File file = new File(fileName);
         if(!file.exists()){
             throw new IOException("文件不存在");
@@ -186,6 +189,7 @@ public class EmployeeController
             employee.setPhoneNumber(row.getCell(1).getStringCellValue());//手机号码
             employee.setIdNum(row.getCell(2).getStringCellValue());//身份证
             employee.setDeptName(row.getCell(3).getStringCellValue());//部门名
+            System.out.println(employee);
             employees.add(employee);
             add(employee,req);
             int rows = employeeService.updateEmployee(employee);
