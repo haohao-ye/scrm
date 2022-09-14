@@ -75,10 +75,10 @@ export default {
   
 .app-breadcrumb.el-breadcrumb {
   display: inline-block;
-  font-size: 14px;
-  line-height: 50px;
-  margin-left: 8px;
-  font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  font-size: 15px;
+  line-height: 60px;
+  margin-left: 7px;
+  font-family: "AliRegular";
 
   .no-redirect {
     color: #409EFF;

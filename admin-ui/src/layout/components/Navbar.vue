@@ -16,7 +16,7 @@
               首页
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
+          <a target="_blank" href="https://qfcode.coding.net/p/huanong0929/d/myscrm/git">
             <el-dropdown-item>Git一下</el-dropdown-item>
           </a>
           <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
@@ -61,14 +61,15 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  height: 50px;
+  height: 60px;
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  border-bottom: 0.1px solid #f7f7f7;
+  // box-shadow: 0 1px 4px rgba(0,21,41,.05);
 
   .hamburger-container {
-    line-height: 46px;
+    line-height: 60px;
     height: 100%;
     float: left;
     cursor: pointer;
@@ -87,7 +88,7 @@ export default {
   .right-menu {
     float: right;
     height: 100%;
-    line-height: 50px;
+    line-height: 40px;
 
     &:focus {
       outline: none;
@@ -112,16 +113,16 @@ export default {
     }
 
     .avatar-container {
-      margin-right: 30px;
+      margin-right: 40px;
 
       .avatar-wrapper {
-        margin-top: 5px;
+        margin-top: 10px;
         position: relative;
 
         .user-avatar {
           cursor: pointer;
-          width: 40px;
-          height: 40px;
+          width: 35px;
+          height: 35px;
           border-radius: 10px;
         }
 
