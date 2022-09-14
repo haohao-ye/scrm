@@ -5,10 +5,13 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
+      <template v-if="device!=='mobile'">
+        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+      </template>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+          <!-- <i class="el-icon-arrow-down" /> -->
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
@@ -33,18 +36,21 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Screenfull from '@/components/Screenfull'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    Screenfull
   },
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'device'
     ])
   },
   methods: {
@@ -88,7 +94,7 @@ export default {
   .right-menu {
     float: right;
     height: 100%;
-    line-height: 40px;
+    line-height: 60px;
 
     &:focus {
       outline: none;
@@ -96,9 +102,9 @@ export default {
 
     .right-menu-item {
       display: inline-block;
-      padding: 0 8px;
+      padding: 0 20px;
       height: 100%;
-      font-size: 18px;
+      font-size: 16px;
       color: #5a5e66;
       vertical-align: text-bottom;
 
@@ -114,13 +120,15 @@ export default {
 
     .avatar-container {
       margin-right: 40px;
-
+      
       .avatar-wrapper {
         margin-top: 10px;
         position: relative;
 
         .user-avatar {
           cursor: pointer;
+          position: relative;
+          bottom: 8px;
           width: 35px;
           height: 35px;
           border-radius: 10px;
@@ -130,8 +138,8 @@ export default {
           cursor: pointer;
           position: absolute;
           right: -20px;
-          top: 25px;
-          font-size: 12px;
+          top: 10px;
+          font-size: 1px;
         }
       }
     }
