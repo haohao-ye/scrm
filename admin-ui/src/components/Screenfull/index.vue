@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg-icon :icon-class="isFullscreen?'exit-fullscreen':'fullscreen'" @click="click" />
+    <svg-icon :icon-class="isFullscreen?'suoxiao':'fangda'" @click="click" />
   </div>
 </template>
 
@@ -52,9 +52,9 @@ export default {
 .screenfull-svg {
   display: inline-block;
   cursor: pointer;
-  fill: #5a5e66;;
-  width: 20px;
-  height: 20px;
+  fill: #393c40;
+  width: 25px;
+  height: 25px;
   vertical-align: 10px;
 }
 </style>
