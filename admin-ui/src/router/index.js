@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   },
   /*
@@ -83,20 +83,20 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/sysmgr/admin',
     name: 'Sysadmin',
-    meta: { title: '系统管理', icon: 'el-icon-platform-eleme' },
+    meta: { title: '成员管理', icon: 'el-icon-user-solid' },
     children: [
       {
         path: 'admin',
         name: 'Admin',
         component: () => import('@/views/sysmgr/admin'),
-        meta: { title: '系统管理员', icon: 'el-icon-platform-eleme' }
+        meta: { title: '系统管理员', icon: 'el-icon-user-solid' }
       },
-      {
-        path: 'admin1',
-        name: 'Admin1',
-        component: () => import('@/views/sysmgr/admin1'),
-        meta: { title: '系统管理员', icon: 'el-icon-platform-eleme' }
-      }
+      // {
+      //   path: 'admin1',
+      //   name: 'Admin1',
+      //   component: () => import('@/views/sysmgr/admin1'),
+      //   meta: { title: '成员管理', icon: 'el-icon-platform-eleme' }
+      // }
     ]
   },
 
@@ -119,13 +119,13 @@ export const constantRoutes = [
     path: '/dept',
     component: Layout,
     name: 'Dept',
-    meta: { title: '部门列表', icon: 'el-icon-s-tools' },
+    // meta: { title: '部门列表', icon: 'el-icon-s-tools' },
     children: [
       {
         path: 'dept',
         name: 'Dept',
         component: () => import('@/views/dept/dept'),
-        meta: { title: '部门管理', icon: 'el-icon-document' }
+        meta: { title: '部门管理', icon: 'el-icon-s-check' }
       }
     ]
   },
@@ -134,7 +134,7 @@ export const constantRoutes = [
     path: '/inform',
     component: Layout,
     name: 'Inform',
-    meta: { title: '通知管理', icon: 'el-icon-message-solid' },
+    // meta: { title: '通知管理', icon: 'el-icon-message-solid' },
     children: [
       {
         path: 'inform',
@@ -149,7 +149,7 @@ export const constantRoutes = [
     path: '/goods',
     component: Layout,
     name: 'goods',
-    meta: { title: '商品管理', icon: 'el-icon-s-goods' },
+    // meta: { title: '商品管理', icon: 'el-icon-s-goods' },
     children: [
       {
         path: 'goods',
@@ -164,7 +164,7 @@ export const constantRoutes = [
     path: '/activity',
     component: Layout,
     name: 'Activity',
-    meta: { title: '营销活动', icon: 'el-icon-s-goods' },
+    // meta: { title: '营销活动', icon: 'el-icon-s-goods' },
     children: [
       {
         path: 'activity',
@@ -179,7 +179,7 @@ export const constantRoutes = [
     path: '/employee',
     component: Layout,
     name: 'employee',
-    meta: { title: '员工管理', icon: 'el-icon-user' },
+    // meta: { title: '员工管理', icon: 'el-icon-user' },
     children: [
       {
         path: 'employee',
@@ -194,7 +194,7 @@ export const constantRoutes = [
     path: '/orders',
     component: Layout,
     name: 'Orders',
-    meta: { title: '订单列表', icon: 'el-icon-s-tools' },
+    // meta: { title: '订单列表', icon: 'el-icon-s-tools' },
     children: [
       {
         path: 'orders',
@@ -234,7 +234,6 @@ export const constantRoutes = [
       }
     ]
   },
-
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

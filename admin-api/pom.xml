@@ -36,6 +36,13 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!--引入poi-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.17</version>
+        </dependency>
+
     </dependencies>
 
 </project>

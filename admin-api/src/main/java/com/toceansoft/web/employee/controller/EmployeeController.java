@@ -1,5 +1,10 @@
 package com.toceansoft.web.employee.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.jar.JarFile;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,12 +13,23 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.common.util.JWTUtils;
+
+import java.io.File;
+
+
+import com.toceansoft.dept.entity.Dept;
+import com.toceansoft.dept.service.IDeptService;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import com.toceansoft.common.util.R;
 import com.toceansoft.employee.entity.Employee;
 import com.toceansoft.employee.service.IEmployeeService;
+import com.toceansoft.web.dept.controller.DeptController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +48,10 @@ public class EmployeeController
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private IDeptService deptService;
+
 
     /**
      * 查询员工管理列表
@@ -144,6 +164,57 @@ public class EmployeeController
         if (rows <= 0 ) {
             return R.fail(50002, "重置密码失败！");
         }
+        return R.ok(20000, null);
+    }
+
+    /**
+     * 导入excel
+     * @return
+     */
+    @PutMapping("/getImport")
+    public R getImport(String fileName,HttpServletRequest req) throws IOException, java.io.IOException {
+        System.out.println(fileName);
+        File file = new File(fileName);
+        if(!file.exists()){
+            throw new IOException("文件不存在");
+        }
+        HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file));//如果是xls，使用HSSFWorkbook；如果是xlsx，使用XSSFWorkbook,但是目前的xlsx在poi插件中有一点BUG和当前JDK11版本有冲突，所以只用了xls格式的表格
+        //循环工作簿
+        List<Employee> employees= new ArrayList<>();
+        //取第一行的下一行
+        HSSFSheet sheet = workbook.getSheetAt(0);
+        for (int i = sheet.getFirstRowNum(); i<=sheet.getLastRowNum(); i++) {
+            //获取行
+            HSSFRow row = sheet.getRow(i);
+            if (row == null)
+                continue;
+            Employee employee = new Employee();
+            row.getCell(0).setCellType(CellType.STRING);//改单元格的类型为spring，防止这类报错Cannot get a STRING value from a NUMERIC cell
+            row.getCell(1).setCellType(CellType.STRING);
+            row.getCell(2).setCellType(CellType.STRING);
+            row.getCell(3).setCellType(CellType.STRING);
+            employee.setName(row.getCell(0).getStringCellValue());//名字
+            employee.setPhoneNumber(row.getCell(1).getStringCellValue());//手机号码
+            employee.setIdNum(row.getCell(2).getStringCellValue());//身份证
+            employee.setDeptName(row.getCell(3).getStringCellValue());//部门名
+            Dept dept = new Dept();
+            dept.setDeptName(employee.getDeptName());
+            List<Dept> deptList = deptService.selectDeptList(dept);
+            if(!deptList.isEmpty()){
+                employee.setDeptId( deptList.get(0).getId());
+            }else {
+                employee.setDeptId(1L);
+            }
+
+            System.out.println(employee);
+            employees.add(employee);
+            add(employee,req);
+            int rows = employeeService.updateEmployee(employee);
+            if (rows <= 0 ) {
+                return R.fail(50002, "导入失败");
+            }
+        }
+
         return R.ok(20000, null);
     }
 }
