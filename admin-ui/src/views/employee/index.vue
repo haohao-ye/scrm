@@ -253,7 +253,7 @@ export default {
         ],
       },
       deptList: [],
-      importMsg:{ fileName : 'C:\\Users\\Administrator\\Desktop\\test\.xlsx'},
+      importMsg:{ fileName : 'C:\\Users\\Administrator\\Desktop\\test\.xls'},
     };
   },
   created() {
@@ -405,8 +405,10 @@ export default {
         .then(function () {
           console.log(msg);
           return importEmployee(msg);
+          
         })
         .then((response) => {
+          this.getList();
           this.download(response.msg);
         });
     },
