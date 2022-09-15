@@ -7,7 +7,6 @@ import com.toceansoft.common.util.JWTUtils;
 import com.toceansoft.common.util.R;
 import com.toceansoft.goods.entity.Goods;
 import com.toceansoft.goods.service.IGoodsService;
-import com.toceansoft.orders.entity.Count;
 import com.toceansoft.orders.entity.Orders;
 import com.toceansoft.orders.service.IOrdersService;
 import com.toceansoft.web.goods.controller.GoodsController;
@@ -60,23 +59,6 @@ public class OrdersController
 //        return R.ok(20000, pageInfo);//返回分页对象
         return  R.ok(20000,list);
     }
-
-    /**
-     * 查询商品销量接口
-     */
-    @GetMapping("/count")
-    public R count(Orders orders)
-    {
-
-        List<Count> list = ordersService.countList(orders);
-        System.out.println(list);
-
-        PageInfo pageInfo = new PageInfo(list); //构建分页对象
-        return R.ok(20000, pageInfo);//返回分页对象
-    }
-
-
-
 
     /**
      * 获取订单管理详细信息
