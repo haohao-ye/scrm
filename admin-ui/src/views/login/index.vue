@@ -209,7 +209,7 @@ $light_gray: #eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  // background-color: $bg;
   overflow: hidden;
   font-family: "AliRegular";
   background-image: url("../../assets/home1.jpg");
