@@ -18,11 +18,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  font-family: "AliRegular";
 }
 
 label {
   font-weight: 700;
+  font-family: "AliRegular";
 }
 
 html {

@@ -73,13 +73,13 @@
           />
         </el-form-item> -->
         <el-form-item label="营销活动" prop="activity_id">
-          <el-select v-model="form.activity_id" placeholder="选择活动编号" @click.native="optionSelect">
+          <el-select v-model="form.activity_id" placeholder="选择活动编号" size="small" @click.native="optionSelect">
             <el-option
               v-for="activity in activityList"
               :key="activity.id"
               :value="activity.id"
               :label="activity.name"
-             @keyup.enter.native="handleQuery"
+              @keyup.enter.native="handleQuery"
             />
           </el-select>
         </el-form-item>
@@ -570,19 +570,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-  @font-face {
-    font-family:AliRegular;
-    src:url('../../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
-  }
-  @font-face {
-    font-family:AliBold;
-    src:url('../../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
-  }
-  
-  .app-container {
-    font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
-  }
-  
-  </style>
