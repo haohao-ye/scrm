@@ -253,6 +253,7 @@ export default {
         ],
       },
       deptList: [],
+      importMsg:{ fileName : 'C:\\Users\\Administrator\\Desktop\\test\.xls'},
     };
   },
   created() {
@@ -394,11 +395,20 @@ export default {
     /** 导入按钮操作 */
     handleImport() {
       const queryParams = this.queryParams;
-      this
+      let msg = this.importMsg;
+      this.$confirm('是否导入该文件"' , {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        
+      })
         .then(function () {
-          return importEmployee(queryParams);
+          console.log(msg);
+          return importEmployee(msg);
+          
         })
         .then((response) => {
+          this.getList();
           this.download(response.msg);
         });
     },

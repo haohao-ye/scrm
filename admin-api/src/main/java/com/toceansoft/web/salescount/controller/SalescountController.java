@@ -1,24 +1,22 @@
 package com.toceansoft.web.salescount.controller;
 
+
 import java.util.List;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.toceansoft.admin.entity.Admin;
-import com.toceansoft.common.util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import com.toceansoft.common.util.R;
 import com.toceansoft.salescount.entity.Salescount;
 import com.toceansoft.salescount.service.ISalescountService;
-
+import com.toceansoft.common.util.JWTUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * 销售统计Controller
- * 
- * @author hhh
- * @date Wed Sep 07 16:13:05 CST 2022
+ *
+ * @author zengqf
+ * @date Thu Sep 08 15:08:48 CST 2022
  */
 @RestController
 @RequestMapping("/api/salescount/salescount")
@@ -27,9 +25,6 @@ public class SalescountController
     @Autowired
     private ISalescountService salescountService;
 
-
-    @Autowired
-    private RedisTemplate redisTemplate;
     /**
      * 查询销售统计列表
      */
@@ -46,29 +41,22 @@ public class SalescountController
     /**
      * 获取销售统计详细信息
      */
-    @GetMapping(value = "/{countId}")
-    public R getInfo(@PathVariable("countId") Long countId)
+    @GetMapping(value = "/{goodsId}")
+    public R getInfo(@PathVariable("goodsId") Long goodsId)
     {
-        return R.ok(20000,salescountService.selectSalescountById(countId));
+        return R.ok(20000,salescountService.selectSalescountById(goodsId));
     }
 
     /**
      * 新增销售统计
      */
     @PostMapping
-    public R add(HttpServletRequest req, @RequestBody Salescount salescount)
+    public R add(@RequestBody Salescount salescount,  HttpServletRequest req)
     {
-
-        //1 获得requet请求
-        //2 获得token
-        String token =req.getHeader("X-Token");
+        String token = req.getHeader("X-Token");
         //从token中获得用户名
         String username = JWTUtils.getUsername(token);
-        //从redis缓存中读取当前登录用户
-        Admin admin = (Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
-
-        salescount.setCreateBy(admin.getUsername());
-
+        salescount.setCreateBy(username);
         int rows = salescountService.insertSalescount(salescount);
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");
@@ -80,8 +68,12 @@ public class SalescountController
      * 修改销售统计
      */
     @PutMapping
-    public R edit(@RequestBody Salescount salescount)
+    public R edit(@RequestBody Salescount salescount,  HttpServletRequest req)
     {
+        String token = req.getHeader("X-Token");
+        //从token中获得用户名
+        String username = JWTUtils.getUsername(token);
+        salescount.setCreateBy(username);
          int rows = salescountService.updateSalescount(salescount);
         if (rows <= 0 ) {
             return R.fail(50002, "修改失败");
@@ -92,10 +84,10 @@ public class SalescountController
     /**
      * 删除销售统计
      */
-	@DeleteMapping("/{countIds}")
-    public R remove(@PathVariable Long[] countIds)
+	@DeleteMapping("/{goodsIds}")
+    public R remove(@PathVariable Long[] goodsIds)
     {
-        int rows = salescountService.deleteSalescountByIds(countIds);
+        int rows = salescountService.deleteSalescountByIds(goodsIds);
          if (rows <= 0 ) {
             return R.fail(50002, "删除失败");
         }

@@ -5,8 +5,12 @@ import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.common.util.JWTUtils;
 import com.toceansoft.common.util.R;
+import com.toceansoft.goods.entity.Goods;
+import com.toceansoft.goods.service.IGoodsService;
+import com.toceansoft.orders.entity.Count;
 import com.toceansoft.orders.entity.Orders;
 import com.toceansoft.orders.service.IOrdersService;
+import com.toceansoft.web.goods.controller.GoodsController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +34,9 @@ public class OrdersController
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private IGoodsService goodsService;
+
     /**
      * 查询订单管理列表
      */
@@ -40,7 +47,35 @@ public class OrdersController
         List<Orders> list = ordersService.selectOrdersList(orders);
         PageInfo pageInfo = new PageInfo(list); //构建分页对象
         return R.ok(20000, pageInfo);//返回分页对象
+
     }
+
+
+    @GetMapping("/lists")
+    public R list(Orders orders)
+    {
+//        PageHelper.startPage(pageNum, pageSize); //指定分页
+        List<Orders> list = ordersService.selectOrdersList(orders);
+//        PageInfo pageInfo = new PageInfo(list); //构建分页对象
+//        return R.ok(20000, pageInfo);//返回分页对象
+        return  R.ok(20000,list);
+    }
+
+    /**
+     * 查询商品销量接口
+     */
+    @GetMapping("/count")
+    public R count(Orders orders)
+    {
+
+        List<Count> list = ordersService.countList(orders);
+        System.out.println(list);
+
+        PageInfo pageInfo = new PageInfo(list); //构建分页对象
+        return R.ok(20000, pageInfo);//返回分页对象
+    }
+
+
 
 
     /**
@@ -69,10 +104,18 @@ public class OrdersController
         orders.setCreateBy(admin.getUsername());
 
         int rows = ordersService.insertOrders(orders);
+
+
+
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");
         }
+        Goods goods = goodsService.selectGoodsById(orders.getGoodsId());
+        long number = goods.getInventory() - orders.getQuantity();
+        goods.setInventory(number);
+        goodsService.updateGoods(goods);
         return R.ok(20000, null);
+
     }
 
     /**
