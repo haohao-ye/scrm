@@ -79,11 +79,12 @@ export default {
     height: 100%;
     float: left;
     cursor: pointer;
-    transition: background .3s;
+    transition: all .3s ease-in-out;
     -webkit-tap-highlight-color:transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      // color: rgba(64, 158, 255, .8);
+      background: rgba(0, 0, 0, .025);
     }
   }
 
@@ -94,7 +95,8 @@ export default {
   .right-menu {
     float: right;
     height: 100%;
-    line-height: 60px;
+    line-height: 20px;
+    margin-top: 8px;
 
     &:focus {
       outline: none;
@@ -102,24 +104,25 @@ export default {
 
     .right-menu-item {
       display: inline-block;
-      padding: 0 20px;
+      padding: 0 30px;
       height: 100%;
       font-size: 16px;
       color: #5a5e66;
-      vertical-align: text-bottom;
+      vertical-align: middle;  // 使块内元素居中排列
+      transition: all .3s ease-in-out;
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          // background-color: rgba(0, 0, 0, .025);
+          color: rgba(64, 158, 255, .8);
         }
       }
     }
 
     .avatar-container {
-      margin-right: 40px;
+      margin-right: 30px;
       
       .avatar-wrapper {
         margin-top: 10px;
