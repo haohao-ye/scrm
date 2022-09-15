@@ -36,9 +36,10 @@ export default {
   vertical-align: text-top;
   width: 20px;
   height: 20px;
+  transition: all .5s ease-in-out;
 }
 
 .hamburger.is-active {
-  transform: rotate(180deg);
+  transform: rotateY(180deg);
 }
 </style>
