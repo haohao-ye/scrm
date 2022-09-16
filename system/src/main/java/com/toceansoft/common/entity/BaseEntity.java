@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private String createBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
@@ -17,6 +15,10 @@ public class BaseEntity implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
+
+    private static final long serialVersionUID = 1L;
+    private String createBy;
+
     private String remark;
     /** 请求参数 */
     private Map<String, Object> params;
