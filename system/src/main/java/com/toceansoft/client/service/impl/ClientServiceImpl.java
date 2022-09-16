@@ -94,4 +94,9 @@ public class ClientServiceImpl implements ClientService
     {
         return clientMapper.deleteClientById(id);
     }
+
+    @Override
+    public List<Client> selectClientByName(String clientName) {
+        return clientMapper.selectClientByName(clientName);
+    }
 }

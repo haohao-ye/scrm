@@ -1,6 +1,7 @@
 package com.toceansoft.client.service;
 
 
+
 import com.toceansoft.client.entity.Client;
 import org.apache.ibatis.annotations.Param;
 
@@ -61,4 +62,11 @@ public interface ClientService
      * @return 结果
      */
     public int deleteClientById(Long id);
+
+    /**
+     * 根据客户姓名查询
+     * @param clientName
+     * @return
+     */
+    public List<Client> selectClientByName(String clientName);
 }

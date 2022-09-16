@@ -3,6 +3,7 @@ package com.toceansoft.client.mapper;
 
 import com.toceansoft.client.entity.Client;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -62,4 +63,11 @@ public interface ClientMapper
      * @return 结果
      */
     public int deleteClientByIds(Long[] ids);
+
+    /**
+     * 根据客户姓名查询
+     * @param clientName
+     * @return
+     */
+    public List<Client> selectClientByName(@Param("clientName") String clientName);
 }

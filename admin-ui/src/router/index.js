@@ -219,7 +219,22 @@ export const constantRoutes = [
           meta: {title:'销售统计',icon:'el-icon-document-copy'}
         }
       ]
-    },
+  },
+
+  {
+      path: '/client',
+      component: Layout,
+      name: 'Client',
+      meta: {title: '客户管理', icon: 'el-icon-s-tools'},
+      children:[
+        {
+          path: 'client',
+          name: 'client',
+          component: ()=>import('@/views/client/client'),
+          meta: {title:'客户管理',icon:'el-icon-document-copy'}
+        }
+      ]
+  },
 
 {
   path: '/gen',

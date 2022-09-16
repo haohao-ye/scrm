@@ -99,4 +99,9 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectClientByName" parameterType="String" resultMap="ClientResult">
+        <include refid="selectClientVo"/>
+        where client_name = #{clientName}
+    </select>
 </mapper>
