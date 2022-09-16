@@ -3,13 +3,15 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toceansoft.orders.mapper.OrdersMapper">
-    
+
     <resultMap type="Orders" id="OrdersResult">
         <result property="consumptionListId"    column="consumption_list_id"    />
         <result property="clientId"    column="client_id"    />
         <result property="goodsId"    column="goods_id"    />
+        <result property="goodsName" column="goods_name" />
         <result property="quantity"    column="quantity"    />
         <result property="state"    column="state"    />
+        <result property="img"  column="img"/>
         <result property="salesmanId"    column="salesman_id"    />
         <result property="totalAmount"    column="total_amount"    />
         <result property="createTime"    column="create_time"    />
@@ -18,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectOrdersVo">
-        select consumption_list_id, client_id, goods_id, quantity, state, salesman_id, total_amount, create_time, create_by, del_lable from t_orders
+        select consumption_list_id, client_id, goods_id, quantity, state, img, salesman_id, total_amount, create_time, create_by, del_lable from t_orders
     </sql>
 
     <select id="selectOrdersList" parameterType="Orders" resultMap="OrdersResult">
@@ -30,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="state != null  and state != ''"> and state = #{state}</if>
             <if test="salesmanId != null "> and salesman_id = #{salesmanId}</if>
             <if test="totalAmount != null "> and total_amount = #{totalAmount}</if>
+            <if test="img !=null">and img=#{img}</if>
             <if test="delLable != null  and delLable != ''"> and del_lable = #{delLable}</if>
         </where>
     </select>
@@ -46,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="goodsId != null">goods_id,</if>
             <if test="quantity != null">quantity,</if>
             <if test="state != null and state != ''">state,</if>
+            <if test="img !=null and img !=''">img,</if>
             <if test="salesmanId != null">salesman_id,</if>
             <if test="totalAmount != null">total_amount,</if>
             <if test="createTime != null">create_time,</if>
@@ -60,6 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="salesmanId != null">#{salesmanId},</if>
             <if test="totalAmount != null">#{totalAmount},</if>
             <if test="createTime != null">#{createTime},</if>
+            <if test="img!=null">#{img},</if>
             <if test="createBy != null and createBy != ''">#{createBy},</if>
             <if test="delLable != null">#{delLable},</if>
          </trim>
@@ -72,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="goodsId != null">goods_id = #{goodsId},</if>
             <if test="quantity != null">quantity = #{quantity},</if>
             <if test="state != null and state != ''">state = #{state},</if>
+            <if test="img !=null and img!=''">img=#{img},</if>
             <if test="salesmanId != null">salesman_id = #{salesmanId},</if>
             <if test="totalAmount != null">total_amount = #{totalAmount},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
@@ -80,6 +86,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where consumption_list_id = #{consumptionListId}
     </update>
+
+
 
     <delete id="deleteOrdersById" parameterType="Long">
         delete from t_orders where consumption_list_id = #{consumptionListId}

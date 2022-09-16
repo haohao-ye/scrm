@@ -13,21 +13,21 @@
         <el-form-item label>
           <el-button size="small" @click="search()">查询</el-button>
           <el-button size="small" @click="reset()">重置</el-button>
+          
         </el-form-item>
       </el-form>
     </el-card>
     <!-- 列表栏 -->
     <el-card class="mt-15">
       <el-row>
-        <el-button size="small" icon="el-icon-plus" @click="add()">添加</el-button>
-        <el-button size="small" icon="el-icon-delete" @click="del()">删除</el-button>
-        <el-button size="small" icon="el-icon-refresh" @click="search()">刷新</el-button>
+        <el-button type="primary" plain size="mini" icon="el-icon-plus" @click="add()">新增</el-button>
+        <el-button type="danger" plain size="mini" icon="el-icon-delete" @click="del()">删除</el-button>
+        <el-button type="success" plain size="mini" icon="el-icon-refresh" @click="search()">刷新</el-button>
       </el-row>
       <div class="mt-15">
         <el-table
           :data="list"
           style="width:100%"
-          :border="false"
           @selection-change="selectionChange"
         >
           <el-table-column type="selection" width="60" />
@@ -37,14 +37,30 @@
           <el-table-column prop="phoneNumber" label="手机" />
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="edit(scope.row.id)">修改</el-button>
-              <el-button size="mini" @click="del(scope.row.id)">删除</el-button>
-              <el-button size="mini" @click="resetPassword(scope.row.id)">重置密码</el-button>
+              <el-button
+                size="mini"
+                type="text"
+                icon="el-icon-edit" 
+                @click="edit(scope.row.id)"
+              >修改</el-button>
+              <el-button 
+                size="mini"
+                type="text"
+                icon="el-icon-delete"
+                @click="del(scope.row.id)"
+              >删除</el-button>
+              <el-button 
+                size="mini"
+                type="text"
+                icon="el-icon-warning-outline"
+                @click="resetPassword(scope.row.id)"
+              >重置密码</el-button>
             </template>
+            
           </el-table-column>
         </el-table>
       </div>
-      <div style="text-align:center; margin-top:10px">
+      <!-- <div style="text-align:center; margin-top:10px">
         <el-pagination
           :total="total"
           :current-page="searchForm.pageNo"
@@ -53,9 +69,14 @@
           layout="total, sizes, prev, pager, next, jumper"
           @size-change="sizeChange()"
           @current-change="currentChange()"
-
         />
-      </div>
+      </div> -->
+      <pagination
+          v-show="total>0" 
+          :total="total" 
+          :page.sync="searchForm.pageNo" 
+          :limit.sync="searchForm.pageSize"
+        />
     </el-card>
 
     <el-dialog
@@ -93,7 +114,6 @@
           <el-input v-model="form.remark" type="textarea" />
         </el-form-item>
       </el-form>
-
       <div slot="footer" class="dialog-footer">
         <el-button size="small">取消</el-button>
         <el-button size="small" type="primary" @click="submit">确定</el-button>
@@ -104,7 +124,7 @@
 
 <!-- js -->
 <script>
-import { getAdmin, listAdmin, addAdmin, delAdmin, editAdmin, resetPw } from "@/api/admin";
+import { getAdmin, listAdmin, addAdmin, delAdmin, editAdmin ,resetPw} from "@/api/admin";
 export default {
   name: "Admin",
   data() {
@@ -138,7 +158,8 @@ export default {
         password: "",
         nickname: "",
         phoneNumber: "",
-        remark: ""
+        remark: "",
+        // imageUrl: ""
       },
       formTitle: "",
       rules: {
@@ -157,7 +178,6 @@ export default {
     this.search();
   },
   methods: {
-
     resetPassword(id){
       // console.log(id);
       getAdmin(id).then(res=>{
@@ -177,14 +197,6 @@ export default {
           })
         })
       
-    },
-    sizeChange(val){
-        this.searchForm.pageSize=val;
-        this.search();
-    },
-    currentChange(val){
-        this.searchForm.pageNo=val;
-        this.search();
     },
     search() {
       //查询
@@ -285,24 +297,23 @@ export default {
         pageSize: 10
       };
       this.search();
-    }
+    },
   }
 };
 </script>
 
 <!-- css -->
 <style lang="scss" scoped>
-@font-face {
-  font-family:AliRegular;
-  src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
-}
-@font-face {
-  font-family:AliBold;
-  src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
-}
+  @font-face {
+    font-family:AliRegular;
+    src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+  }
+  @font-face {
+    font-family:AliBold;
+    src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+  }
 
-.app-container {
-  font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
-}
-
+  .app-container {
+    font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  }
 </style>

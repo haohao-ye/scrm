@@ -1,5 +1,6 @@
 package ${packageName}.controller;
 
+
 import java.util.List;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -8,10 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import com.toceansoft.common.util.R;
 import ${packageName}.entity.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
+import com.toceansoft.common.util.JWTUtils;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * ${functionName}Controller
- * 
+ *
  * @author ${author}
  * @date ${datetime}
  */
@@ -50,8 +53,12 @@ public class ${ClassName}Controller
      * 新增${functionName}
      */
     @PostMapping
-    public R add(@RequestBody ${ClassName} ${className})
+    public R add(@RequestBody ${ClassName} ${className},  HttpServletRequest req)
     {
+        String token = req.getHeader("X-Token");
+        //从token中获得用户名
+        String username = JWTUtils.getUsername(token);
+        ${className}.setCreateBy(username);
         int rows = ${className}Service.insert${ClassName}(${className});
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");
@@ -63,8 +70,12 @@ public class ${ClassName}Controller
      * 修改${functionName}
      */
     @PutMapping
-    public R edit(@RequestBody ${ClassName} ${className})
+    public R edit(@RequestBody ${ClassName} ${className},  HttpServletRequest req)
     {
+        String token = req.getHeader("X-Token");
+        //从token中获得用户名
+        String username = JWTUtils.getUsername(token);
+        ${className}.setCreateBy(username);
          int rows = ${className}Service.update${ClassName}(${className});
         if (rows <= 0 ) {
             return R.fail(50002, "修改失败");

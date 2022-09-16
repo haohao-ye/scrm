@@ -4,16 +4,26 @@
 @import './element-ui.scss';
 @import './sidebar.scss';
 
+@font-face {
+  font-family:AliRegular;
+  src:url('../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+}
+@font-face {
+  font-family:AliBold;
+  src:url('../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+}
+
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-family: "AliRegular";
 }
 
 label {
   font-weight: 700;
+  font-family: "AliRegular";
 }
 
 html {

@@ -1,19 +1,34 @@
 package com.toceansoft.web.employee.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+import java.util.jar.JarFile;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.common.util.JWTUtils;
+
+import java.io.File;
+
+
+import com.toceansoft.dept.entity.Dept;
+import com.toceansoft.dept.service.IDeptService;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import com.toceansoft.common.util.R;
 import com.toceansoft.employee.entity.Employee;
 import com.toceansoft.employee.service.IEmployeeService;
+import com.toceansoft.web.dept.controller.DeptController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,6 +48,39 @@ public class EmployeeController
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private IDeptService deptService;
+
+
+    /*小程序调用后台登录接口
+     * */
+    @RequestMapping("/doLogin")
+    public R dologin( String username,  String password){
+//        System.out.println(username);
+//        System.out.println(password);
+        int ok = 1;
+        for(int i = 0; i<username.length(); i++){
+            if(username.charAt(i) > '9' || username.charAt(i) < '0'){
+                return R.fail(50001,"用户名错误");
+            }
+        }
+        Long id = Long.parseLong(username);
+        //验证用户名和密码
+        Employee employee = employeeService.selectEmployeeById(id);
+        if(!employee.getPassword().equals(password)){
+            return R.fail(50001,"用户名或密码错误");
+        }
+
+        //验证成功，生成token
+        Map<String,Object> claims=new HashMap<>();
+        claims.put("username",employee.getName());
+
+        String token= JWTUtils.getJwtToken(claims);
+        Map<String,Object> data=new HashMap<>();
+        data.put("token",token);
+        return  R.ok(20001,data);
+    }
+
     /**
      * 查询员工管理列表
      */
@@ -46,13 +94,33 @@ public class EmployeeController
     }
 
 
+
     /**
      * 获取员工管理详细信息
      */
     @GetMapping(value = "/{id}")
     public R getInfo(@PathVariable("id") Long id)
     {
+
         return R.ok(20000,employeeService.selectEmployeeById(id));
+    }
+
+    /**
+     * 获取加密后的员工信息（手机号、身份证加密）
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/getCodedInfo/{id}")
+    public R getCodedInfo(@PathVariable("id") Long id)
+    {
+        Employee e = employeeService.selectEmployeeById(id);
+        StringBuffer phone = new StringBuffer(e.getPhoneNumber());
+        StringBuffer idShow = new StringBuffer(e.getIdNum());
+        phone = phone.replace(3,7,"****");
+        idShow = idShow.replace(3,15,"************");
+        e.setPhoneNumber(phone.toString());
+        e.setIdNum(idShow.toString());
+        return R.ok(20000,e);
     }
 
     /**
@@ -133,7 +201,7 @@ public class EmployeeController
     }
 
     /**
-     * 重置员工登录密码
+     * 管理员重置员工登录密码
      * @return
      */
     @PutMapping("/resetPw")
@@ -144,6 +212,59 @@ public class EmployeeController
         if (rows <= 0 ) {
             return R.fail(50002, "重置密码失败！");
         }
+        return R.ok(20000, null);
+    }
+
+
+
+    /**
+     * 导入excel
+     * @return
+     */
+    @PutMapping("/getImport")
+    public R getImport(String fileName,HttpServletRequest req) throws IOException, java.io.IOException {
+        System.out.println(fileName);
+        File file = new File(fileName);
+        if(!file.exists()){
+            throw new IOException("文件不存在");
+        }
+        HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(file));//如果是xls，使用HSSFWorkbook；如果是xlsx，使用XSSFWorkbook,但是目前的xlsx在poi插件中有一点BUG和当前JDK11版本有冲突，所以只用了xls格式的表格
+        //循环工作簿
+        List<Employee> employees= new ArrayList<>();
+        //取第一行的下一行
+        HSSFSheet sheet = workbook.getSheetAt(0);
+        for (int i = sheet.getFirstRowNum() + 1; i<=sheet.getLastRowNum(); i++) {
+            //获取行
+            HSSFRow row = sheet.getRow(i);
+            if (row == null)
+                continue;
+            Employee employee = new Employee();
+            row.getCell(0).setCellType(CellType.STRING);//改单元格的类型为spring，防止这类报错Cannot get a STRING value from a NUMERIC cell
+            row.getCell(1).setCellType(CellType.STRING);
+            row.getCell(2).setCellType(CellType.STRING);
+            row.getCell(3).setCellType(CellType.STRING);
+            employee.setName(row.getCell(0).getStringCellValue());//名字
+            employee.setPhoneNumber(row.getCell(1).getStringCellValue());//手机号码
+            employee.setIdNum(row.getCell(2).getStringCellValue());//身份证
+            employee.setDeptName(row.getCell(3).getStringCellValue());//部门名
+            Dept dept = new Dept();
+            dept.setDeptName(employee.getDeptName());
+            List<Dept> deptList = deptService.selectDeptList(dept);
+            if(!deptList.isEmpty()){
+                employee.setDeptId( deptList.get(0).getId());
+            }else {
+                employee.setDeptId(1L);
+            }
+
+            System.out.println(employee);
+            employees.add(employee);
+            add(employee,req);
+            int rows = employeeService.updateEmployee(employee);
+            if (rows <= 0 ) {
+                return R.fail(50002, "导入失败");
+            }
+        }
+
         return R.ok(20000, null);
     }
 }

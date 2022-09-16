@@ -5,6 +5,14 @@
   font-weight: 400 !important;
 }
 
+.el-card.is-always-shadow {
+  border-radius: 10px;
+  margin-top: 3px;
+  margin-bottom: 20px;
+  box-shadow: 3px 3px 20px #f1f1f1;
+  border:none;
+}
+
 .el-upload {
   input[type="file"] {
     display: none !important;
@@ -14,7 +22,6 @@
 .el-upload__input {
   display: none;
 }
-
 
 // to fixed https://github.com/ElemeFE/element/issues/2461
 .el-dialog {

@@ -5,8 +5,11 @@ import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.common.util.JWTUtils;
 import com.toceansoft.common.util.R;
+import com.toceansoft.goods.entity.Goods;
+import com.toceansoft.goods.service.IGoodsService;
 import com.toceansoft.orders.entity.Orders;
 import com.toceansoft.orders.service.IOrdersService;
+import com.toceansoft.web.goods.controller.GoodsController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +33,9 @@ public class OrdersController
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private IGoodsService goodsService;
+
     /**
      * 查询订单管理列表
      */
@@ -40,8 +46,51 @@ public class OrdersController
         List<Orders> list = ordersService.selectOrdersList(orders);
         PageInfo pageInfo = new PageInfo(list); //构建分页对象
         return R.ok(20000, pageInfo);//返回分页对象
+
     }
 
+
+    @GetMapping("/lists")
+    public R list(Orders orders)
+    {
+//        PageHelper.startPage(pageNum, pageSize); //指定分页
+        List<Orders> list = ordersService.selectOrdersList(orders);
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getState().equals("待付款"))
+                list.get(i).setTypes(1);
+            else if (list.get(i).getState().equals("已出库")) {
+                list.get(i).setTypes(2);
+
+            } else if (list.get(i).getState().equals("待收货")) {
+                list.get(i).setTypes(3);
+            } else if (list.get(i).getState().equals("已完成")) {
+                list.get(i).setTypes(4);
+            } else if (list.get(i).getState().equals("已取消")) {
+                list.get(i).setTypes(9);
+            }
+
+        }
+
+//        for (int j=0;j<list.size();j++){
+//            Goods goods = goodsService.selectGoodsById(list.get(j).getGoodsId());
+//
+//            String name=goods.getName();
+//
+//
+//            System.out.println(goods.getId());
+//            System.out.println(list.size());
+//
+//            list.get(j).setGoodsName(name);
+//
+//
+//
+//        }
+
+
+//        PageInfo pageInfo = new PageInfo(list); //构建分页对象
+//        return R.ok(20000, pageInfo);//返回分页对象
+        return  R.ok(20000,list);
+    }
 
     /**
      * 获取订单管理详细信息
@@ -72,10 +121,18 @@ public class OrdersController
         orders.setSalesmanId(id);
 
         int rows = ordersService.insertOrders(orders);
+
+
+
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");
         }
+        Goods goods = goodsService.selectGoodsById(orders.getGoodsId());
+        long number = goods.getInventory() - orders.getQuantity();
+        goods.setInventory(number);
+        goodsService.updateGoods(goods);
         return R.ok(20000, null);
+
     }
 
     /**
