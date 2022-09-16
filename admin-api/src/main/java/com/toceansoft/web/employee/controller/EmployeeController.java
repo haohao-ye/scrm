@@ -183,7 +183,7 @@ public class EmployeeController
         List<Employee> employees= new ArrayList<>();
         //取第一行的下一行
         HSSFSheet sheet = workbook.getSheetAt(0);
-        for (int i = sheet.getFirstRowNum(); i<=sheet.getLastRowNum(); i++) {
+        for (int i = sheet.getFirstRowNum() + 1; i<=sheet.getLastRowNum(); i++) {
             //获取行
             HSSFRow row = sheet.getRow(i);
             if (row == null)
