@@ -58,15 +58,18 @@ public class OrdersController
     @PostMapping
     public R add(HttpServletRequest req, @RequestBody Orders orders)
     {
-        //1 获得requet请求
-        //2 获得token
-        String token =req.getHeader("X-Token");
-        //从token中获得用户名
-        String username = JWTUtils.getUsername(token);
-        //从redis缓存中读取当前登录用户
-        Admin admin = (Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
-
-        orders.setCreateBy(admin.getUsername());
+//        //1 获得requet请求
+//        //2 获得token
+//        String token =req.getHeader("X-Token");
+//        //从token中获得用户名
+//        String username = JWTUtils.getUsername(token);
+//        //从redis缓存中读取当前登录用户
+//        Admin admin = (Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
+//
+//        orders.setCreateBy(admin.getUsername());
+        orders.setCreateBy("admin");
+        Long id=new Long(1);
+        orders.setSalesmanId(id);
 
         int rows = ordersService.insertOrders(orders);
         if (rows <= 0 ) {

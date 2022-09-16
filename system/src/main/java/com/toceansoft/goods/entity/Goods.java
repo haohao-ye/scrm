@@ -54,6 +54,9 @@ public class Goods extends BaseEntity
     /** 折扣 */
     private Long activity_id;
 
+    /** 備註*/
+    private String remark;
+
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -83,6 +86,7 @@ public class Goods extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("updateBy", getUpdateBy())
             .append("delFlag", getDelFlag())
+                .append("remark",getRemark())
             .toString();
     }
 }
