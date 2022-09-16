@@ -1,14 +1,37 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">welcome: {{ name }}</div>
+    <el-row>
+      <el-col :xs="24" :sm="24" :lg="8">
+        <div class="chart-wrapper">
+          <pie-chart />
+        </div>
+      </el-col>
+        
+      <el-col :xs="24" :sm="24" :lg="8">
+        <div class="chart-wrapper">
+          <line-chart />
+        </div>
+      </el-col>
+    </el-row>
+
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import BarChart from './components/BarChart'
+import PieChart from './components/PieChart'
+import LineChart from './components/LineChart'
 
 export default {
   name: 'Dashboard',
+
+  components: {
+    BarChart,
+    PieChart,
+    LineChart
+  },
+
   computed: {
     ...mapGetters([
       'name'
@@ -21,10 +44,6 @@ export default {
 .dashboard {
   &-container {
     margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
   }
 }
 </style>
