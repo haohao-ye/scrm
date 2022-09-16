@@ -3,12 +3,11 @@ package com.toceansoft.web.employee.controller;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.jar.JarFile;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
@@ -52,6 +51,35 @@ public class EmployeeController
     @Autowired
     private IDeptService deptService;
 
+
+    /*小程序调用后台登录接口
+     * */
+    @RequestMapping("/doLogin")
+    public R dologin( String username,  String password){
+//        System.out.println(username);
+//        System.out.println(password);
+        int ok = 1;
+        for(int i = 0; i<username.length(); i++){
+            if(username.charAt(i) > '9' || username.charAt(i) < '0'){
+                return R.fail(50001,"用户名错误");
+            }
+        }
+        Long id = Long.parseLong(username);
+        //验证用户名和密码
+        Employee employee = employeeService.selectEmployeeById(id);
+        if(!employee.getPassword().equals(password)){
+            return R.fail(50001,"用户名或密码错误");
+        }
+
+        //验证成功，生成token
+        Map<String,Object> claims=new HashMap<>();
+        claims.put("username",employee.getName());
+
+        String token= JWTUtils.getJwtToken(claims);
+        Map<String,Object> data=new HashMap<>();
+        data.put("token",token);
+        return  R.ok(20001,data);
+    }
 
     /**
      * 查询员工管理列表
