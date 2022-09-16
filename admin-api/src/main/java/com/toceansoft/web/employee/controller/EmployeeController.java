@@ -55,7 +55,7 @@ public class EmployeeController
     /*小程序调用后台登录接口
      * */
     @RequestMapping("/doLogin")
-    public R dologin( String username,  String password){
+    public R doLogin( String username,  String password){
 //        System.out.println(username);
 //        System.out.println(password);
         int ok = 1;
@@ -216,6 +216,51 @@ public class EmployeeController
     }
 
 
+    /**
+     * 员工修改自己的密码
+     * @param employee
+     * @return
+     */
+    @PostMapping("/changePsd")
+    public R changePassword(@RequestBody Employee employee){
+        System.out.println(employee);
+        String pwd = employee.getPassword();
+        String newPwd = employee.getNewPassword();
+        employee = employeeService.selectEmployeeById(employee.getId());
+        System.out.println(employee);
+//        System.out.println("用户: "+e.getName()+" 正在修改密码");
+//        System.out.println(e.getPassword());
+        if(! pwd.equals(employee.getPassword())){
+            return R.fail(50010,"原密码错误！");
+        }
+        employee.setPassword(newPwd);
+        int rows = employeeService.updateEmployee(employee);
+        if (rows <= 0 ) {
+            return R.fail(50002, "修改失败");
+        }
+        return R.ok(20000, null);
+    }
+
+    /**
+     * 员工重置自己的密码
+     * @param employee
+     * @return
+     */
+    @PutMapping("/resetPassword")
+    public R resetPassword(@RequestBody Employee employee){
+
+        Employee e = employeeService.selectEmployeeById(employee.getId());
+
+        if(!e.getIdNum().equals(employee.getIdNum()) || !e.getPhoneNumber().equals(employee.getPhoneNumber())){
+            return R.fail(50011,"手机号或身份证号验证失败，请仔细检查！");
+        }
+        employee.setPassword(e.getIdNum().substring(6,14));
+        int rows = employeeService.updateEmployee(employee);
+        if (rows <= 0 ) {
+            return R.fail(50012, "重置密码失败！");
+        }
+        return R.ok(20000, null);
+    }
 
     /**
      * 导入excel
