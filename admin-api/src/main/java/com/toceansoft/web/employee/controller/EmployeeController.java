@@ -101,7 +101,26 @@ public class EmployeeController
     @GetMapping(value = "/{id}")
     public R getInfo(@PathVariable("id") Long id)
     {
+
         return R.ok(20000,employeeService.selectEmployeeById(id));
+    }
+
+    /**
+     * 获取加密后的员工信息（手机号、身份证加密）
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/getCodedInfo/{id}")
+    public R getCodedInfo(@PathVariable("id") Long id)
+    {
+        Employee e = employeeService.selectEmployeeById(id);
+        StringBuffer phone = new StringBuffer(e.getPhoneNumber());
+        StringBuffer idShow = new StringBuffer(e.getIdNum());
+        phone = phone.replace(3,7,"****");
+        idShow = idShow.replace(3,15,"************");
+        e.setPhoneNumber(phone.toString());
+        e.setIdNum(idShow.toString());
+        return R.ok(20000,e);
     }
 
     /**
@@ -182,7 +201,7 @@ public class EmployeeController
     }
 
     /**
-     * 重置员工登录密码
+     * 管理员重置员工登录密码
      * @return
      */
     @PutMapping("/resetPw")
@@ -195,6 +214,8 @@ public class EmployeeController
         }
         return R.ok(20000, null);
     }
+
+
 
     /**
      * 导入excel
