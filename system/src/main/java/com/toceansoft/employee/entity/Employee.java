@@ -37,6 +37,9 @@ public class Employee extends BaseEntity
     /** 员工部门id */
     private Long deptId;
 
+    /** 员工新密码 */
+    private String newPassword;
+
 
     @Override
     public String toString() {
