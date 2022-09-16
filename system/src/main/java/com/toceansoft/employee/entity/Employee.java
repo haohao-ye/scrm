@@ -51,6 +51,7 @@ public class Employee extends BaseEntity
             .append("password", getPassword())
             .append("deptName", getDeptName())
             .append("deptId",getDeptId())
+                .append("newPassword",getNewPassword())
             .toString();
     }
 }
