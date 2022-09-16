@@ -30,9 +30,12 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+      <el-button 
+        :loading="loading" 
+        element-loading-spinner="el-icon-loading"
+        type="primary" 
+        style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin">登录</el-button>
-
       <div class="tips">
         <span>如忘记账户信息，请联系公司管理员。</span>
       </div>

@@ -3,12 +3,11 @@ package com.toceansoft.web.employee.controller;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.jar.JarFile;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
@@ -53,6 +52,35 @@ public class EmployeeController
     private IDeptService deptService;
 
 
+    /*小程序调用后台登录接口
+     * */
+    @RequestMapping("/doLogin")
+    public R dologin( String username,  String password){
+//        System.out.println(username);
+//        System.out.println(password);
+        int ok = 1;
+        for(int i = 0; i<username.length(); i++){
+            if(username.charAt(i) > '9' || username.charAt(i) < '0'){
+                return R.fail(50001,"用户名错误");
+            }
+        }
+        Long id = Long.parseLong(username);
+        //验证用户名和密码
+        Employee employee = employeeService.selectEmployeeById(id);
+        if(!employee.getPassword().equals(password)){
+            return R.fail(50001,"用户名或密码错误");
+        }
+
+        //验证成功，生成token
+        Map<String,Object> claims=new HashMap<>();
+        claims.put("username",employee.getName());
+
+        String token= JWTUtils.getJwtToken(claims);
+        Map<String,Object> data=new HashMap<>();
+        data.put("token",token);
+        return  R.ok(20001,data);
+    }
+
     /**
      * 查询员工管理列表
      */
@@ -66,13 +94,33 @@ public class EmployeeController
     }
 
 
+
     /**
      * 获取员工管理详细信息
      */
     @GetMapping(value = "/{id}")
     public R getInfo(@PathVariable("id") Long id)
     {
+
         return R.ok(20000,employeeService.selectEmployeeById(id));
+    }
+
+    /**
+     * 获取加密后的员工信息（手机号、身份证加密）
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/getCodedInfo/{id}")
+    public R getCodedInfo(@PathVariable("id") Long id)
+    {
+        Employee e = employeeService.selectEmployeeById(id);
+        StringBuffer phone = new StringBuffer(e.getPhoneNumber());
+        StringBuffer idShow = new StringBuffer(e.getIdNum());
+        phone = phone.replace(3,7,"****");
+        idShow = idShow.replace(3,15,"************");
+        e.setPhoneNumber(phone.toString());
+        e.setIdNum(idShow.toString());
+        return R.ok(20000,e);
     }
 
     /**
@@ -153,7 +201,7 @@ public class EmployeeController
     }
 
     /**
-     * 重置员工登录密码
+     * 管理员重置员工登录密码
      * @return
      */
     @PutMapping("/resetPw")
@@ -166,6 +214,8 @@ public class EmployeeController
         }
         return R.ok(20000, null);
     }
+
+
 
     /**
      * 导入excel
