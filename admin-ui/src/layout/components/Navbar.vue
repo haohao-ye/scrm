@@ -72,6 +72,7 @@ export default {
   position: relative;
   background: #fff;
   border-bottom: 0.1px solid #f7f7f7;
+  border-left: 1px solid #f7f7f7;
   // box-shadow: 0 1px 4px rgba(0,21,41,.05);
 
   .hamburger-container {

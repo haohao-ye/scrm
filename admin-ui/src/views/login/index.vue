@@ -56,7 +56,7 @@ export default {
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码不得少于6位数字'))
+        callback(new Error('密码不得少于 6 位数字'))
       } else {
         callback()
       }
@@ -145,6 +145,8 @@ $placeholder: #eae8e8;
 
 /* reset element-ui css */
 .login-container {
+  text-shadow: 4px 2px 5px rgba(103, 103, 103);
+
   .el-input {
     display: inline-block;
     height: 47px;
@@ -153,19 +155,22 @@ $placeholder: #eae8e8;
     input {
       background: transparent;
       border: 0px;
+      border-radius: 0px;
+
       font-size: 16px;
       font-family: "AliRegular";
+
       color: $light_gray;
       caret-color: $cursor;
       -webkit-appearance: none;
-      border-radius: 0px;
+
       padding: 12px 5px 12px 15px;
       height: 47px;
 
       &::placeholder {
         color: $placeholder;
         font-size: 14px;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         font-family: "AliLight";
       }
 
@@ -177,24 +182,32 @@ $placeholder: #eae8e8;
   }
 
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(103, 103, 103, 0.1);
-    border-radius: 5px;
+    // border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(103, 103, 103, 0.4);
+    border-radius: 30px;
     color: #454545;
+    margin-bottom: 30px;
+  }
+
+  // 重写 elementUI 的错误提示样式
+  .el-form-item__content > .el-form-item__error {
+      color: #ff5c61;
+      text-shadow: 5px 5px 10px rgba(255, 255, 255, 0.6);
+      // background: rgba(255, 255, 255, 0.7);
   }
 
   .el-button {
     font-size: 14px;
-    letter-spacing: 5px;
+    border-radius: 20px;
+    letter-spacing: 20px;
     font-family: "AliRegular";
   }
 }
 </style>
 
 <style lang="scss" scoped>
-$bg: #2d3a4b;
-$dark_gray: #f9f9f9;
-$light_gray: #eee;
+$svg_color: #fff;
+$text_color: #fff;
 
 @font-face {
   font-family: AliRegular;
@@ -209,10 +222,13 @@ $light_gray: #eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  // background-color: $bg;
   overflow: hidden;
   font-family: "AliRegular";
-  background-image: url("../../assets/home1.jpg");
+  background-image: url("../../assets/login1.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-shadow: 4px 2px 5px rgba(103, 103, 103, 0.2);
 
   .login-form {
     position: relative;
@@ -224,15 +240,15 @@ $light_gray: #eee;
   }
 
   .tips {
-    font-size: 12px;
-    letter-spacing: 0.5px;
-    color: #fff;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: $text_color;
     text-align: center;
   }
 
   .svg-container {
     padding: 6px 5px 6px 15px;
-    color: $dark_gray;
+    color: $svg_color;
     vertical-align: middle;
     width: 30px;
     display: inline-block;
@@ -242,8 +258,8 @@ $light_gray: #eee;
     position: relative;
 
     .title {
-      font-size: 40px;
-      color: #fff;
+      font-size: 50px;
+      color: $text_color;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
@@ -255,7 +271,7 @@ $light_gray: #eee;
     right: 10px;
     top: 7px;
     font-size: 16px;
-    color: $dark_gray;
+    color: $svg_color;
     cursor: pointer;
     user-select: none;
   }
