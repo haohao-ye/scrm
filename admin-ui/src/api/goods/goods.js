@@ -61,7 +61,7 @@ export function exportGoods(query) {
 // 订单入库
 export function updateByOrder(data) {
   return request({
-    url: '/api/goods/goods',
+    url: '/api/goods/goods/order',
     method: 'put',
     data: data
   })

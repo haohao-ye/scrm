@@ -48,6 +48,15 @@ public class GoodsController
         return R.ok(20000, pageInfo);//返回分页对象
     }
 
+    @GetMapping("/lists")
+    public R list(Goods goods)
+    {
+//        PageHelper.startPage(pageNum, pageSize); //指定分页
+        List<Goods> list = goodsService.selectGoodsList(goods);
+//        PageInfo pageInfo = new PageInfo(list); //构建分页对象
+        return R.ok(20000, list);//返回分页对象
+    }
+
 
     /**
      * 获取商品管理详细信息
@@ -92,7 +101,7 @@ public class GoodsController
         return R.ok(20000, null);
     }
 
-    @PutMapping
+    @PutMapping("/order")
     public R entryGoods(@RequestBody EntryOrder entryOrder){
         int rows=goodsService.updateByOrder(entryOrder);
         if (rows <= 0 ) {
@@ -104,7 +113,7 @@ public class GoodsController
     /**
      * 修改商品
      */
-    @PutMapping("/order")
+    @PutMapping()
     public R edit(@RequestBody Goods goods)
     {
          int rows = goodsService.updateGoods(goods);

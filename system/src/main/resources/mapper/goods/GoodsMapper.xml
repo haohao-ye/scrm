@@ -19,8 +19,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="delFlag"    column="del_flag"    />
+        <result property="remark"   column="remark"/>
     </resultMap>
 
+    <!--前端传回的订单表-->
     <resultMap type="EntryOrder" id="EntryOrderResult">
         <result property="id"    column="id"    />
         <result property="goodsName"    column="goods_name"    />
@@ -38,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectGoodsVo">
-        select g.id, g.name, g.type, g.price, g.lable, g.brand, g.inventory, g.color, g.activity_id,
+        select g.id, g.name, g.type, g.price, g.lable, g.brand, g.inventory, g.color, g.activity_id,g.remark,
                 g.creat_time, g.creat_by, g.update_time, g.update_by, g.del_flag,a.name as activity_name
         from t_goods g left join t_activity a on g.activity_id=a.id
     </sql>
@@ -56,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="activity_id != null "> and g.activity_id = #{activity_id}</if>
             <if test="creatTime != null "> and g.creat_time = #{creatTime}</if>
             <if test="creatBy != null  and creatBy != ''"> and g.creat_by = #{creatBy}</if>
+            <if test="remark !=null and remark !='' "> and g.remark=#{remark}</if>
             and g.del_flag!=1
         </where>
     </select>
@@ -124,9 +127,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateByOrder" parameterType="EntryOrder" >
         update t_goods
         <trim prefix="SET" suffixOverrides=",">
-            <if test="inventory != null">inventory =inventory+#{quantity},</if>
+            <if test="inventory != null">inventory =inventory + #{quantity},</if>
         </trim>
-        where in(select * from t_goods g join t_entry_order e on g.name=e.goods_name and e.type=g.type and g.brand=e.brand and
+        where id exits(select * from t_goods g join t_entry_order e on g.name=e.goods_name and e.type=g.type and g.brand=e.brand and
         g.color=e.color)
     </update>
 
