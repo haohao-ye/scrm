@@ -51,11 +51,26 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'shouye' }
     }]
   },
-  /*
 
+  {
+    path: '/tool',
+    component: Layout,
+    name: 'Tool',
+    // meta: { title: '系统工具', icon: 'el-icon-s-tools' },
+    children: [
+      {
+        path: 'gen',
+        name: 'Gen',
+        component: () => import('@/views/tool/gen'),
+        meta: { title: '代码生成', icon: 'gongju' }
+      }
+    ]
+  },
+
+  /*
     {
       path: '/example',
       component: Layout,
@@ -89,7 +104,7 @@ export const constantRoutes = [
         path: 'admin',
         name: 'Admin',
         component: () => import('@/views/sysmgr/admin'),
-        meta: { title: '系统管理员', icon: 'el-icon-user-solid' }
+        meta: { title: '系统管理员', icon: 'guanliyuan' }
       },
       // {
       //   path: 'admin1',
@@ -101,16 +116,16 @@ export const constantRoutes = [
   },
 
   {
-    path: '/tool',
+    path: '/employee',
     component: Layout,
-    name: 'Tool',
-    meta: { title: '系统工具', icon: 'el-icon-s-tools' },
+    name: 'employee',
+    // meta: { title: '员工管理', icon: 'el-icon-user' },
     children: [
       {
-        path: 'gen',
-        name: 'Gen',
-        component: () => import('@/views/tool/gen'),
-        meta: { title: '代码生成', icon: 'el-icon-document' }
+        path: 'employee',
+        name: '员工管理',
+        component: () => import('@/views/employee/index'),
+        meta: { title: '员工管理', icon: 'yuangong' }
       }
     ]
   },
@@ -125,7 +140,7 @@ export const constantRoutes = [
         path: 'dept',
         name: 'Dept',
         component: () => import('@/views/dept/dept'),
-        meta: { title: '部门管理', icon: 'el-icon-s-check' }
+        meta: { title: '部门管理', icon: 'bumen' }
       }
     ]
   },
@@ -140,7 +155,7 @@ export const constantRoutes = [
         path: 'inform',
         name: 'Inform',
         component: () => import('@/views/inform/index'),
-        meta: { title: '通知管理', icon: 'el-icon-message-solid' }
+        meta: { title: '通知管理', icon: 'tongzhi' }
       }
     ]
   },
@@ -155,7 +170,7 @@ export const constantRoutes = [
         path: 'goods',
         name: '商品列表',
         component: () => import('@/views/goods/goods'),
-        meta: { title: '商品管理', icon: 'el-icon-s-goods' }
+        meta: { title: '商品管理', icon: 'shangpin' }
       }
     ]
   },
@@ -170,22 +185,7 @@ export const constantRoutes = [
         path: 'activity',
         name: '营销',
         component: () => import('@/views/activity/activity'),
-        meta: { title: '营销活动', icon: 'el-icon-s-goods' }
-      }
-    ]
-  },
-
-  {
-    path: '/employee',
-    component: Layout,
-    name: 'employee',
-    // meta: { title: '员工管理', icon: 'el-icon-user' },
-    children: [
-      {
-        path: 'employee',
-        name: '员工管理',
-        component: () => import('@/views/employee/index'),
-        meta: { title: '员工管理', icon: 'el-icon-user' }
+        meta: { title: '营销活动', icon: 'yingxiao' }
       }
     ]
   },
@@ -200,11 +200,10 @@ export const constantRoutes = [
         path: 'orders',
         name: 'Orders',
         component: () => import('@/views/orders/orders'),
-        meta: { title: '订单管理', icon: 'el-icon-s-data' }
+        meta: { title: '订单管理', icon: 'dingdan' }
       }
     ]
   },
-
 
   // {
   //   path: '/salecount',
