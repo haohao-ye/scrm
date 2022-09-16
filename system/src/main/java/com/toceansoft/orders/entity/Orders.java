@@ -25,11 +25,20 @@ public class Orders extends BaseEntity
     /** 商品id */
     private Long goodsId;
 
+    /** 商品名字 */
+    private String goodsName;
+
     /** 商品量 */
     private Long quantity;
 
+    /** 商品照片 */
+    private String img;
+
     /** 订单状态 */
     private String state;
+
+    /** 订单状态变量 */
+    private Integer types;
 
     /** 销售员id */
     private Long salesmanId;
@@ -48,6 +57,10 @@ public class Orders extends BaseEntity
             .append("clientId", getClientId())
             .append("goodsId", getGoodsId())
             .append("quantity", getQuantity())
+                .append("img",getImg())
+                .append("types",getTypes())
+
+                .append("goodsName",getGoodsName())
             .append("state", getState())
             .append("salesmanId", getSalesmanId())
             .append("totalAmount", getTotalAmount())

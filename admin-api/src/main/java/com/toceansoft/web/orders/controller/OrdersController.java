@@ -55,6 +55,38 @@ public class OrdersController
     {
 //        PageHelper.startPage(pageNum, pageSize); //指定分页
         List<Orders> list = ordersService.selectOrdersList(orders);
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getState().equals("待付款"))
+                list.get(i).setTypes(1);
+            else if (list.get(i).getState().equals("已出库")) {
+                list.get(i).setTypes(2);
+
+            } else if (list.get(i).getState().equals("待收货")) {
+                list.get(i).setTypes(3);
+            } else if (list.get(i).getState().equals("已完成")) {
+                list.get(i).setTypes(4);
+            } else if (list.get(i).getState().equals("已取消")) {
+                list.get(i).setTypes(9);
+            }
+
+        }
+
+//        for (int j=0;j<list.size();j++){
+//            Goods goods = goodsService.selectGoodsById(list.get(j).getGoodsId());
+//
+//            String name=goods.getName();
+//
+//
+//            System.out.println(goods.getId());
+//            System.out.println(list.size());
+//
+//            list.get(j).setGoodsName(name);
+//
+//
+//
+//        }
+
+
 //        PageInfo pageInfo = new PageInfo(list); //构建分页对象
 //        return R.ok(20000, pageInfo);//返回分页对象
         return  R.ok(20000,list);
