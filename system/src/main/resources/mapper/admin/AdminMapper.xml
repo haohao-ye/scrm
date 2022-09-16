@@ -83,6 +83,8 @@
     </insert>
 
 
+
+
     <!--修改-->
     <update id="update" parameterType="admin" >
         update t_admin
@@ -110,8 +112,8 @@
     <update id="changePassword" >
         update t_admin
         <set>
-            <if test="password!=null and password!=''">
-                password=#{password}
+            <if test="newPassword!=null and newPassword!=''">
+                password = #{newPassword}
             </if>
         </set>
         where id=#{id}

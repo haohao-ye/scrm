@@ -10,9 +10,9 @@ export function listSalescount(query) {
 }
 
 // 查询销售统计详细
-export function getSalescount(countId) {
+export function getSalescount(goodsId) {
   return request({
-    url: '/api/salescount/salescount/' + countId,
+    url: '/api/salescount/salescount/' + goodsId,
     method: 'get'
   })
 }
@@ -36,9 +36,9 @@ export function updateSalescount(data) {
 }
 
 // 删除销售统计
-export function delSalescount(countId) {
+export function delSalescount(goodsId) {
   return request({
-    url: '/api/salescount/salescount/' + countId,
+    url: '/api/salescount/salescount/' + goodsId,
     method: 'delete'
   })
 }

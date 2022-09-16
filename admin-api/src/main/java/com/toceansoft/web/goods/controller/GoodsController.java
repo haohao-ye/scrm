@@ -7,6 +7,8 @@ import com.github.pagehelper.PageInfo;
 import com.toceansoft.admin.entity.Admin;
 import com.toceansoft.common.util.JWTUtils;
 import com.toceansoft.dept.entity.Dept;
+import com.toceansoft.goods.entity.EntryOrder;
+import com.toceansoft.orders.entity.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -44,6 +46,15 @@ public class GoodsController
         List<Goods> list = goodsService.selectGoodsList(goods);
         PageInfo pageInfo = new PageInfo(list); //构建分页对象
         return R.ok(20000, pageInfo);//返回分页对象
+    }
+
+    @GetMapping("/lists")
+    public R list(Goods goods)
+    {
+//        PageHelper.startPage(pageNum, pageSize); //指定分页
+        List<Goods> list = goodsService.selectGoodsList(goods);
+//        PageInfo pageInfo = new PageInfo(list); //构建分页对象
+        return R.ok(20000, list);//返回分页对象
     }
 
 
@@ -90,10 +101,19 @@ public class GoodsController
         return R.ok(20000, null);
     }
 
+    @PutMapping("/order")
+    public R entryGoods(@RequestBody EntryOrder entryOrder){
+        int rows=goodsService.updateByOrder(entryOrder);
+        if (rows <= 0 ) {
+            return R.fail(50002, "入库失败");
+        }
+        return R.ok(20000, null);
+    }
+
     /**
      * 修改商品
      */
-    @PutMapping
+    @PutMapping()
     public R edit(@RequestBody Goods goods)
     {
          int rows = goodsService.updateGoods(goods);

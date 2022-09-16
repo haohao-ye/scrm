@@ -9,7 +9,7 @@ import com.toceansoft.activity.entity.Activity;
  * @author ygy
  * @date Thu Sep 08 10:20:59 CST 2022
  */
-public interface IActivityService 
+public interface ActivityService
 {
     /**
      * 查询营销活动

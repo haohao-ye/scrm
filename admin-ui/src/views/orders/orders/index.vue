@@ -2,19 +2,19 @@
   <div class="app-container">
   <el-card>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="客户id" prop="clientId">
+      <el-form-item label="客户ID" prop="clientId">
         <el-input
           v-model="queryParams.clientId"
-          placeholder="请输入客户id"
+          placeholder="请输入客户ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="商品id" prop="goodsId">
+      <el-form-item label="商品ID" prop="goodsId">
         <el-input
           v-model="queryParams.goodsId"
-          placeholder="请输入商品id"
+          placeholder="请输入商品ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -38,23 +38,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item> -->
-      <el-form-item label="销售员id" prop="salesmanId">
+      <el-form-item label="销售员ID" prop="salesmanId">
         <el-input
           v-model="queryParams.salesmanId"
-          placeholder="请输入销售员id"
+          placeholder="请输入销售员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <!-- <el-form-item label="总额" prop="totalAmount">
-        <el-input
-          v-model="queryParams.totalAmount"
-          placeholder="请输入总额"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        /> -->
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -342,3 +333,19 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  @font-face {
+    font-family:AliRegular;
+    src:url('../../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+  }
+  @font-face {
+    font-family:AliBold;
+    src:url('../../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+  }
+  
+  .app-container {
+    font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  }
+  
+  </style>

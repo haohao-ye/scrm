@@ -52,7 +52,7 @@
 
     <el-table v-loading="loading" :data="informList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="通知id" align="center" prop="id" />
+      <el-table-column label="序号" align="center" prop="id" />
       <el-table-column label="通知标题" align="center" prop="infoTitle" />
       <el-table-column label="通知管理" align="center" prop="infoAdm" />
       <el-table-column label="通知销售" align="center" prop="infoSol" />
@@ -80,7 +80,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -325,3 +325,19 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  @font-face {
+    font-family:AliRegular;
+    src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+  }
+  @font-face {
+    font-family:AliBold;
+    src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+  }
+
+  .app-container {
+    font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
+  }
+
+  </style>

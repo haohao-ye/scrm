@@ -43,11 +43,20 @@ export function delEmployee(id) {
   })
 }
 
-// 导出员工管理
-export function exportEmployee(query) {
+// 导入员工管理
+export function importEmployee(data) {
   return request({
-    url: '/api/employee/employee/export',
-    method: 'get',
-    params: query
+    url: '/api/employee/employee/getImport',
+    method: 'put',
+    params: data
+  })
+}
+
+// 重置员工密码
+export function resetPassword(data) {
+  return request({
+    url: '/api/employee/employee/resetPw',
+    method: 'Put',
+    data:data
   })
 }

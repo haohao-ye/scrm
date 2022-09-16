@@ -147,12 +147,22 @@ public class AdminController {
         return R.ok(20000,pageInfo);
     }
 
+    /**
+     * 获取用户详细信息
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public  R get(@PathVariable Long id){
         Admin admin =adminService.selectById(id);
         return R.ok(20000,admin);
     }
 
+    /**
+     * 批量删除管理员用户
+     * @param ids
+     * @return
+     */
     @DeleteMapping("/{ids}")
     public R delete(@PathVariable Long[] ids){
         System.out.printf("ids");
@@ -164,6 +174,12 @@ public class AdminController {
         return  R.fail(0,"删除失败");
     }
 
+    /**
+     * 添加管理员
+     * @param admin
+     * @param req
+     * @return
+     */
     @PostMapping("/add")
     public R add(@RequestBody Admin admin,HttpServletRequest req){
         String token=req.getHeader("X-Token");
@@ -172,7 +188,7 @@ public class AdminController {
         queryCond.setUsername(admin.getUsername());
         List<Admin> adminList=adminService.selectList(queryCond);
         if(null!=adminList&&adminList.size()>0){
-            return R.fail(0,"已存在");
+            return R.fail(50003,"用户已存在");
         }
         //密码加密
         String encodedPw=encoder.encode(admin.getPassword());
@@ -182,12 +198,17 @@ public class AdminController {
 
         int rows=adminService.insert(admin);
         if(rows<=0){
-            return R.fail(0,"shibai");
+            return R.fail(50001,"添加成功");
 
         }
-        return R.ok(20000,"chenggong");
+        return R.ok(20000,"添加失败");
     }
 
+    /**
+     * 修改管理员信息
+     * @param admin
+     * @return
+     */
     @PutMapping("/edit")
     public R edit(@RequestBody Admin admin){
         System.out.println(admin.getUsername());
@@ -198,12 +219,26 @@ public class AdminController {
 
         int rows=adminService.update(admin);
         if(rows<=0){
-            return R.fail(0,"shibai");
+            return R.fail(0,"修改成功");
 
         }
-        return R.ok(20000,"chenggong");
+        return R.ok(20000,"修改失败");
     }
 
+    /**
+     * 重置管理员密码
+     * @param admin
+     * @return
+     */
+    @PutMapping("/resetPw")
+    public R resetPw(@RequestBody Admin admin){
+        //管理员密码重置为123456
+//        System.out.println("重置密码");
+//        System.out.println(admin);
+        admin.setNewPassword("123456");
+        adminService.changePassword(admin.getId(),admin.getNewPassword());
+        return R.ok(20000,"重置成功");
+    }
 
 
     /**

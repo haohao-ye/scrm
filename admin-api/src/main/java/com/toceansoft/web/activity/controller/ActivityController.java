@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.toceansoft.common.util.R;
 import com.toceansoft.activity.entity.Activity;
-import com.toceansoft.activity.service.IActivityService;
+import com.toceansoft.activity.service.ActivityService;
 
 /**
  * 营销活动Controller
@@ -20,7 +20,7 @@ import com.toceansoft.activity.service.IActivityService;
 public class ActivityController
 {
     @Autowired
-    private IActivityService activityService;
+    private ActivityService activityService;
 
     /**
      * 查询营销活动列表

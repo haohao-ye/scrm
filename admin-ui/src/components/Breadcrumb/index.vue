@@ -33,7 +33,7 @@ export default {
       const first = matched[0]
 
       if (!this.isDashboard(first)) {
-        matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
+        matched = [{ path: '/dashboard', meta: { title: '首页' }}].concat(matched)
       }
 
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
@@ -64,14 +64,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@font-face {
+  font-family:AliRegular;
+  src:url('../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+}
+@font-face {
+  font-family:AliBold;
+  src:url('../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+}
+  
 .app-breadcrumb.el-breadcrumb {
   display: inline-block;
-  font-size: 14px;
-  line-height: 50px;
-  margin-left: 8px;
+  font-size: 15px;
+  line-height: 60px;
+  margin-left: 7px;
+  font-family: "AliRegular";
 
   .no-redirect {
-    color: #97a8be;
+    color: #409EFF;
     cursor: text;
   }
 }
