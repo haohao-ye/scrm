@@ -1,16 +1,20 @@
 <template>
   <div class="dashboard-container">
-    <el-row>
-      <el-col :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
-          <pie-chart />
-        </div>
+    <el-row :gutter="32">
+      <el-col :xs="38" :sm="28" :lg="8">
+        <el-card>
+          <div class="chart-wrapper">
+            <pie-chart />
+          </div>
+        </el-card>
       </el-col>
         
-      <el-col :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
-          <line-chart />
-        </div>
+      <el-col :xs="38" :sm="28" :lg="16">
+        <el-card>
+          <div class="chart-wrapper">
+            <line-chart />
+          </div>
+        </el-card>
       </el-col>
     </el-row>
 

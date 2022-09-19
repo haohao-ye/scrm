@@ -29,7 +29,7 @@
 
       <el-table v-loading="loading" :data="deptList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="部门id" align="center" prop="id" />
+        <el-table-column label="部门 ID" align="center" prop="id" />
         <el-table-column label="部门名称" align="center" prop="deptName" />
         <el-table-column label="备注" align="center" prop="remark" />
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
