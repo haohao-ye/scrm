@@ -96,7 +96,7 @@
           <el-button
           type="info"
           plain
-          icon="el-icon-document"
+          icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
         >导入</el-button> 
@@ -110,7 +110,16 @@
           @click="handleImport"
         >导入</el-button> -->
         </el-col>
-      </el-row>
+    <el-col :span="1.5">
+      <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="setGuaz"
+        >下载样本</el-button> 
+    </el-col>
+  </el-row>
 
       <el-table
         v-loading="loading"
@@ -412,6 +421,18 @@ export default {
           this.download(response.msg);
         });
     },
+    /** 下载按钮操作 */
+    setGuaz() {
+      let a = document.createElement('a');
+      let evt = document.createEvent('MouseEvents');
+      a.download = '样本.xls';
+      a.href = '/样本.xls';
+      evt.initEvent('click',true,true);
+      a.dispatchEvent(evt);
+      window.URL.revokeObjectURL(a.href);
+    },
+    
+    
   },
 };
 </script>
