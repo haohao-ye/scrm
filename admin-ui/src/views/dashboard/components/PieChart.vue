@@ -7,6 +7,11 @@ import * as echarts from 'echarts'  // 根据 v5 修改引入方式
 import resize from './mixins/resize'
 
 const animationDuration = 6000
+const pieData = [
+                    { name: '好评', value: 1048 },
+                    { name: '一般', value: 735 },
+                    { name: '差评', value: 180 }
+                ]
 
 export default {
     mixins: [resize],
@@ -44,7 +49,10 @@ export default {
     methods: {
         initChart() {
             this.chart = echarts.init(this.$el)
+            this.setOptions(pieData)
+        },
 
+        setOptions(pieData) {
             this.chart.setOption({
                 title: {
                     text: '32469',
@@ -62,6 +70,14 @@ export default {
                     icon: 'circle',
                     top: '0',
                     left: 'left'
+                },
+                // 工具栏
+                toolbox: {
+                    feature: {
+                        saveAsImage: {
+                            type: 'png'
+                        }
+                    }
                 },
                 series: [
                     {
@@ -89,11 +105,7 @@ export default {
                                 }
                             }
                         },
-                        data: [
-                            { name: '好评', value: 1048 },
-                            { name: '一般', value: 735 },
-                            { name: '差评', value: 180 }
-                        ]
+                        data: pieData
                     }
                 ]
             })

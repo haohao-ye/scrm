@@ -4,9 +4,17 @@
 
 <script>
 import * as echarts from 'echarts'  // 根据 v5 修改引入方式
+import { TEXT_STYLE_OPTIONS } from 'echarts/lib/util/model'
 import resize from './mixins/resize'
 
 const animationDuration = 6000
+// 初始化数据（如没有会报错）
+// 后期加上接口调用方法，更新 lineData 即可。
+const lineData = {
+    good: [120, 132, 101, 134, 190, 230, 210, 201, 234, 290, 230, 210],
+    medium: [100, 82, 91, 54, 90, 76, 110, 81, 104, 90, 130, 110],
+    bad: [10, 22, 21, 14, 19, 13, 20, 11, 34, 29, 20, 10]
+}
 
 export default {
     mixins: [resize],
@@ -44,7 +52,10 @@ export default {
     methods: {
         initChart() {
             this.chart = echarts.init(this.$el)
-
+            this.setOptions(lineData)
+        },
+        
+        setOptions({good, medium, bad} = {}) {
             this.chart.setOption({
                 title: {
                     text: '评价数据分析'
@@ -69,11 +80,11 @@ export default {
                 // 工具栏
                 toolbox: {
                     feature: {
-                        saveAsImage: {
-                            type: 'png'
-                        },
                         magicType: {
                             type: ['line', 'bar', 'stack']
+                        },
+                        saveAsImage: {
+                            type: 'png',
                         }
                     }
                 },
@@ -90,18 +101,18 @@ export default {
                         name: '好评',
                         type: 'line',
                         // smooth: true, // 平滑曲线显示
-                        data: [120, 132, 101, 134, 190, 230, 210, 201, 234, 290, 230, 210]
+                        data: good
                     }, {
                         name: '一般',
                         type: 'line',
                         // smooth: true,
-                        data: [100, 82, 91, 54, 90, 76, 110, 81, 104, 90, 130, 110]
+                        data: medium
                     }, {
                         name: '差评',
                         type: 'line',
                         stack: '总量',
                         // smooth: true,
-                        data: [10, 22, 21, 14, 19, 13, 20, 11, 34, 29, 20, 10]
+                        data: bad
                     }
                 ]
             })
