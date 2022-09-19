@@ -31,8 +31,8 @@
       </el-form-item>
 
       <el-button 
-        :loading="loading" 
-        element-loading-spinner="el-icon-loading"
+        v-loading.fullscreen.lock="loading" 
+        element-loading-spinner="el-icon-magic-stick"
         type="primary" 
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin">登录</el-button>
