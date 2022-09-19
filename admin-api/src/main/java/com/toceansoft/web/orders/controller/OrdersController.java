@@ -114,6 +114,20 @@ public class OrdersController
         Long id=new Long(1);
         orders.setSalesmanId(id);
 
+        if(orders.getState().equals("待付款"))
+            orders.setTypes(1);
+        else if (orders.getState().equals("已出库")) {
+            orders.setTypes(2);
+
+        } else if (orders.getState().equals("待收货")) {
+            orders.setTypes(3);
+        } else if (orders.getState().equals("已完成")) {
+            orders.setTypes(4);
+        } else if (orders.getState().equals("已取消")) {
+            orders.setTypes(9);
+        }
+
+
         int rows = ordersService.insertOrders(orders);
 
 
