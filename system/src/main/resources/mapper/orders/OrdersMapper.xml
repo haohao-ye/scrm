@@ -51,10 +51,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="clientId != null">client_id,</if>
             <if test="clientName!=null">client_name</if>
             <if test="goodsId != null">goods_id,</if>
+            <if test="goodsName !=nuull and gppdsName!=''">goods_name,</if>
             <if test="quantity != null">quantity,</if>
             <if test="state != null and state != ''">state,</if>
             <if test="img !=null and img !=''">img,</if>
-            <if test="goodsName !=nuull and gppdsName!=''">goods_name,</if>
             <if test="salesmanId != null">salesman_id,</if>
             <if test="totalAmount != null">total_amount,</if>
             <if test="createTime != null">create_time,</if>
@@ -68,10 +68,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="goodsName!=null">#{goodsName},</if>
             <if test="quantity != null">#{quantity},</if>
             <if test="state != null and state != ''">#{state},</if>
+            <if test="img!=null">#{img},</if>
             <if test="salesmanId != null">#{salesmanId},</if>
             <if test="totalAmount != null">#{totalAmount},</if>
             <if test="createTime != null">#{createTime},</if>
-            <if test="img!=null">#{img},</if>
             <if test="createBy != null and createBy != ''">#{createBy},</if>
             <if test="delLable != null">#{delLable},</if>
          </trim>
