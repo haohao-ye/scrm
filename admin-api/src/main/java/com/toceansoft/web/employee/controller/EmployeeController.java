@@ -52,6 +52,45 @@ public class EmployeeController
     private IDeptService deptService;
 
 
+
+    @RequestMapping("/wxlogin")
+    public R wxlogin(String openid){
+        System.out.println("openid:"+openid);
+        Employee employee = employeeService.selectEmployeeByOpenid(openid);
+        if(employee == null){
+            return R.fail(25000,"用户微信未绑定手机号码");
+        }
+
+        //验证成功，生成token
+        Map<String,Object> claims=new HashMap<>();
+        claims.put("username",employee.getName());
+
+        String token= JWTUtils.getJwtToken(claims);
+        Map<String,Object> data=new HashMap<>();
+        data.put("token",token);
+        return  R.ok(20001,employee.getId());
+    }
+
+    @RequestMapping("/wxbind")
+    public R wxbind(String openid, String id){
+        Employee employee = employeeService.selectEmployeeById(Long.parseLong(id));
+        System.out.println("openid"+openid);
+        System.out.println("id"+id);
+        if(employee == null){
+            return R.fail(25001,"用户不存在");
+        }
+        if(employee.getOpenid() != null && !employee.getOpenid().equals("")){
+            return R.fail(25002,"用户微信已绑定");
+        }
+        System.out.println("ok!!!");
+        employee.setOpenid(openid);
+        employeeService.updateEmployee(employee);
+        return R.ok(20001,"绑定成功");
+
+    }
+
+
+
     /*小程序调用后台登录接口
      * */
     @RequestMapping("/doLogin")
@@ -71,6 +110,7 @@ public class EmployeeController
             return R.fail(50001,"用户名或密码错误");
         }
 
+
         //验证成功，生成token
         Map<String,Object> claims=new HashMap<>();
         claims.put("username",employee.getName());
@@ -78,6 +118,10 @@ public class EmployeeController
         String token= JWTUtils.getJwtToken(claims);
         Map<String,Object> data=new HashMap<>();
         data.put("token",token);
+        System.out.println("openid"+employee.getOpenid());
+        if(employee.getOpenid()==null || employee.getOpenid().equals("")){
+            return R.ok(20009,"询问是否绑定微信");
+        }
         return  R.ok(20001,data);
     }
 
@@ -113,7 +157,9 @@ public class EmployeeController
     @GetMapping(value = "/getCodedInfo/{id}")
     public R getCodedInfo(@PathVariable("id") Long id)
     {
+
         Employee e = employeeService.selectEmployeeById(id);
+        System.out.println(id);
         StringBuffer phone = new StringBuffer(e.getPhoneNumber());
         StringBuffer idShow = new StringBuffer(e.getIdNum());
         phone = phone.replace(3,7,"****");
