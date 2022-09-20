@@ -24,7 +24,10 @@
             clearable
             size="small"
           >
-            <el-option label="请选择字典生成" value="" />
+            <el-option label="游戏本" value="游戏本" />
+            <el-option label="轻薄本" value="轻薄本" />
+            <el-option label="商务本" value="商务本" />
+            <el-option label="一体式" value="一体式" />
           </el-select>
         </el-form-item>
         <!-- <el-form-item label="价格" prop="price">
@@ -236,7 +239,10 @@
         </el-form-item>
         <el-form-item label="类型" prop="type">
           <el-select v-model="form.type" placeholder="请选择类型">
-            <el-option label="请选择字典生成" value="pc" />
+            <el-option label="游戏本" value="游戏本" />
+            <el-option label="轻薄本" value="轻薄本" />
+            <el-option label="商务本" value="商务本" />
+            <el-option label="一体式" value="一体式" />
           </el-select>
         </el-form-item>
         <el-form-item label="价格" prop="price">
