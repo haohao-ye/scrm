@@ -30,11 +30,23 @@ export default {
         height: {
             type: String,
             default: '400px'
+        },
+        chartData: {
+            type: Object,
+            require: true
         }
     },
     data() {
         return {
             chart: null
+        }
+    },
+    watch: {
+        chartData: {
+            deep: true,
+            handler(val) {
+                this.setOptions(val)
+            }
         }
     },
     mounted() {
