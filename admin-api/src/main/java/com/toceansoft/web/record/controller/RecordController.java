@@ -48,6 +48,21 @@ public class RecordController
     }
 
     /**
+     * 根据客户id查询沟通记录
+     * @param record
+     * @return
+     */
+    @GetMapping("/lists")
+    public R lists(Record record)
+    {
+        System.out.println(record);
+        List<Record> list = recordService.selectRecordList(record);
+        System.out.println(list);
+        return R.ok(20000, list);//返回分页对象
+    }
+
+
+    /**
      * 新增销售员沟通记录
      */
     @PostMapping

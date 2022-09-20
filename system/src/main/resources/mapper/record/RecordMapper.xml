@@ -17,13 +17,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectRecordVo">
-        select id, clientId, employeeId, mode, remark, create_by, create_time, update_by, update_time from t_record
+        select id, clientId, employeeId, mode, remark,update_time from t_record
     </sql>
 
     <select id="selectRecordList" parameterType="Record" resultMap="RecordResult">
         <include refid="selectRecordVo"/>
         <where>  
-            <if test="clientid != null "> and clientId = #{clientid}</if>
+            <if test="id != null "> and clientId = #{id}</if>
             <if test="employeeid != null "> and employeeId = #{employeeid}</if>
             <if test="mode != null  and mode != ''"> and mode = #{mode}</if>
         </where>

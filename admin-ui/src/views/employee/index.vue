@@ -99,14 +99,14 @@
           icon="el-icon-upload2"
           size="mini"
           @click="handleImport"
-        >导入</el-button> 
+        >导入</el-button>
           </el-upload>
           <!-- <el-button
           type="info"
           plain
           icon="el-icon-document"
           size="mini"
-          
+
           @click="handleImport"
         >导入</el-button> -->
         </el-col>
@@ -117,7 +117,7 @@
           icon="el-icon-download"
           size="mini"
           @click="setGuaz"
-        >下载样本</el-button> 
+        >下载模板</el-button>
     </el-col>
   </el-row>
 
@@ -409,12 +409,12 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
-        
+
       })
         .then(function () {
           console.log(msg);
           return importEmployee(msg);
-          
+
         })
         .then((response) => {
           this.getList();
@@ -431,8 +431,8 @@ export default {
       a.dispatchEvent(evt);
       window.URL.revokeObjectURL(a.href);
     },
-    
-    
+
+
   },
 };
 </script>

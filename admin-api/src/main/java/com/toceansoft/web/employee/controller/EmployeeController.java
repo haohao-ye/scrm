@@ -264,23 +264,21 @@ public class EmployeeController
 
     /**
      * 员工修改自己的密码
-     * @param employee
      * @return
      */
-    @PostMapping("/changePsd")
-    public R changePassword(@RequestBody Employee employee){
-        System.out.println(employee);
-        String pwd = employee.getPassword();
-        String newPwd = employee.getNewPassword();
-        employee = employeeService.selectEmployeeById(employee.getId());
-        System.out.println(employee);
+    @GetMapping("/changePsd")
+    public R changePassword(Long id,String password,String newPassword){
+        Employee e = employeeService.selectEmployeeById(id);
+        System.out.println("0. "+id);
+        System.out.println("1. "+employeeService.selectEmployeeById(id));
+        System.out.println("2. "+e);
 //        System.out.println("用户: "+e.getName()+" 正在修改密码");
 //        System.out.println(e.getPassword());
-        if(! pwd.equals(employee.getPassword())){
+        if(! password.equals(e.getPassword())){
             return R.fail(50010,"原密码错误！");
         }
-        employee.setPassword(newPwd);
-        int rows = employeeService.updateEmployee(employee);
+        e.setPassword(newPassword);
+        int rows = employeeService.updateEmployee(e);
         if (rows <= 0 ) {
             return R.fail(50002, "修改失败");
         }
@@ -289,19 +287,19 @@ public class EmployeeController
 
     /**
      * 员工重置自己的密码
-     * @param employee
      * @return
      */
-    @PutMapping("/resetPassword")
-    public R resetPassword(@RequestBody Employee employee){
+    @GetMapping("/resetPassword")
+    public R resetPassword(Long id,String phoneNumber,String idNum){
 
-        Employee e = employeeService.selectEmployeeById(employee.getId());
+        System.out.println(id+"  "+phoneNumber+"  "+idNum);
+        Employee e = employeeService.selectEmployeeById(id);
 
-        if(!e.getIdNum().equals(employee.getIdNum()) || !e.getPhoneNumber().equals(employee.getPhoneNumber())){
+        if(!e.getIdNum().equals(idNum) || !e.getPhoneNumber().equals(phoneNumber)){
             return R.fail(50011,"手机号或身份证号验证失败，请仔细检查！");
         }
-        employee.setPassword(e.getIdNum().substring(6,14));
-        int rows = employeeService.updateEmployee(employee);
+        e.setPassword(e.getIdNum().substring(6,14));
+        int rows = employeeService.updateEmployee(e);
         if (rows <= 0 ) {
             return R.fail(50012, "重置密码失败！");
         }

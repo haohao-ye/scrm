@@ -25,8 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectInformList" parameterType="Inform" resultMap="InformResult">
         <include refid="selectInformVo"/>
-        <where>  
+        <where>
             <if test="infoTitle != null  and infoTitle != ''"> and info_title like concat('%', #{infoTitle}, '%')</if>
+            <if test="infoSol != null  and infoSol != ''"> and info_sol = #{infoSol}</if>
             <if test="infoBody != null  and infoBody != ''"> and info_body like concat('%', #{infoBody}, '%')</if>
         </where>
     </select>
