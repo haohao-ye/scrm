@@ -24,7 +24,10 @@
             clearable
             size="small"
           >
-            <el-option label="请选择字典生成" value="" />
+            <el-option label="游戏本" value="游戏本" />
+            <el-option label="轻薄本" value="轻薄本" />
+            <el-option label="商务本" value="商务本" />
+            <el-option label="一体式" value="一体式" />
           </el-select>
         </el-form-item>
         <!-- <el-form-item label="价格" prop="price">
@@ -73,7 +76,12 @@
           />
         </el-form-item> -->
         <el-form-item label="营销活动" prop="activity_id">
-          <el-select v-model="form.activity_id" placeholder="选择活动编号" size="small" @click.native="optionSelect">
+          <el-select
+            v-model="form.activity_id"
+            placeholder="选择活动编号"
+            size="small"
+            @click.native="optionSelect"
+          >
             <el-option
               v-for="activity in activityList"
               :key="activity.id"
@@ -231,7 +239,10 @@
         </el-form-item>
         <el-form-item label="类型" prop="type">
           <el-select v-model="form.type" placeholder="请选择类型">
-            <el-option label="请选择字典生成" value="pc" />
+            <el-option label="游戏本" value="游戏本" />
+            <el-option label="轻薄本" value="轻薄本" />
+            <el-option label="商务本" value="商务本" />
+            <el-option label="一体式" value="一体式" />
           </el-select>
         </el-form-item>
         <el-form-item label="价格" prop="price">
@@ -267,8 +278,18 @@
     </el-dialog>
 
     <!-- 订单对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="orderForm" :model="orderForm" :rules="rules1" label-width="80px">
+    <el-dialog
+      :title="title"
+      :visible.sync="open1"
+      width="500px"
+      append-to-body
+    >
+      <el-form
+        ref="orderForm"
+        :model="orderForm"
+        :rules="rules1"
+        label-width="80px"
+      >
         <el-form-item label="单号" prop="orderNo">
           <el-input v-model="form.orderNo" placeholder="输入单号" />
         </el-form-item>
@@ -296,12 +317,11 @@
           <el-input v-model="form.color" placeholder="请输入颜色" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="备注"/>
+          <el-input v-model="form.remark" placeholder="备注" />
         </el-form-item>
-       
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitOrder">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -373,20 +393,19 @@ export default {
       // 表单参数
       form: {},
       //订单表单参数
-      orderForm:{},
+      orderForm: {},
       // 表单校验
       rules: {
         name: [{ required: true, message: "名称不能为空", trigger: "blur" }],
         type: [{ required: true, message: "类型不能为空", trigger: "change" }],
-        price: [
-          {validator:checkPrice, trigger: 'change'}
-        ],
+        price: [{ validator: checkPrice, trigger: "change" }],
         brand: [{ required: true, message: "品牌不能为空", trigger: "blur" }],
         inventory: [
           { required: true, message: "库存不能为空", trigger: "blur" },
         ],
         activity_id: [{ type: "number" }],
       },
+      rules1: {},
       activityList: {},
     };
   },
@@ -427,7 +446,7 @@ export default {
         updateBy: null,
         delFlag: null,
       };
-      this.orderForm={
+      this.orderForm = {
         orderNo: null,
         name: null,
         type: null,
@@ -435,7 +454,7 @@ export default {
         lable: null,
         brand: null,
         quantity: null,
-        remark:null,
+        remark: null,
         color: null,
         creatBy: null,
         updateTime: null,
@@ -445,8 +464,8 @@ export default {
       this.resetForm("form");
       this.resetForm("orderForm");
     },
-    test(){
-        this.console.log("-----------");
+    test() {
+      this.console.log("-----------");
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -477,11 +496,10 @@ export default {
       this.optionSelect();
     },
     /**订单入库 */
-    handleEntry(){
-        this.reset();
-        this.open=true;
-        this.title="订单";
-        
+    handleEntry() {
+      this.reset();
+      this.open1 = true;
+      this.title = "订单";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -515,19 +533,16 @@ export default {
       });
     },
     /**确认订单按钮 */
-    submitOrder(){
+    submitOrder() {
       this.$refs["orderForm"].validate((valid) => {
         if (valid) {
-         
-            updateByOrder(this.orderForm).then((response) => {
-              this.$message("入库成功");
-              this.open = false;
-              this.getList();
-            });
-          
+          updateByOrder(this.orderForm).then((response) => {
+            this.$message("入库成功");
+            this.open = false;
+            this.getList();
+          });
         }
       });
-
     },
     optionSelect() {
       listActivity(this.queryParams).then((response) => {
