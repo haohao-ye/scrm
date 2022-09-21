@@ -88,12 +88,12 @@
 
     <el-table v-loading="loading" :data="ordersList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="消费单id" align="center" prop="consumptionListId" />
-      <el-table-column label="客户id" align="center" prop="clientId" />
-      <el-table-column label="商品id" align="center" prop="goodsId" />
+      <el-table-column label="消费单 ID" align="center" prop="consumptionListId" />
+      <el-table-column label="客户 ID" align="center" prop="clientId" />
+      <el-table-column label="商品 ID" align="center" prop="goodsId" />
       <el-table-column label="商品量" align="center" prop="quantity" />
       <el-table-column label="订单状态" align="center" prop="state" />
-      <el-table-column label="销售员id" align="center" prop="salesmanId" />
+      <el-table-column label="销售员 ID" align="center" prop="salesmanId" />
       <el-table-column label="总额" align="center" prop="totalAmount" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -124,10 +124,10 @@
     <!-- 添加或修改订单表对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="客户id" prop="clientId">
+        <el-form-item label="客户 ID" prop="clientId">
           <el-input v-model="form.clientId" placeholder="请输入客户id" />
         </el-form-item>
-        <el-form-item label="商品id" prop="goodsId">
+        <el-form-item label="商品 ID" prop="goodsId">
           <el-input v-model="form.goodsId" placeholder="请输入商品id" />
         </el-form-item>
         <el-form-item label="商品量" prop="quantity">
@@ -136,7 +136,7 @@
         <el-form-item label="订单状态" prop="state">
           <el-input v-model="form.state" placeholder="请输入订单状态" />
         </el-form-item>
-        <el-form-item label="销售员id" prop="salesmanId">
+        <el-form-item label="销售员 ID" prop="salesmanId">
           <el-input v-model="form.salesmanId" placeholder="请输入销售员id" />
         </el-form-item>
         <el-form-item label="总额" prop="totalAmount">

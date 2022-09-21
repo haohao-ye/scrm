@@ -52,10 +52,49 @@ public class EmployeeController
     private IDeptService deptService;
 
 
+
+    @RequestMapping("/wxlogin")
+    public R wxlogin(String openid){
+        System.out.println("openid:"+openid);
+        Employee employee = employeeService.selectEmployeeByOpenid(openid);
+        if(employee == null){
+            return R.fail(25000,"用户微信未绑定手机号码");
+        }
+
+        //验证成功，生成token
+        Map<String,Object> claims=new HashMap<>();
+        claims.put("username",employee.getName());
+
+        String token= JWTUtils.getJwtToken(claims);
+        Map<String,Object> data=new HashMap<>();
+        data.put("token",token);
+        return  R.ok(20001,employee.getId());
+    }
+
+    @RequestMapping("/wxbind")
+    public R wxbind(String openid, String id){
+        Employee employee = employeeService.selectEmployeeById(Long.parseLong(id));
+        System.out.println("openid"+openid);
+        System.out.println("id"+id);
+        if(employee == null){
+            return R.fail(25001,"用户不存在");
+        }
+        if(employee.getOpenid() != null && !employee.getOpenid().equals("")){
+            return R.fail(25002,"用户微信已绑定");
+        }
+        System.out.println("ok!!!");
+        employee.setOpenid(openid);
+        employeeService.updateEmployee(employee);
+        return R.ok(20001,"绑定成功");
+
+    }
+
+
+
     /*小程序调用后台登录接口
      * */
     @RequestMapping("/doLogin")
-    public R dologin( String username,  String password){
+    public R doLogin( String username,  String password){
 //        System.out.println(username);
 //        System.out.println(password);
         int ok = 1;
@@ -71,6 +110,7 @@ public class EmployeeController
             return R.fail(50001,"用户名或密码错误");
         }
 
+
         //验证成功，生成token
         Map<String,Object> claims=new HashMap<>();
         claims.put("username",employee.getName());
@@ -78,6 +118,10 @@ public class EmployeeController
         String token= JWTUtils.getJwtToken(claims);
         Map<String,Object> data=new HashMap<>();
         data.put("token",token);
+        System.out.println("openid"+employee.getOpenid());
+        if(employee.getOpenid()==null || employee.getOpenid().equals("")){
+            return R.ok(20009,"询问是否绑定微信");
+        }
         return  R.ok(20001,data);
     }
 
@@ -126,7 +170,9 @@ public class EmployeeController
     @GetMapping(value = "/getCodedInfo/{id}")
     public R getCodedInfo(@PathVariable("id") Long id)
     {
+
         Employee e = employeeService.selectEmployeeById(id);
+        System.out.println(id);
         StringBuffer phone = new StringBuffer(e.getPhoneNumber());
         StringBuffer idShow = new StringBuffer(e.getIdNum());
         phone = phone.replace(3,7,"****");
@@ -229,6 +275,49 @@ public class EmployeeController
     }
 
 
+    /**
+     * 员工修改自己的密码
+     * @return
+     */
+    @GetMapping("/changePsd")
+    public R changePassword(Long id,String password,String newPassword){
+        Employee e = employeeService.selectEmployeeById(id);
+        System.out.println("0. "+id);
+        System.out.println("1. "+employeeService.selectEmployeeById(id));
+        System.out.println("2. "+e);
+//        System.out.println("用户: "+e.getName()+" 正在修改密码");
+//        System.out.println(e.getPassword());
+        if(! password.equals(e.getPassword())){
+            return R.fail(50010,"原密码错误！");
+        }
+        e.setPassword(newPassword);
+        int rows = employeeService.updateEmployee(e);
+        if (rows <= 0 ) {
+            return R.fail(50002, "修改失败");
+        }
+        return R.ok(20000, null);
+    }
+
+    /**
+     * 员工重置自己的密码
+     * @return
+     */
+    @GetMapping("/resetPassword")
+    public R resetPassword(Long id,String phoneNumber,String idNum){
+
+        System.out.println(id+"  "+phoneNumber+"  "+idNum);
+        Employee e = employeeService.selectEmployeeById(id);
+
+        if(!e.getIdNum().equals(idNum) || !e.getPhoneNumber().equals(phoneNumber)){
+            return R.fail(50011,"手机号或身份证号验证失败，请仔细检查！");
+        }
+        e.setPassword(e.getIdNum().substring(6,14));
+        int rows = employeeService.updateEmployee(e);
+        if (rows <= 0 ) {
+            return R.fail(50012, "重置密码失败！");
+        }
+        return R.ok(20000, null);
+    }
 
     /**
      * 导入excel

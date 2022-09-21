@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.toceansoft.employee.mapper.EmployeeMapper">
-    
+
     <resultMap type="Employee" id="EmployeeResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
@@ -12,26 +12,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="password"    column="password"    />
         <result property="deptId"    column="dept_id"    />
         <result property="deptName"    column="dept_name"    />
+        <result property="openid"    column="openid"    />
     </resultMap>
 
     <sql id="selectEmployeeVo">
-        select e.id, e.name, e.id_num, e.phone_number, e.password, e.dept_id ,d.dept_name as dept_name
+        select e.id, e.name, e.id_num, e.phone_number, e.password, e.dept_id ,e.openid,d.dept_name as dept_name
         from t_employee e left join t_dept d on e.dept_id = d.id
     </sql>
 
     <select id="selectEmployeeList" parameterType="Employee" resultMap="EmployeeResult">
         <include refid="selectEmployeeVo"/>
-        <where>  
+        <where>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="deptId != null  and deptId != ''"> and dept_id = #{deptId}</if>
         </where>
     </select>
-    
+
     <select id="selectEmployeeById" parameterType="Long" resultMap="EmployeeResult">
         <include refid="selectEmployeeVo"/>
         where e.id = #{id}
     </select>
-        
+
+    <select id="selectEmployeeByOpenid" parameterType="String" resultMap="EmployeeResult">
+        <include refid="selectEmployeeVo"/>
+        where e.openid = #{openid}
+    </select>
+
+
+
+
     <insert id="insertEmployee" parameterType="Employee">
         insert into t_employee
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -41,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="phoneNumber != null and phoneNumber != ''">phone_number,</if>
             <if test="password != null and password != ''">password,</if>
             <if test="deptId != null and deptId != ''">dept_id,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="name != null and name != ''">#{name},</if>
@@ -49,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="phoneNumber != null and phoneNumber != ''">#{phoneNumber},</if>
             <if test="password != null and password != ''">#{password},</if>
             <if test="deptId != null and deptId != ''">#{deptId},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateEmployee" parameterType="Employee">
@@ -60,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
             <if test="password != null and password != ''">password = #{password},</if>
             <if test="deptId != null and deptId != ''">dept_id = #{deptId},</if>
+            openid = #{openid},
         </trim>
         where id = #{id}
     </update>
@@ -69,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteEmployeeByIds" parameterType="String">
-        delete from t_employee where id in 
+        delete from t_employee where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -78,4 +88,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="counter" parameterType="Employee" resultType="java.lang.Integer">
         select count(*) from t_employee
     </select>
+
+
 </mapper>

@@ -65,4 +65,12 @@ public interface IEmployeeService
      * @return
      */
     public int counter(Employee employee);
+
+    /**
+     * 微信登录通过openid确定员工信息
+     *
+     * @param
+     * @return 结果
+     */
+    public Employee selectEmployeeByOpenid(String openid);
 }
