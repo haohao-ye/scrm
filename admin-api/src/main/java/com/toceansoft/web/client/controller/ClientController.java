@@ -71,9 +71,16 @@ public class ClientController
      * 新增客户
      */
     @PostMapping()
-    public R add(@RequestBody Client client)
+    public R add(@RequestBody Client client, HttpServletRequest request)
     {
-        System.out.println();
+        String token=request.getHeader("X-Token");
+        String username = JWTUtils.getUsername(token);
+        Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
+        client.setUpdatePerson(admin.getUsername());
+        client.setCreator(admin.getUsername());
+        client.setCreateTime(new Date());
+        client.setUpdateTime(new Date());
+
         int rows = clientService.insertClient(client);
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");
@@ -87,8 +94,14 @@ public class ClientController
      */
 
     @PutMapping("")
-    public R edit(@RequestBody Client client)
+    public R edit(@RequestBody Client client, HttpServletRequest request)
     {
+        String token=request.getHeader("X-Token");
+        String username = JWTUtils.getUsername(token);
+        Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
+        client.setUpdatePerson(admin.getUsername());
+        client.setUpdateTime(new Date());
+
         int rows = clientService.updateClient(client);
         if (rows <= 0 ) {
             return R.fail(50002, "修改失败");
@@ -97,13 +110,21 @@ public class ClientController
     }
 
     /**
-     * 删除客户
+     * 删除【请填写功能名称】
      */
     @DeleteMapping("/{ids}")
     //@PathVariable(name = "ids")
-    public R remove(@PathVariable Long[] ids)
+    public R remove(@PathVariable Long[] ids, HttpServletRequest request)
     {
-        System.out.println("deleting======================================="+ids);
+        String token=request.getHeader("X-Token");
+        String username = JWTUtils.getUsername(token);
+        Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
+        for (Long id :ids) {
+            Client client = clientService.selectClientById(id);
+            client.setUpdatePerson(admin.getUsername());
+        }
+
+        System.out.println("======================================="+ids);
         int rows = clientService.deleteClientByIds(ids);
         if (rows <= 0 ) {
             return R.fail(50002, "删除失败");

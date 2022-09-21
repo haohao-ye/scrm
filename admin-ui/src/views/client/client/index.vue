@@ -20,19 +20,19 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item> -->
-      <el-form-item label="联系方式" prop="contactInformation">
+      <el-form-item label="联系方式" prop="phoneNumber">
         <el-input
-          v-model="queryParams.contactInformation"
+          v-model="queryParams.phoneNumber"
           placeholder="请输入联系方式"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <!-- <el-form-item label="客户标签" prop="lable">
+      <!-- <el-form-item label="客户级别" prop="clientLevel">
         <el-input
-          v-model="queryParams.lable"
-          placeholder="请输入客户标签"
+          v-model="queryParams.clientLevel"
+          placeholder="请输入客户级别"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -47,9 +47,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="创建时间" prop="creatTime">
+      <el-form-item label="创建时间" prop="createTime">
         <el-date-picker clearable size="small"
-          v-model="queryParams.creatTime"
+          v-model="queryParams.createTime"
           type="date"
           value-format="yyyy-MM-dd"
           placeholder="选择创建时间">
@@ -73,9 +73,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item> -->
-      <!-- <el-form-item label="删除标签" prop="delLable">
+      <!-- <el-form-item label="删除标签" prop="delLabel">
         <el-input
-          v-model="queryParams.delLable"
+          v-model="queryParams.delLabel"
           placeholder="请输入删除标签"
           clearable
           size="small"
@@ -126,17 +126,17 @@
       <el-table-column label="客户id" align="center" prop="id" />
       <el-table-column label="客户姓名" align="center" prop="clientName" />
       <el-table-column label="客户地址" align="center" prop="address" />
-      <el-table-column label="联系方式" align="center" prop="contactInformation" />
-      <el-table-column label="客户标签" align="center" prop="lable" />
+      <el-table-column label="联系方式" align="center" prop="phoneNumber" />
+      <el-table-column label="客户级别" align="center" prop="clientLevel" />
       <el-table-column label="客户组别" align="center" prop="clientGroup" />
-      <el-table-column label="创建时间" align="center" prop="creatTime" width="180">
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.creatTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建人" align="center" prop="creator" />
       <el-table-column label="更新人" align="center" prop="updatePerson" />
-      <el-table-column label="删除标签" align="center" prop="delLable" />
+      <el-table-column label="删除标签" align="center" prop="delLabel" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -172,18 +172,18 @@
         <el-form-item label="客户地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入客户地址" />
         </el-form-item>
-        <el-form-item label="联系方式" prop="contactInformation">
-          <el-input v-model="form.contactInformation" placeholder="请输入联系方式" />
+        <el-form-item label="联系方式" prop="phoneNumber">
+          <el-input v-model="form.phoneNumber" placeholder="请输入联系方式" />
         </el-form-item>
-        <el-form-item label="客户标签" prop="lable">
-          <el-input v-model="form.lable" placeholder="请输入客户标签" />
+        <el-form-item label="客户级别" prop="clientLevel">
+          <el-input v-model="form.clientLevel" placeholder="请输入客户级别" />
         </el-form-item>
         <el-form-item label="客户组别" prop="clientGroup">
           <el-input v-model="form.clientGroup" placeholder="请输入客户组别" />
         </el-form-item>
-        <!-- <el-form-item label="创建时间" prop="creatTime">
+        <!-- <el-form-item label="创建时间" prop="createTime">
           <el-date-picker clearable size="small"
-            v-model="form.creatTime"
+            v-model="form.createTime"
             type="date"
             value-format="yyyy-MM-dd"
             placeholder="选择创建时间">
@@ -195,8 +195,8 @@
         <el-form-item label="更新人" prop="updatePerson">
           <el-input v-model="form.updatePerson" placeholder="请输入更新人" />
         </el-form-item> -->
-        <!-- <el-form-item label="删除标签" prop="delLable">
-          <el-input v-model="form.delLable" placeholder="请输入删除标签" />
+        <!-- <el-form-item label="删除标签" prop="delLabel">
+          <el-input v-model="form.delLabel" placeholder="请输入删除标签" />
         </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -240,13 +240,13 @@ export default {
         pageSize: 10,
         clientName: null,
         address: null,
-        contactInformation: null,
-        lable: null,
+        phoneNumber: null,
+        clientLevel: null,
         clientGroup: null,
-        creatTime: null,
+        createTime: null,
         creator: null,
         updatePerson: null,
-        delLable: null
+        delLabel: null
       },
       // 表单参数
       form: {},
@@ -255,19 +255,19 @@ export default {
         clientName: [
           { required: true, message: "客户名称不能为空", trigger: "blur" }
         ],
-        contactInformation: [
+        phoneNumber: [
           { required: true, message: "联系方式不能为空", trigger: "blur" }
         ],
         clientGroup: [
           { required: true, message: "客户组别不能为空", trigger: "blur" }
         ],
-        creatTime: [
+        createTime: [
           { required: true, message: "创建时间不能为空", trigger: "blur" }
         ],
         updateTime: [
           { required: true, message: "更新时间不能为空", trigger: "blur" }
         ],
-        delLable: [
+        delLabel: [
           { required: true, message: "删除标签不能为空", trigger: "blur" }
         ]
       }
@@ -297,14 +297,14 @@ export default {
         id: null,
         clientName: null,
         address: null,
-        contactInformation: null,
-        lable: null,
+        phoneNumber: null,
+        clientLevel: null,
         clientGroup: null,
-        creatTime: null,
+        createTime: null,
         creator: null,
         updateTime: null,
         updatePerson: null,
-        delLable: null
+        delLabel: null
       };
       this.resetForm("form");
     },

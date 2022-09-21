@@ -137,6 +137,19 @@ public class EmployeeController
         return R.ok(20000, pageInfo);//返回分页对象
     }
 
+    @GetMapping("/lists")
+    public R lists(Employee employee)
+    {
+        List<Employee> list = employeeService.selectEmployeeList(employee);
+        List<String> list1 = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++ ) {
+            String str = String.valueOf(list.get(i).getId())+" "+String.valueOf(list.get(i).getName());
+            list1.add(str);
+        }
+        System.out.println(list1);
+        return R.ok(20000, list);//返回分页对象
+    }
+
 
 
     /**
