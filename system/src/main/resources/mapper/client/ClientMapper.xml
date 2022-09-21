@@ -8,18 +8,19 @@
         <result property="id"    column="id"    />
         <result property="clientName"    column="client_name"    />
         <result property="address"    column="address"    />
-        <result property="contactInformation"    column="contact_information"    />
-        <result property="lable"    column="lable"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="clientLevel"    column="client_level"    />
         <result property="clientGroup"    column="client_group"    />
-        <result property="creatTime"    column="creat_time"    />
+        <result property="createTime"    column="create_time"    />
         <result property="creator"    column="creator"    />
         <result property="updateTime"    column="update_time"    />
         <result property="updatePerson"    column="update_person"    />
-        <result property="delLable"    column="del_lable"    />
+        <result property="delLabel"    column="del_label"    />
+        <result property="contactLabel"    column="contact_label"    />
     </resultMap>
 
     <sql id="selectClientVo">
-        select id, client_name, address, contact_information, lable, client_group, creat_time, creator, update_time, update_person, del_lable from t_client
+        select id, client_name, address, phone_number, client_level, client_group, create_time, creator, update_time, update_person, del_label, contact_label from t_client
     </sql>
 
     <select id="selectClientList" parameterType="Client" resultMap="ClientResult">
@@ -27,13 +28,14 @@
         <where>
             <if test="clientName != null  and clientName != ''"> and client_name like concat('%', #{clientName}, '%')</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
-            <if test="contactInformation != null  and contactInformation != ''"> and contact_information = #{contactInformation}</if>
-            <if test="lable != null  and lable != ''"> and lable = #{lable}</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
+            <if test="clientLevel != null  and clientLevel != ''"> and client_level = #{clientLevel}</if>
             <if test="clientGroup != null "> and client_group = #{clientGroup}</if>
-            <if test="creatTime != null "> and creat_time = #{creatTime}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
             <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
             <if test="updatePerson != null  and updatePerson != ''"> and update_person = #{updatePerson}</if>
-            <if test="delLable != null  and delLable != ''"> and del_lable = #{delLable}</if>
+            <if test="delLabel != null  and delLabel != ''"> and del_label = #{delLabel}</if>
+            <if test="contactLabel != null  and contactLabel != ''"> and contact_label = #{contactLabel}</if>
         </where>
     </select>
 
@@ -48,27 +50,27 @@
             <if test="id != null">id,</if>
             <if test="clientName != null and clientName != ''">client_name,</if>
             <if test="address != null">address,</if>
-            <if test="contactInformation != null and contactInformation != ''">contact_information,</if>
-            <if test="lable != null">lable,</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number,</if>
+            <if test="clientLevel != null">client_level,</if>
             <if test="clientGroup != null">client_group,</if>
-            creat_time,
+            create_time,
             <if test="creator != null">creator,</if>
             update_time,
             <if test="updatePerson != null">update_person,</if>
-            <if test="delLable != null and delLable != ''">del_lable,</if>
+            <if test="delLabel != null and delLabel != ''">del_label,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="clientName != null and clientName != ''">#{clientName},</if>
             <if test="address != null">#{address},</if>
-            <if test="contactInformation != null and contactInformation != ''">#{contactInformation},</if>
-            <if test="lable != null">#{lable},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">#{phoneNumber},</if>
+            <if test="clientLevel != null">#{clientLevel},</if>
             <if test="clientGroup != null">#{clientGroup},</if>
             sysdate(),
             <if test="creator != null">#{creator},</if>
             sysdate(),
             <if test="updatePerson != null">#{updatePerson},</if>
-            <if test="delLable != null and delLable != ''">#{delLable},</if>
+            <if test="delLabel != null and delLabel != ''">#{delLabel},</if>
         </trim>
     </insert>
 
@@ -77,14 +79,14 @@
         <trim prefix="SET" suffixOverrides=",">
             <if test="clientName != null and clientName != ''">client_name = #{clientName},</if>
             <if test="address != null">address = #{address},</if>
-            <if test="contactInformation != null and contactInformation != ''">contact_information = #{contactInformation},</if>
-            <if test="lable != null">lable = #{lable},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
+            <if test="clientLevel != null">client_level = #{clientLevel},</if>
             <if test="clientGroup != null">client_group = #{clientGroup},</if>
-            <if test="creatTime != null">creat_time = #{creatTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
             <if test="creator != null">creator = #{creator},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="updatePerson != null">update_person = #{updatePerson},</if>
-            <if test="delLable != null and delLable != ''">del_lable = #{delLable},</if>
+            <if test="delLabel != null and delLabel != ''">del_label = #{delLabel},</if>
         </trim>
         where id = #{id}
     </update>

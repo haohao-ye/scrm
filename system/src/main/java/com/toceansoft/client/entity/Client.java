@@ -30,17 +30,17 @@ public class Client extends BaseEntity
     private String address;
 
     /** 客户联系方式 */
-    private String contactInformation;
+    private String phoneNumber;
 
     /** 客户标签 */
-    private String lable;
+    private String clientLevel;
 
     /** 客户组别 */
     private Long clientGroup;
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date creatTime;
+    private Date createTime;
 
     /** 创建人 */
     private String creator;
@@ -49,7 +49,10 @@ public class Client extends BaseEntity
     private String updatePerson;
 
     /** 删除标签 */
-    private String delLable;
+    private String delLabel;
+
+    /** 联系标签 */
+    private String contactLabel;
 
 
     @Override
@@ -58,14 +61,15 @@ public class Client extends BaseEntity
                 .append("id", getId())
                 .append("clientName", getClientName())
                 .append("address", getAddress())
-                .append("contactInformation", getContactInformation())
-                .append("lable", getLable())
+                .append("phoneNumber", getPhoneNumber())
+                .append("clientLevel", getClientLevel())
                 .append("clientGroup", getClientGroup())
-                .append("creatTime", getCreatTime())
+                .append("createTime", getCreateTime())
                 .append("creator", getCreator())
                 .append("updateTime", getUpdateTime())
                 .append("updatePerson", getUpdatePerson())
-                .append("delLable", getDelLable())
+                .append("delLabel", getDelLabel())
+                .append("contactLabel", getContactLabel())
                 .toString();
     }
 }

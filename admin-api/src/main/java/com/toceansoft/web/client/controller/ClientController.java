@@ -78,7 +78,7 @@ public class ClientController
         Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
         client.setUpdatePerson(admin.getUsername());
         client.setCreator(admin.getUsername());
-        client.setCreatTime(new Date());
+        client.setCreateTime(new Date());
         client.setUpdateTime(new Date());
 
         int rows = clientService.insertClient(client);
