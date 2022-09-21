@@ -23,4 +23,6 @@ public class Admin implements Serializable {
     private String remark;
     private String newPassword;
 
+    private String role;  // 角色
+    private Long deptId;
 }

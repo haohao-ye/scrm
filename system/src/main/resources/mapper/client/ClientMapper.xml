@@ -11,6 +11,7 @@
         <result property="phoneNumber"    column="phone_number"    />
         <result property="clientLevel"    column="client_level"    />
         <result property="clientGroup"    column="client_group"    />
+        <result property="clientGroupName"    column="client_group_name"    />
         <result property="createTime"    column="create_time"    />
         <result property="creator"    column="creator"    />
         <result property="updateTime"    column="update_time"    />
@@ -20,29 +21,29 @@
     </resultMap>
 
     <sql id="selectClientVo">
-        select id, client_name, address, phone_number, client_level, client_group, create_time, creator, update_time, update_person, del_label, contact_label from t_client
+        select c.*, e.name as client_group_name from t_client c left join t_employee e on c.client_group = e.id
     </sql>
 
     <select id="selectClientList" parameterType="Client" resultMap="ClientResult">
         <include refid="selectClientVo"/>
         <where>
-            <if test="clientName != null  and clientName != ''"> and client_name like concat('%', #{clientName}, '%')</if>
-            <if test="address != null  and address != ''"> and address = #{address}</if>
-            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
-            <if test="clientLevel != null  and clientLevel != ''"> and client_level = #{clientLevel}</if>
-            <if test="clientGroup != null "> and client_group = #{clientGroup}</if>
-            <if test="createTime != null "> and create_time = #{createTime}</if>
-            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
-            <if test="updatePerson != null  and updatePerson != ''"> and update_person = #{updatePerson}</if>
-            <if test="delLabel != null  and delLabel != ''"> and del_label = #{delLabel}</if>
-            <if test="contactLabel != null  and contactLabel != ''"> and contact_label = #{contactLabel}</if>
+            <if test="clientName != null  and clientName != ''"> and c.client_name like concat('%', #{clientName}, '%')</if>
+            <if test="address != null  and address != ''"> and c.address = #{address}</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and c.phone_number = #{phoneNumber}</if>
+            <if test="clientLevel != null  and clientLevel != ''"> and c.client_level = #{clientLevel}</if>
+            <if test="clientGroup != null "> and c.client_group = #{clientGroup}</if>
+            <if test="createTime != null "> and c.create_time = #{createTime}</if>
+            <if test="creator != null  and creator != ''"> and c.creator = #{creator}</if>
+            <if test="updatePerson != null  and updatePerson != ''"> and c.update_person = #{updatePerson}</if>
+            <if test="delLabel != null  and delLabel != ''"> and c.del_label = #{delLabel}</if>
+            <if test="contactLabel != null  and contactLabel != ''"> and c.contact_label = #{contactLabel}</if>
         </where>
-        order by id,client_level
+        order by id
     </select>
 
     <select id="selectClientById" parameterType="Long" resultMap="ClientResult">
         <include refid="selectClientVo"/>
-        where id = #{id}
+        where c.id = #{id}
     </select>
 
     <insert id="insertClient" parameterType="Client">

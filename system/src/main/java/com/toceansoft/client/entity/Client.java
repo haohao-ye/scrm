@@ -54,6 +54,9 @@ public class Client extends BaseEntity
     /** 联系标签 */
     private String contactLabel;
 
+    /** 客户组别 */
+    private String clientGroupName;
+
 
     @Override
     public String toString() {

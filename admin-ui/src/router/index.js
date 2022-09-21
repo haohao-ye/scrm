@@ -93,117 +93,6 @@ export const constantRoutes = [
       ]
     },
   */
-  {
-    path: '/sysmgr',
-    component: Layout,
-    redirect: '/sysmgr/admin',
-    name: 'Sysadmin',
-    meta: { title: '成员管理', icon: 'el-icon-user-solid' },
-    children: [
-      {
-        path: 'admin',
-        name: 'Admin',
-        component: () => import('@/views/sysmgr/admin'),
-        meta: { title: '系统管理员', icon: 'guanliyuan' }
-      },
-      // {
-      //   path: 'admin1',
-      //   name: 'Admin1',
-      //   component: () => import('@/views/sysmgr/admin1'),
-      //   meta: { title: '成员管理', icon: 'el-icon-platform-eleme' }
-      // }
-    ]
-  },
-
-  {
-    path: '/employee',
-    component: Layout,
-    name: 'employee',
-    // meta: { title: '员工管理', icon: 'el-icon-user' },
-    children: [
-      {
-        path: 'employee',
-        name: '员工管理',
-        component: () => import('@/views/employee/index'),
-        meta: { title: '员工管理', icon: 'yuangong' }
-      }
-    ]
-  },
-
-  {
-    path: '/dept',
-    component: Layout,
-    name: 'Dept',
-    // meta: { title: '部门列表', icon: 'el-icon-s-tools' },
-    children: [
-      {
-        path: 'dept',
-        name: 'Dept',
-        component: () => import('@/views/dept/dept'),
-        meta: { title: '部门管理', icon: 'bumen' }
-      }
-    ]
-  },
-
-  {
-    path: '/inform',
-    component: Layout,
-    name: 'Inform',
-    // meta: { title: '通知管理', icon: 'el-icon-message-solid' },
-    children: [
-      {
-        path: 'inform',
-        name: 'Inform',
-        component: () => import('@/views/inform/index'),
-        meta: { title: '通知管理', icon: 'tongzhi' }
-      }
-    ]
-  },
-
-  {
-    path: '/goods',
-    component: Layout,
-    name: 'goods',
-    // meta: { title: '商品管理', icon: 'el-icon-s-goods' },
-    children: [
-      {
-        path: 'goods',
-        name: '商品列表',
-        component: () => import('@/views/goods/goods'),
-        meta: { title: '商品管理', icon: 'shangpin' }
-      }
-    ]
-  },
-
-  {
-    path: '/activity',
-    component: Layout,
-    name: 'Activity',
-    // meta: { title: '营销活动', icon: 'el-icon-s-goods' },
-    children: [
-      {
-        path: 'activity',
-        name: '营销',
-        component: () => import('@/views/activity/activity'),
-        meta: { title: '营销活动', icon: 'yingxiao' }
-      }
-    ]
-  },
-
-  {
-    path: '/orders',
-    component: Layout,
-    name: 'Orders',
-    // meta: { title: '订单列表', icon: 'el-icon-s-tools' },
-    children: [
-      {
-        path: 'orders',
-        name: 'Orders',
-        component: () => import('@/views/orders/orders'),
-        meta: { title: '订单管理', icon: 'dingdan' }
-      }
-    ]
-  },
 
   // {
   //   path: '/salecount',
@@ -230,6 +119,136 @@ export const constantRoutes = [
         component: (resolve) => require(['@/views/tool/gen/editTable'], resolve),
         name: 'GenEdit',
         meta: { title: '修改生成配置' }
+      }
+    ]
+  }
+]
+
+// 把需要设置权限的理由放在动态路由里那就得写为 其中 meta中的 roles 就是对角色的管理
+export const asyncRoutes = [
+  {
+    path: '/sysmgr',
+    component: Layout,
+    redirect: '/sysmgr/admin',
+    name: 'Sysadmin',
+    // meta: { title: '成员管理', icon: 'el-icon-user-solid' },
+    children: [
+      {
+        path: 'admin',
+        name: 'Admin',
+        component: () => import('@/views/sysmgr/admin'),
+        meta: { title: '系统管理员', icon: 'guanliyuan', roles: ['admin'] }
+      },
+      // {
+      //   path: 'admin1',
+      //   name: 'Admin1',
+      //   component: () => import('@/views/sysmgr/admin1'),
+      //   meta: { title: '成员管理', icon: 'el-icon-platform-eleme' }
+      // }
+    ]
+  },
+
+  {
+    path: '/employee',
+    component: Layout,
+    name: 'employee',
+    // meta: { title: '员工管理', icon: 'el-icon-user' },
+    children: [
+      {
+        path: 'employee',
+        name: '员工管理',
+        component: () => import('@/views/employee/index'),
+        meta: { title: '员工管理', icon: 'yuangong', roles: ['admin'] }
+      }
+    ]
+  },
+
+  {
+    path: '/dept',
+    component: Layout,
+    name: 'Dept',
+    // meta: { title: '部门列表', icon: 'el-icon-s-tools' },
+    children: [
+      {
+        path: 'dept',
+        name: 'Dept',
+        component: () => import('@/views/dept/dept'),
+        meta: { title: '部门管理', icon: 'bumen', roles: ['admin'] }
+      }
+    ]
+  },
+
+  {
+    path: '/inform',
+    component: Layout,
+    name: 'Inform',
+    // meta: { title: '通知管理', icon: 'el-icon-message-solid' },
+    children: [
+      {
+        path: 'inform',
+        name: 'Inform',
+        component: () => import('@/views/inform/index'),
+        meta: { title: '通知管理', icon: 'tongzhi', roles: ['admin'] }
+      }
+    ]
+  },
+
+
+  {
+    path: '/goods',
+    component: Layout,
+    name: 'goods',
+    // meta: { title: '商品管理', icon: 'el-icon-s-goods' },
+    children: [
+      {
+        path: 'goods',
+        name: '商品列表',
+        component: () => import('@/views/goods/goods'),
+        meta: { title: '商品管理', icon: 'shangpin', roles: ['admin', 'sales', 'assets']  }
+      }
+    ]
+  },
+
+  {
+    path: '/activity',
+    component: Layout,
+    name: 'Activity',
+    // meta: { title: '营销活动', icon: 'el-icon-s-goods' },
+    children: [
+      {
+        path: 'activity',
+        name: '营销',
+        component: () => import('@/views/activity/activity'),
+        meta: { title: '营销活动', icon: 'yingxiao', roles: ['admin', 'sales'] }
+      }
+    ]
+  },
+
+  {
+    path: '/orders',
+    component: Layout,
+    name: 'Orders',
+    // meta: { title: '订单列表', icon: 'el-icon-s-tools' },
+    children: [
+      {
+        path: 'orders',
+        name: 'Orders',
+        component: () => import('@/views/orders/orders'),
+        meta: { title: '订单管理', icon: 'dingdan', roles: ['admin', 'sales'] }
+      }
+    ]
+  },
+
+  {
+    path: '/client',
+    component: Layout,
+    name: 'Client',
+    children: [
+      {
+        path: 'client',
+        name: 'Client',
+        component: () => import('@/views/client/client/index'),
+        meta: { title: '客户管理', icon: 'kehu', roles: ['admin', 'sales'] }
       }
     ]
   },

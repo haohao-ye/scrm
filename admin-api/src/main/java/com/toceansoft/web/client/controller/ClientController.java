@@ -137,11 +137,11 @@ public class ClientController
      * @param clientName
      * @return
      */
-    @GetMapping(value = "/{clientName}")
-    public R getByName(@PathVariable("clientName") String clientName){
-        List<Client> list = clientService.selectClientByName(clientName);
-        PageInfo pageInfo = new PageInfo(list); //构建分页对象
-        return R.ok(20000, null);
-    }
+//    @GetMapping(value = "/{clientName}")
+//    public R getByName(@PathVariable("clientName") String clientName){
+//        List<Client> list = clientService.selectClientByName(clientName);
+//        PageInfo pageInfo = new PageInfo(list); //构建分页对象
+//        return R.ok(20000, null);
+//    }
 }
 

@@ -81,6 +81,11 @@ public class InformController
         Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
         inform.setUpdateBy(admin.getUsername());
         inform.setCreateBy(admin.getUsername());
+
+        Date date = new Date();
+        inform.setCreateTime(date);
+        inform.setUpdateTime(date);
+
         int rows = informService.insertInform(inform);
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");
@@ -98,7 +103,7 @@ public class InformController
         String username = JWTUtils.getUsername(token);
         Admin admin=(Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
         inform.setUpdateBy(admin.getUsername());
-         int rows = informService.updateInform(inform);
+        int rows = informService.updateInform(inform);
         if (rows <= 0 ) {
             return R.fail(50002, "修改失败");
         }
