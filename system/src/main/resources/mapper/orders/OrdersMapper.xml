@@ -49,9 +49,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into t_orders
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="clientId != null">client_id,</if>
-            <if test="clientName!=null">client_name</if>
+            <if test="clientName!=null">client_name,</if>
             <if test="goodsId != null">goods_id,</if>
-            <if test="goodsName !=nuull and gppdsName!=''">goods_name,</if>
+            <if test="goodsName !=null and goodsName!=''">goods_name,</if>
             <if test="quantity != null">quantity,</if>
             <if test="state != null and state != ''">state,</if>
             <if test="img !=null and img !=''">img,</if>
@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="clientId != null">#{clientId},</if>
-            <if test="clientName!=null">#{clientName</if>
+            <if test="clientName!=null">#{clientName},</if>
             <if test="goodsId != null">#{goodsId},</if>
             <if test="goodsName!=null">#{goodsName},</if>
             <if test="quantity != null">#{quantity},</if>
