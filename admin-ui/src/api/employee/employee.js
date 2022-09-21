@@ -9,6 +9,15 @@ export function listEmployee(query) {
   })
 }
 
+// 查询员工管理列表2
+export function listEmp(query) {
+  return request({
+    url: '/api/employee/employee/lists',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询员工管理详细
 export function getEmployee(id) {
   return request({
