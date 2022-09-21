@@ -83,7 +83,7 @@
 
     <el-table v-loading="loading" :data="activityList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="商业活动id" align="center" prop="id" />
+      <el-table-column label="商业活动 ID" align="center" prop="id" />
       <el-table-column label="活动名称" align="center" prop="name" />
       <el-table-column label="活动类别" align="center" prop="type" />
       <el-table-column label="活动开始时间" align="center" prop="endTime" width="180">

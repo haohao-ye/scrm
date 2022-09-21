@@ -40,6 +40,8 @@ public class Employee extends BaseEntity
     /** 员工新密码 */
     private String newPassword;
 
+    private String openid;
+
 
     @Override
     public String toString() {
@@ -52,6 +54,7 @@ public class Employee extends BaseEntity
             .append("deptName", getDeptName())
             .append("deptId",getDeptId())
                 .append("newPassword",getNewPassword())
+                .append("openid",getOpenid())
             .toString();
     }
 }

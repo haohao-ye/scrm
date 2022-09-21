@@ -178,7 +178,7 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="商品id" align="center" prop="id" />
+        <el-table-column label="商品 ID" align="center" prop="id" />
         <el-table-column label="名称" align="center" prop="name" />
         <el-table-column label="类型" align="center" prop="type" />
         <el-table-column label="价格" align="center" prop="price" />

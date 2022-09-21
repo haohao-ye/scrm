@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 16/09/2022 09:24:08
+ Date: 19/09/2022 15:05:40
 */
 
 SET NAMES utf8mb4;
@@ -37,6 +37,7 @@ CREATE TABLE `t_employee`  (
 -- ----------------------------
 -- Records of t_employee
 -- ----------------------------
+INSERT INTO `t_employee` VALUES (11111111, '测试用户', '测试', '111111111111111111', '11111111111', '11111111', 3);
 INSERT INTO `t_employee` VALUES (20200902, '王武', '男', '400134188305052659', '12548756931', '18830505', 1);
 INSERT INTO `t_employee` VALUES (20210603, '里夫金', '女', '442158199603052124', '12544785524', '19960305', 1);
 INSERT INTO `t_employee` VALUES (20210804, '倪狻', '男', '445124200002052114', '13666558877', '20000205', 2);

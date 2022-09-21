@@ -22,6 +22,9 @@ public class Orders extends BaseEntity
     /** 客户id */
     private Long clientId;
 
+    /**客户名字 */
+    private String clientName;
+
     /** 商品id */
     private Long goodsId;
 
@@ -57,6 +60,7 @@ public class Orders extends BaseEntity
             .append("clientId", getClientId())
             .append("goodsId", getGoodsId())
             .append("quantity", getQuantity())
+                .append("clientName",getClientName())
                 .append("img",getImg())
                 .append("types",getTypes())
 

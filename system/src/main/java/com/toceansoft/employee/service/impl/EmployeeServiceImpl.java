@@ -100,4 +100,9 @@ public class EmployeeServiceImpl implements IEmployeeService
     public int counter(Employee employee) {
         return employeeMapper.counter(employee);
     }
+
+    @Override
+    public Employee selectEmployeeByOpenid(String openid) {
+        return employeeMapper.selectEmployeeByOpenid(openid);
+    }
 }

@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date Wed Sep 07 09:37:22 CST 2022
  */
 @RestController
-@RequestMapping("/api/Inform/inform")
+@RequestMapping("/api/inform/inform")
 public class InformController
 {
     @Autowired
@@ -44,6 +44,21 @@ public class InformController
         return R.ok(20000, pageInfo);//返回分页对象
     }
 
+
+    /**
+     * 小程序端查询对应的通知
+     * @param inform
+     * @return
+     */
+    @GetMapping("/lists")
+    public R lists(Inform inform)
+    {
+        inform.setInfoSol("是");
+        System.out.println(inform);
+        List<Inform> list = informService.selectInformList(inform);
+        System.out.println(list);
+        return R.ok(20000, list);
+    }
 
     /**
      * 获取通知详细信息

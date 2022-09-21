@@ -2,10 +2,10 @@
   <div class="app-container">
   <el-card>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="商品id" prop="goodsId">
+      <el-form-item label="商品 ID" prop="goodsId">
         <el-input
           v-model="queryParams.goodsId"
-          placeholder="请输入商品id"
+          placeholder="请输入商品 ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

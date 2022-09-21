@@ -6,16 +6,16 @@ import com.toceansoft.employee.entity.Employee;
 
 /**
  * 员工管理Mapper接口
- * 
+ *
  * @author chan_juhin
  * @date Wed Sep 07 14:43:57 CST 2022
  */
  @Mapper
-public interface EmployeeMapper 
+public interface EmployeeMapper
 {
     /**
      * 查询员工管理
-     * 
+     *
      * @param id 员工管理ID
      * @return 员工管理
      */
@@ -23,7 +23,7 @@ public interface EmployeeMapper
 
     /**
      * 查询员工管理列表
-     * 
+     *
      * @param employee 员工管理
      * @return 员工管理集合
      */
@@ -31,7 +31,7 @@ public interface EmployeeMapper
 
     /**
      * 新增员工管理
-     * 
+     *
      * @param employee 员工管理
      * @return 结果
      */
@@ -39,7 +39,7 @@ public interface EmployeeMapper
 
     /**
      * 修改员工管理
-     * 
+     *
      * @param employee 员工管理
      * @return 结果
      */
@@ -47,7 +47,7 @@ public interface EmployeeMapper
 
     /**
      * 删除员工管理
-     * 
+     *
      * @param id 员工管理ID
      * @return 结果
      */
@@ -55,7 +55,7 @@ public interface EmployeeMapper
 
     /**
      * 批量删除员工管理
-     * 
+     *
      * @param ids 需要删除的数据ID
      * @return 结果
      */
@@ -67,4 +67,13 @@ public interface EmployeeMapper
      * @return
      */
     public int counter(Employee employee);
+
+
+    /**
+     * 微信登录通过openid确定员工信息
+     *
+     * @param
+     * @return 结果
+     */
+    public Employee selectEmployeeByOpenid(String openid);
 }

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toceansoft.record.mapper.RecordMapper">
+    
+    <resultMap type="Record" id="RecordResult">
+        <result property="id"    column="id"    />
+        <result property="clientid"    column="clientId"    />
+        <result property="employeeid"    column="employeeId"    />
+        <result property="mode"    column="mode"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectRecordVo">
+        select id, clientId, employeeId, mode, remark,update_time from t_record
+    </sql>
+
+    <select id="selectRecordList" parameterType="Record" resultMap="RecordResult">
+        <include refid="selectRecordVo"/>
+        <where>  
+            <if test="id != null "> and clientId = #{id}</if>
+            <if test="employeeid != null "> and employeeId = #{employeeid}</if>
+            <if test="mode != null  and mode != ''"> and mode = #{mode}</if>
+        </where>
+    </select>
+    
+    <select id="selectRecordById" parameterType="Long" resultMap="RecordResult">
+        <include refid="selectRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRecord" parameterType="Record">
+        insert into t_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="clientid != null">clientId,</if>
+            <if test="employeeid != null">employeeId,</if>
+            <if test="mode != null and mode != ''">mode,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="clientid != null">#{clientid},</if>
+            <if test="employeeid != null">#{employeeid},</if>
+            <if test="mode != null and mode != ''">#{mode},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRecord" parameterType="Record">
+        update t_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientid != null">clientId = #{clientid},</if>
+            <if test="employeeid != null">employeeId = #{employeeid},</if>
+            <if test="mode != null and mode != ''">mode = #{mode},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRecordById" parameterType="Long">
+        delete from t_record where id = #{id}
+    </delete>
+
+    <delete id="deleteRecordByIds" parameterType="String">
+        delete from t_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

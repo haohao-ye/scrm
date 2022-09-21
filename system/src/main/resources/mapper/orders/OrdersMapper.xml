@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="Orders" id="OrdersResult">
         <result property="consumptionListId"    column="consumption_list_id"    />
         <result property="clientId"    column="client_id"    />
+        <result property="clientName"  column="client_name"/>
         <result property="goodsId"    column="goods_id"    />
         <result property="goodsName" column="goods_name" />
         <result property="quantity"    column="quantity"    />
@@ -20,19 +21,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectOrdersVo">
-        select consumption_list_id, client_id, goods_id, quantity, state, img, salesman_id, total_amount, create_time, create_by, del_lable from t_orders
+        select consumption_list_id, client_id, client_name, goods_id, quantity, state,goods_name, img, salesman_id, total_amount, create_time, create_by, del_lable from t_orders
     </sql>
 
     <select id="selectOrdersList" parameterType="Orders" resultMap="OrdersResult">
         <include refid="selectOrdersVo"/>
         <where>  
             <if test="clientId != null "> and client_id = #{clientId}</if>
+            <if test="clientName!=null">and client_name=#{clientName}</if>
             <if test="goodsId != null "> and goods_id = #{goodsId}</if>
             <if test="quantity != null "> and quantity = #{quantity}</if>
             <if test="state != null  and state != ''"> and state = #{state}</if>
             <if test="salesmanId != null "> and salesman_id = #{salesmanId}</if>
             <if test="totalAmount != null "> and total_amount = #{totalAmount}</if>
             <if test="img !=null">and img=#{img}</if>
+            <if test="goodsName!=null">and goods_name=#{goodsName}</if>
             <if test="delLable != null  and delLable != ''"> and del_lable = #{delLable}</if>
         </where>
     </select>
@@ -46,7 +49,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into t_orders
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="clientId != null">client_id,</if>
+            <if test="clientName!=null">client_name</if>
             <if test="goodsId != null">goods_id,</if>
+            <if test="goodsName !=nuull and gppdsName!=''">goods_name,</if>
             <if test="quantity != null">quantity,</if>
             <if test="state != null and state != ''">state,</if>
             <if test="img !=null and img !=''">img,</if>
@@ -58,14 +63,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="clientId != null">#{clientId},</if>
+            <if test="clientName!=null">#{clientName</if>
             <if test="goodsId != null">#{goodsId},</if>
+            <if test="goodsName!=null">#{goodsName},</if>
             <if test="quantity != null">#{quantity},</if>
             <if test="state != null and state != ''">#{state},</if>
             <if test="img!=null">#{img},</if>
             <if test="salesmanId != null">#{salesmanId},</if>
             <if test="totalAmount != null">#{totalAmount},</if>
             <if test="createTime != null">#{createTime},</if>
-
             <if test="createBy != null and createBy != ''">#{createBy},</if>
             <if test="delLable != null">#{delLable},</if>
          </trim>

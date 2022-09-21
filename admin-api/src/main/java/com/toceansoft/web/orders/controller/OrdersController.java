@@ -24,6 +24,7 @@ import java.util.List;
  * @date Wed Sep 07 10:44:01 CST 2022
  */
 @RestController
+@ResponseBody
 @RequestMapping("/api/orders/orders")
 public class OrdersController
 {
@@ -51,10 +52,11 @@ public class OrdersController
 
 
     @GetMapping("/lists")
-    public R list(Orders orders)
+    public R list( Orders orders)
     {
 //        PageHelper.startPage(pageNum, pageSize); //指定分页
         List<Orders> list = ordersService.selectOrdersList(orders);
+        System.out.println(list);
         for(int i=0;i<list.size();i++){
             if(list.get(i).getState().equals("待付款"))
                 list.get(i).setTypes(1);
@@ -72,18 +74,10 @@ public class OrdersController
         }
 
 //        for (int j=0;j<list.size();j++){
-//            Goods goods = goodsService.selectGoodsById(list.get(j).getGoodsId());
+//            Goods goods=goodsService.selectGoodsById(list.get(j).getGoodsId());
+//            System.out.println(goods.getName());
 //
-//            String name=goods.getName();
-//
-//
-//            System.out.println(goods.getId());
-//            System.out.println(list.size());
-//
-//            list.get(j).setGoodsName(name);
-//
-//
-//
+//            list.get(j).setGoodsName(goods.getName());
 //        }
 
 
@@ -120,6 +114,20 @@ public class OrdersController
         Long id=new Long(1);
         orders.setSalesmanId(id);
 
+        if(orders.getState().equals("待付款"))
+            orders.setTypes(1);
+        else if (orders.getState().equals("已出库")) {
+            orders.setTypes(2);
+
+        } else if (orders.getState().equals("待收货")) {
+            orders.setTypes(3);
+        } else if (orders.getState().equals("已完成")) {
+            orders.setTypes(4);
+        } else if (orders.getState().equals("已取消")) {
+            orders.setTypes(9);
+        }
+
+
         int rows = ordersService.insertOrders(orders);
 
 
@@ -127,6 +135,8 @@ public class OrdersController
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");
         }
+
+
         Goods goods = goodsService.selectGoodsById(orders.getGoodsId());
         long number = goods.getInventory() - orders.getQuantity();
         goods.setInventory(number);

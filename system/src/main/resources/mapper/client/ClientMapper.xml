@@ -35,6 +35,7 @@
             <if test="updatePerson != null  and updatePerson != ''"> and update_person = #{updatePerson}</if>
             <if test="delLable != null  and delLable != ''"> and del_lable = #{delLable}</if>
         </where>
+        order by lable
     </select>
 
     <select id="selectClientById" parameterType="Long" resultMap="ClientResult">
