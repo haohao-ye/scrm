@@ -59,6 +59,10 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public void changePassword(Long id, String newPassword) {
         adminMapper.changePassword(id,newPassword);
+    }
 
+    @Override
+    public Admin selectEByUsername(String username) {
+        return adminMapper.selectEByUsername(username);
     }
 }

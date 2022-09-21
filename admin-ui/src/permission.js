@@ -26,15 +26,40 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
+      // const hasGetUserInfo = store.getters.name
+      // if (hasGetUserInfo) {
+      //   next()
+      // } else {
+      //   try {
+      //     // get user info
+      //     const { roles } = await store.dispatch('admin/getInfo')
+
+      //     next()
+      //   } catch (error) {
+      //     // remove token and go to login page to re-login
+      //     await store.dispatch('admin/resetToken')
+      //     Message.error(error || 'Has Error')
+      //     next(`/login?redirect=${to.path}`)
+      //     NProgress.done()
+      //   }
+      // }
+
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      if (hasRoles) {
         next()
       } else {
         try {
-          // get user info
-          await store.dispatch('admin/getInfo')
+          // await store.dispatch('admin/getInfo')
+          // 第一步
+          const { roles } = await store.dispatch('admin/getInfo')
+          console.log(roles)
 
-          next()
+          // 获取通过权限的路由  第二步
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+
+          // 动态添加可访问路由
+          router.addRoutes(accessRoutes)
+          next({...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('admin/resetToken')
