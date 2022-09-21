@@ -37,7 +37,7 @@
             <if test="delLabel != null  and delLabel != ''"> and del_label = #{delLabel}</if>
             <if test="contactLabel != null  and contactLabel != ''"> and contact_label = #{contactLabel}</if>
         </where>
-        order by lable
+        order by client_level
     </select>
 
     <select id="selectClientById" parameterType="Long" resultMap="ClientResult">
