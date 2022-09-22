@@ -19,6 +19,7 @@
     </resultMap>
 
     <resultMap type="Admin" id="EmployeeResult">
+        <result property="avatar"     column="avatar"    />
         <result property="password"     column="password"    />
         <result property="deptId"     column="dept_id"     />
     </resultMap>
@@ -39,7 +40,7 @@
     </select>
 
     <select id="selectEByUsername" resultMap="EmployeeResult" parameterType="Admin">
-        SELECT password, dept_id
+        SELECT password, dept_id, avatar
         FROM t_employee
         <where>
             <if test="username != null and username != ''">

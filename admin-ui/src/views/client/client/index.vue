@@ -172,7 +172,7 @@
         </el-table-column>
         <el-table-column label="创建人" align="center" prop="creator" />
         <el-table-column label="更新人" align="center" prop="updatePerson" />
-        <el-table-column label="删除标签" align="center" prop="delLabel" />
+        <!-- <el-table-column label="删除标签" align="center" prop="delLabel" /> -->
         <el-table-column
           label="操作"
           align="center"
