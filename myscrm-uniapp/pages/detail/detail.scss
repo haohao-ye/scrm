@@ -1,0 +1,109 @@
+ page {background: #F8F8F8;}
+.main{
+	margin: 5rpx 20rpx;
+	height: 100%;
+	border-radius: 10rpx;
+	.good{
+		padding: 5rpx 20rpx;
+		&>image{
+			width: 100%;
+			border-radius: 10rpx;
+		}
+	}
+	.content{
+		padding: 30rpx 50rpx;
+		display: flex;
+		align-items: center;
+		.title{
+			font-size: 40rpx;
+			color: #3F536E;
+			width: 100rpx;
+			// border: 1rpx solid #007AFF;
+			display: flex;
+			align-items: center;
+			// justify-content: center;
+			
+		}
+		.active{
+			margin-left: 20rpx;
+			padding: 4rpx 10rpx;
+			height: 60rpx;
+			width: 120rpx;
+			background-color: #3F536E;
+			border-radius: 50rpx;
+			color: #FFFFFF;
+			font-size: 28rpx;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.noActive{
+			@extend .active;
+			color: #bababa;
+			border: 1rpx solid #808080;
+			background-color: #555555;
+		}
+	}
+	.price{
+		padding: 20rpx 50rpx;
+		color: #c52000;
+		font-size: 38rpx;
+		font-weight: bold;
+		
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		// 进步器
+		.jbq{
+			display: flex;
+			align-items: center;
+			.count{
+				width: 80rpx;
+				display: flex;
+				justify-content: center;
+			}
+			.add{width: 50rpx;height: 50rpx;}
+			.redoce{@extend .add;}
+		}
+		
+	}
+	.desc{
+		padding: 20rpx 50rpx;
+		font-size: 26rpx;
+		
+	}
+	
+}
+.but{
+	position: fixed;
+	bottom: 0;
+	width: 750rpx;
+	height: 90rpx;
+	border-top: 1rpx solid #e3e1e4;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	.but-1{
+		height: 60rpx;
+		width: 200rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50rpx;
+		background-color: #FFFFFF;
+		color: #ff0006;
+		border: 1rpx solid #ff0006;
+	}
+	.but-2{
+		@extend .but-1;
+		color: #3f5c6e;
+		border: 1rpx solid #3f5c6e;
+	}
+	.but-3{
+		@extend .but-1;
+		border: none;
+		color: #fff;
+		background-color: #3f5c6e;
+		border: 1rpx solid #3f5c6e;
+	}
+}
