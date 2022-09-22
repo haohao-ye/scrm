@@ -1,6 +1,6 @@
 <template>
 	<view >
-		<image :src="order.img" mode="scaleToFill" style="width: 285px;height: 240px;margin-left: 57px;border-radius: 5%;" ></image>
+		<image :src="order.img" mode="scaleToFill" style="width: 100%;" ></image>
 		<!-- <image:src="item.img" class="img"></image> -->
 		<!-- <swiper indicator-dots>
 			<swiper-item v-for="order in swiper">
@@ -20,11 +20,13 @@
 		</view>
 		<view class="line"> </view>
 		<view class="box2">
+			
 			<view>客户ID：{{order.clientId}}</view>
 			<view>客户名：{{order.clientName}}</view>
 			<view>商品数量：{{order.quantity}}</view>
 			<view >订单总价：￥{{order.totalAmount}}</view>
 			<view >订单状态：{{order.state}}</view>
+			<view>订单ID：{{order.consumptionListId}}</view>
 			<view>下单时间：{{(order.createTime || '').split('T')[0]}}</view>
 		</view>
 		<view v-if="order.state == '待付款'" style="padding-top: 2%;padding-left: 15%;padding-right: 15%;padding-bottom: 5%;">
@@ -72,29 +74,14 @@
 		},
 		
 		methods: {
-
-			goToPersonalCenter(){
-				uni.navigateTo({
-					url:'/pages/person/personalCenter?id=20200902'
-				});
-			},
-			goToHome(){
-				uni.navigateTo({
-					url:'/pages/home/home?id=20200902'
-				});
-			},
-			goToOrders(){
-				uni.navigateTo({
-					url:'/pages/orders/orders?id=20200902'
-				});
-			},
 			pay(){
 				this.order.state = '待配送'
 				uni.request({
-					url:'http://localhost:8080/api/orders/orders',
+					url:'http://admin.dkhaohao.shop/prod-api/api/orders/orders',
 					method:"PUT",
 					data:{
-						orders :this.order,
+						consumptionListId: this.order.consumptionListId ,
+						state: this.order.state,
 					},
 					success(res) {
 						console.log("111");

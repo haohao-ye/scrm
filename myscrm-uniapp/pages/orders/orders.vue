@@ -67,7 +67,7 @@
  			getorderlist() {
  				let that = this;
  				uni.request({
- 					url: 'http://localhost:8080/api/orders/orders/lists',
+ 					url: 'http://admin.dkhaohao.shop/prod-api/api/orders/orders/lists',
  					data: {
 						salesmanId: this.id,
 					},

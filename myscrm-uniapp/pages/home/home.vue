@@ -120,7 +120,7 @@
 			getGoods() {
 				let that = this;
 				uni.request({
-					url: 'http://localhost:8080/api/goods/goods/lists',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/goods/goods/lists',
 					data: {},
 					success: (res) => {
 						if (res.data.code == 20000) {
@@ -165,7 +165,7 @@
 				searchParam.name = this.value;
 				let that = this;
 				uni.request({
-					url: 'http://localhost:8080/api/goods/goods/list',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/goods/goods/list',
 					method: "GET",
 					data: {
 						name: this.queryParams.name,

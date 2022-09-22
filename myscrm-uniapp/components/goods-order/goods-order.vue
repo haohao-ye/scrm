@@ -17,7 +17,7 @@
 				<view
 					v-if="types==0"
 					:class="['types d-flex align-items-center justify-content-center',item.types==1||item.types==2||item.types==3?'types_dfk':item.types==4?'types_ywc':item.types==9?'types_yqx':'']">
-					{{item.types==1?"待付款":item.types==2?"已出库":item.types==3?"待收货":item.types==4?"已完成":item.types==9?"已取消":"无"}}
+					{{item.types==1?"待付款":item.types==2?"待发货":item.types==3?"配送中":item.types==4?"已完成":item.types==9?"已取消":"无"}}
 				</view>
 				<view v-if="types==1" class="types types_dfk d-flex align-items-center justify-content-center">
 					待付款
@@ -26,7 +26,7 @@
 					待发货
 				</view>
 				<view v-if="types==3" class="types types_dfk d-flex align-items-center justify-content-center">
-					待收货
+					配送中
 				</view>
 				<view v-if="types==4" class="types types_ywc d-flex align-items-center justify-content-center">
 					已完成
@@ -69,7 +69,7 @@
 			navigoodetail(e){
 				
 				uni.navigateTo({
-					url:"/pages/orderdetail/orderdetail?param="+JSON.stringify(e)
+					url:"/pages/orderdetail/orderdetail?param="+encodeURIComponent(JSON.stringify(e)) 
 				})
 			},
 		}

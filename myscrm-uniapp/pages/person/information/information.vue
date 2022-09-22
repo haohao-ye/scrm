@@ -85,7 +85,7 @@
 				     let that = this;
 					 // console.log(this.form.id);
 				     uni.request({
-				      url: 'http://localhost:8080/api/employee/employee/getCodedInfo/'+this.form.id,
+				      url: 'http://admin.dkhaohao.shop/prod-api/api/employee/employee/getCodedInfo/'+this.form.id,
 				      data: {},
 				      success: (res) => {
 				       if (res.data.code == 20000) {

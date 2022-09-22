@@ -59,7 +59,7 @@
 				let item = "";
 				let i = 0;
 				uni.request({
-					url: 'http://localhost:8080/api/client/lists',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/client/lists',
 					method: 'get',
 					data: {
 						clientGroup: this.salemanId,
@@ -87,19 +87,21 @@
 			yes() {
 				let that = this;
 				let tmp = this.clientArray[this.clientIndex].split(':');
+				console.log(this.goods.name,this.salemanId);
 				uni.request({
 
-					url: 'http://localhost:8080/api/orders/orders',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/orders/orders',
 					method: "POST",
 					data: {
 						goodsId: this.goods.id,
-						goodsName: this.goods.goodsName,
+						goodsName: this.goods.name,
 						quantity: this.goods.quantity,
 						clientName: tmp[1],
 						img: "/static/" + this.goods.id + ".png",
-						state: "待出库",
+						state: "待付款",
 						totalAmount: this.goods.price * this.goods.quantity,
 						clientId: tmp[0],
+						salesmanId: this.salemanId,
 					},
 					success: (res) => {
 						if (res.data.code == 20000) {

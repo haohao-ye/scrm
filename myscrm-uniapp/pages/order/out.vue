@@ -64,7 +64,7 @@
 				let that = this;
 				uni.request({
 
-					url: 'http://localhost:8080/api/orders/orders',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/orders/orders',
 					method: "POST",
 					data: {
 						goodsId: this.goods.id,

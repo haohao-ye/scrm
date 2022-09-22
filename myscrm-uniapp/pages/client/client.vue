@@ -117,7 +117,7 @@
 			getClientList() {
 				let that = this;
 				uni.request({
-					url: 'http://localhost:8080/api/client/lists',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/client/lists',
 					method: 'get',
 					data: {
 						clientGroup: this.id
@@ -136,7 +136,7 @@
 			searchClientList() {
 				let that = this;
 				uni.request({
-					url: 'http://localhost:8080/api/client/lists',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/client/lists',
 					method: 'get',
 					data: {
 						clientGroup: this.id,

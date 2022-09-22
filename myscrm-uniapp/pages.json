@@ -84,15 +84,13 @@
 		{
 			"path": "pages/home/home",
 			"style": {
-				"navigationStyle": "custom", // 隐藏系统导航栏
-				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+				"navigationBarTitleText": "首页"
 			}
 		},
 		{
 			"path": "pages/orders/orders",
 			"style": {
-				"navigationStyle": "custom", // 隐藏系统导航栏
-				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+				"navigationBarTitleText": "订单列表"
 			}
 		},  {
 			"path": "pages/orderdetail/orderdetail",
@@ -105,8 +103,7 @@
 		{
 			"path": "pages/client/client",
 			"style": {
-				"navigationStyle": "custom", // 隐藏系统导航栏
-				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+				"navigationBarTitleText": "客户列表"
 			}
 		},
 		{

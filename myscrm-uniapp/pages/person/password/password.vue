@@ -95,7 +95,7 @@
 			     let that = this;
 				 console.log(JSON.stringify(that.userInfo));
 			     uni.request({
-			      url: 'http://localhost:8080/api/employee/employee/changePsd',
+			      url: 'http://admin.dkhaohao.shop/prod-api/api/employee/employee/changePsd',
 				  method:"GET",
 			      data: {
 					  id: that.userInfo.id,
