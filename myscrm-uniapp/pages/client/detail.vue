@@ -34,8 +34,25 @@
 						:class="['types d-flex align-items-center justify-content-center',model1.userInfo.contactLabel==0||model1.userInfo.contactLabel==1]">
 						{{model1.userInfo.contactLabel==0?"本周待联系":model1.userInfo.contactLabel==1?"本周已联系":"无"}}
 					</view> -->
-					<text v-if="model1.userInfo.contactLabel==0">本周待联系</text>
-					<text v-if="model1.userInfo.contactLabel==1">本周已联系</text>
+					
+							<text v-if="model1.userInfo.contactLabel==1">本周已联系</text>
+							<view v-if="model1.userInfo.contactLabel==0">
+								<u-row gutter="20%">
+									<u-col span="4">
+										<text>本周待联系</text>
+									</u-col>
+									<u-col span="4">
+										<text space="emsp">    </text>
+									</u-col>
+									<u-col span="4">
+										<u-button text='√已联系' @click="hasConnected()"></u-button>
+									</u-col>
+								</u-row>
+								
+								
+							</view>
+							
+					
 
 					<!-- 				<u--text v-text="model1.userInfo.contactLabel" border="none"></u--text>
  -->
@@ -62,20 +79,40 @@
 		</view>
 		
 		<view style="padding-left: 20%;padding-right: 20%;padding-top: 4%;padding-bottom: 4%;">
-			<u-button type="primary" class="update-btn" text="添加记录" @click="addRecord"></u-button>
+			<u-button type="primary" class="update-btn" text="添加记录" @click="show = true"></u-button>
 		</view>
 		
-		<view class="list" v-for="item in recordList" :key='recordList.id' >
+		<view class="list" v-for="item in recordList" :key='recordList.id' style="padding-right: 6%;">
 			<view class="center flex-1 ml-3 ">
-				<view >
-					<view class="text-truncate">--------------------{{item.updateTime}}   {{item.mode}}</view>
+				<view style="padding-top: 2%;padding-bottom: 2%;">
+					<u-line></u-line>
+				</view>
+				<view style="padding-bottom: 1%;">
+					<view class="text-truncate">{{item.updateTime}}    {{item.mode}}</view>
 				</view>
 				<view>
-				<text space="nbsp">{{item.remark}}</text>
-				<text space="emsp">  </text>
+				<text space="nbsp">  {{item.remark}}</text>
 				</view>
 			</view>
 		</view>
+		
+		<u-popup :show="show" :round="10" mode="bottom" @close="close" @open="open" closeable="true">
+				<view style="padding: 5%;">
+					<u-form>
+						<u-form-item labelWidth="90px" label="沟通方式" prop="userInfo.phoneNumber" >
+							<u--input v-model="newRecord.mode" border="none" placeholder="(电联,短信,微信)">
+							</u--input>
+						</u-form-item>
+						<u-form-item labelWidth="90px" label="详情记录" prop="userInfo.phoneNumber">
+							<u--textarea v-model="newRecord.remark" placeholder="请填写沟通详情"></u--textarea>
+						</u-form-item>
+					</u-form>
+				</view>
+				<view>
+					<u-button text="提交" @click="addRecord()"></u-button>
+				</view>
+		</u-popup>
+		
 		
 	</view>
 </template>
@@ -133,6 +170,13 @@
 					mode: '',
 					remark: '   先开始联系客户吧'
 				}],
+				show: false,
+				newRecord:{
+					clientid:'',
+					employeeid:'',
+					mode:'',
+					remark:'',
+				}
 			};
 		},
 		onLoad(e) {
@@ -190,7 +234,9 @@
 				uni.request({
 					url: 'http://localhost:8080/api/client/' + this.client.id,
 					method: 'DELETE',
-					data: this.client,
+					data:{
+						client :this.client,
+					},
 					header: {
 						"X-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW9iYW8tdXNlciIsImlhdCI6MTY2MzYzODAyMiwiZXhwIjoxNjYzNzI0NDIyLCJ1c2VybmFtZSI6ImFkbWluIn0.bnkemNGfSbjPuSmMPP0LIGQpodB2xUhq9-qgJQfdRCE"
 						//"X-Token": uni.getStorageSync("token");
@@ -222,8 +268,66 @@
 					}
 				})
 
-			}
+			},
+			hasConnected(){
+				this.model1.userInfo.contactLabel = 1;
+				uni.request({
+					url: 'http://localhost:8080/api/client',
+					method: "PUT",
+					data: {
+						id: this.model1.userInfo.id,
+						contactLabel: this.model1.userInfo.contactLabel,
+					},
+					header: {
+						"X-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW9iYW8tdXNlciIsImlhdCI6MTY2MzY2MzcyOCwiZXhwIjoxNjYzNzUwMTI4LCJ1c2VybmFtZSI6ImFkbWluIn0.fHzecAPFY2NvSOaEikbKHAmTEn4DlckXkkyAcoXWp4s"
+						//"X-Token": uni.getStorageSync("token");
+				
+					},
+					success: (res) => {
+				
+						if (res.data.code == 20000) {
+							return uni.$u.toast("修改成功！")
+						} else {
+							return uni.$u.toast("连接失败！")
+						}
+					}
+				})
+			},
+			addRecord(){
+				this.newRecord.mode = this.newRecord.mode,
+				this.newRecord.remark = this.newRecord.remark,
+				this.newRecord.clientid = this.model1.userInfo.id,
+				this.newRecord.employeeid = this.model1.userInfo.clientGroup,
+				console.log(JSON.stringify(this.newRecord));
+				uni.request({
+					url: 'http://localhost:8080/api/record/record',
+					method: "POST",
+					data: this.newRecord,
+					header: {
+						"X-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW9iYW8tdXNlciIsImlhdCI6MTY2MzY2MzcyOCwiZXhwIjoxNjYzNzUwMTI4LCJ1c2VybmFtZSI6ImFkbWluIn0.fHzecAPFY2NvSOaEikbKHAmTEn4DlckXkkyAcoXWp4s"
+						//"X-Token": uni.getStorageSync("token");
+				
+					},
+					success: (res) => {
+				
+						if (res.data.code == 20000) {
+							return uni.$u.toast("修改成功！")
+						} else {
+							return uni.$u.toast("连接失败！")
+						}
+					}
+				})
+			},
+			open() {
+			        // console.log('open');
+			},
+			close() {
+			        this.show = false
+			        // console.log('close');
+			},
 		},
+		
+		
 	}
 </script>
 
