@@ -88,6 +88,20 @@ public class ClientController
         return R.ok(20000, null);
     }
 
+    /**
+     * 小程序新增客户
+     */
+    @PostMapping("/add")
+    public R addClient(@RequestBody Client client)
+    {
+
+        int rows = clientService.insertClient(client);
+        if (rows <= 0 ) {
+            return R.fail(50002, "添加失败");
+        }
+        return R.ok(20000, null);
+    }
+
 
     /**
      * 修改客户
@@ -102,6 +116,22 @@ public class ClientController
         client.setUpdatePerson(admin.getUsername());
         client.setUpdateTime(new Date());
 
+        int rows = clientService.updateClient(client);
+        if (rows <= 0 ) {
+            return R.fail(50002, "修改失败");
+        }
+        return R.ok(20000, null);
+    }
+
+    /**
+     * 小程序修改客户
+     */
+
+    @PutMapping("/edit")
+    public R edit(@RequestBody Client client)
+    {
+        System.out.println(client);
+        client.setUpdateTime(new Date());
         int rows = clientService.updateClient(client);
         if (rows <= 0 ) {
             return R.fail(50002, "修改失败");
