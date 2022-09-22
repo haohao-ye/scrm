@@ -296,6 +296,7 @@
 			addRecord(){
 				// console.log(JSON.stringify(this.newRecord));
 				uni.request({
+					// url: 'http://localhost:8080/api/record/record',
 					url: 'http://admin.dkhaohao.shop/prod-api/api/record/record',
 					method: "POST",
 					data: {
@@ -313,7 +314,8 @@
 					success: (res) => {
 				
 						if (res.data.code == 20000) {
-							return uni.$u.toast("修改成功！")
+							return uni.$u.toast("添加成功！");
+							this.show = false;
 						} else {
 							return uni.$u.toast("连接失败！")
 						}

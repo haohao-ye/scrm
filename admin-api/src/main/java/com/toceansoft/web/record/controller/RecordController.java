@@ -1,6 +1,7 @@
 package com.toceansoft.web.record.controller;
 
 
+import java.util.Date;
 import java.util.List;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -74,9 +75,7 @@ public class RecordController
 //        record.setCreateBy(username);
         System.out.println(record);
         record.setCreateBy(record.getEmployeeid().toString());
-        if(record.getUpdateTime().toString().isEmpty()){
-            record.setUpdateTime(record.getCreateTime());
-        }
+        record.setUpdateTime(new Date());
         int rows = recordService.insertRecord(record);
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");
