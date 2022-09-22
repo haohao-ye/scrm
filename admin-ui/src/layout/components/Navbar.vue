@@ -22,7 +22,7 @@
           <a target="_blank" href="https://qfcode.coding.net/p/huanong0929/d/myscrm/git">
             <el-dropdown-item>Git一下</el-dropdown-item>
           </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+          <a target="_blank" href="https://shimo.im/docs/2wAlXDoW1KfNj4AP/">
             <el-dropdown-item>文档</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">
