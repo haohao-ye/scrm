@@ -139,7 +139,7 @@
       <el-table-column label="商品id" align="center" prop="goodsId" />
       <el-table-column label="商品名字" align="center" prop="goodsName" />
       <el-table-column label="商品量" align="center" prop="quantity" />
-      <el-table-column label="商品照片" align="center" prop="img" />
+      <!-- <el-table-column label="商品照片" align="center" prop="img" /> -->
       <el-table-column label="订单状态" align="center" prop="state" />
       <el-table-column label="销售员 ID" align="center" prop="salesmanId" />
       <el-table-column label="总额" align="center" prop="totalAmount" />
