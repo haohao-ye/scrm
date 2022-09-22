@@ -3,6 +3,7 @@ package com.toceansoft.admin.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 系统管理员
@@ -17,9 +18,9 @@ public class Admin implements Serializable {
     private String phoneNumber;
     private String delFlag;
     private String createBy;
-    private String createTime;
+    private Date createTime;
     private String updateBy;
-    private String updateTime;
+    private Date updateTime;
     private String remark;
     private String newPassword;
 

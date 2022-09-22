@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -185,6 +186,7 @@ public class AdminController {
         String token=req.getHeader("X-Token");
         String username =JWTUtils.getUsername(token);
         Admin queryCond=new Admin();
+        System.out.println(username);
         queryCond.setUsername(admin.getUsername());
         List<Admin> adminList=adminService.selectList(queryCond);
         if(null!=adminList&&adminList.size()>0){
@@ -192,8 +194,11 @@ public class AdminController {
         }
         //密码加密
         String encodedPw=encoder.encode(admin.getPassword());
-//        System.out.println(encodedPw);
         admin.setPassword(encodedPw);//将密码设为加密后的密码
+        admin.setCreateBy(username);
+        admin.setUpdateTime(new Date());
+        admin.setCreateTime(new Date());
+        admin.setUpdateBy(username);
 
 
         int rows=adminService.insert(admin);

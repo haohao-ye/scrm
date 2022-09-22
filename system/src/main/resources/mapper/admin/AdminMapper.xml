@@ -70,10 +70,22 @@
                 nickname,
             </if>
             <if test="phoneNumber!=null and phoneNumber!=''">
-                phone_number
+                phone_number,
             </if>
             <if test="remark!=null and remark!=''">
                 remark,
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                create_by,
+            </if>
+            <if test="createTime!=null ">
+                create_time,
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                update_by,
+            </if>
+            <if test="updateTime!=null">
+                update_time,
             </if>
         </trim>
         <trim  suffixOverrides=",">
@@ -92,7 +104,19 @@
                 '${phoneNumber}',
             </if>
             <if test="remark!=null and remark!=''">
-                '${remark}'
+                '${remark}',
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                '${createBy}',
+            </if>
+            <if test="createTime!=null ">
+                sysdate(),
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                '${updateBy}',
+            </if>
+            <if test="updateTime!=null">
+                sysdate(),
             </if>
         </trim>
         from dual

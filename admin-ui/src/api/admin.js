@@ -39,7 +39,7 @@ export function getAdmin(id){
 
 export function addAdmin(data) {
   return request({
-    url: '/api/admin',
+    url: '/api/admin/add',
     method: 'post',
     data
   })
