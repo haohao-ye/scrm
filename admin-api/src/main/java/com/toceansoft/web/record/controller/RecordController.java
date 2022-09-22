@@ -68,10 +68,15 @@ public class RecordController
     @PostMapping
     public R add(@RequestBody Record record,  HttpServletRequest req)
     {
-        String token = req.getHeader("X-Token");
-        //从token中获得用户名
-        String username = JWTUtils.getUsername(token);
-        record.setCreateBy(username);
+//        String token = req.getHeader("X-Token");
+//        //从token中获得用户名
+//        String username = JWTUtils.getUsername(token);
+//        record.setCreateBy(username);
+        System.out.println(record);
+        record.setCreateBy(record.getEmployeeid().toString());
+        if(record.getUpdateTime().toString().isEmpty()){
+            record.setUpdateTime(record.getCreateTime());
+        }
         int rows = recordService.insertRecord(record);
         if (rows <= 0 ) {
             return R.fail(50002, "添加失败");

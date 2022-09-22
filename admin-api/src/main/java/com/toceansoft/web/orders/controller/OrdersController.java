@@ -54,16 +54,16 @@ public class OrdersController
     @GetMapping("/lists")
     public R list( Orders orders)
     {
+        System.out.println(orders);
 //        PageHelper.startPage(pageNum, pageSize); //指定分页
         List<Orders> list = ordersService.selectOrdersList(orders);
         System.out.println(list);
         for(int i=0;i<list.size();i++){
             if(list.get(i).getState().equals("待付款"))
                 list.get(i).setTypes(1);
-            else if (list.get(i).getState().equals("已出库")) {
+            else if (list.get(i).getState().equals("待配送")) {
                 list.get(i).setTypes(2);
-
-            } else if (list.get(i).getState().equals("待收货")) {
+            } else if (list.get(i).getState().equals("配送中")) {
                 list.get(i).setTypes(3);
             } else if (list.get(i).getState().equals("已完成")) {
                 list.get(i).setTypes(4);
@@ -151,6 +151,8 @@ public class OrdersController
     @PutMapping
     public R edit(@RequestBody Orders orders)
     {
+        System.out.println("edit");
+        System.out.println(orders);
          int rows = ordersService.updateOrders(orders);
         if (rows <= 0 ) {
             return R.fail(50002, "修改失败");

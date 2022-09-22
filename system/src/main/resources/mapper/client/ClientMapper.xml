@@ -89,6 +89,7 @@
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="updatePerson != null">update_person = #{updatePerson},</if>
             <if test="delLabel != null and delLabel != ''">del_label = #{delLabel},</if>
+            <if test="contactLabel != null">contact_label = #{contactLabel},</if>
         </trim>
         where id = #{id}
     </update>

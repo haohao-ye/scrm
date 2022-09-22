@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="goodsName!=null">and goods_name=#{goodsName}</if>
             <if test="delLable != null  and delLable != ''"> and del_lable = #{delLable}</if>
         </where>
+        order by consumption_list_id desc
     </select>
     
     <select id="selectOrdersById" parameterType="Long" resultMap="OrdersResult">
@@ -63,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="clientId != null">#{clientId},</if>
-            <if test="clientName!=null">#{clientName}</if>
+            <if test="clientName!=null">#{clientName},</if>
             <if test="goodsId != null">#{goodsId},</if>
             <if test="goodsName!=null">#{goodsName},</if>
             <if test="quantity != null">#{quantity},</if>
