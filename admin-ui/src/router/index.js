@@ -55,6 +55,20 @@ export const constantRoutes = [
     }]
   },
 
+  {
+    path: '/getInform',
+    component: Layout,
+    name: 'GetInform',
+    // meta: { title: '通知管理', icon: 'el-icon-message-solid' },
+    children: [
+      {
+        path: 'getInform',
+        name: 'GetInform',
+        component: () => import('@/views/getInform/index'),
+        meta: { title: '通知', icon: 'tongzhi', roles: ['admin'] }
+      }
+    ]
+  },
   // {
   //   path: '/tool',
   //   component: Layout,
@@ -188,7 +202,7 @@ export const asyncRoutes = [
         path: 'inform',
         name: 'Inform',
         component: () => import('@/views/inform/index'),
-        meta: { title: '通知管理', icon: 'tongzhi', roles: ['admin'] }
+        meta: { title: '通知管理', icon: 'tongzhiguanli', roles: ['admin'] }
       }
     ]
   },
