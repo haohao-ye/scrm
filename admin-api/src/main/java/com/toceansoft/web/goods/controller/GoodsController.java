@@ -135,4 +135,20 @@ public class GoodsController
         }
         return R.ok(20000, null);
     }
+
+    /**
+     * 查询商品总个数
+     */
+    @GetMapping("/count")
+    public R count(Goods goods)
+    {
+        Long sum=new Long(0);
+        List<Goods> list = goodsService.selectGoodsList(goods);
+        for (int i=0;i<list.size();i++){
+            sum+=list.get(i).getInventory();
+        }
+
+        return R.ok(20000,sum);//返回分页对象
+//          return  R.ok(20000,list);
+    }
 }

@@ -11,10 +11,28 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="客户名字" prop="clientName">
+        <el-input
+          v-model="queryParams.clientName"
+          placeholder="请输入客户名字"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="商品ID" prop="goodsId">
         <el-input
           v-model="queryParams.goodsId"
           placeholder="请输入商品ID"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="商品名字" prop="goodsName">
+        <el-input
+          v-model="queryParams.goodsName"
+          placeholder="请输入商品名字"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -28,8 +46,17 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <el-form-item label="订单状态" prop="state">
+      </el-form-item> -->
+      <!-- <el-form-item label="商品照片" prop="img">
+        <el-input
+          v-model="queryParams.img"
+          placeholder="请输入商品照片"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item> -->
+      <!-- <el-form-item label="订单状态" prop="state">
         <el-input
           v-model="queryParams.state"
           placeholder="请输入订单状态"
@@ -47,6 +74,24 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <!-- <el-form-item label="总额" prop="totalAmount">
+        <el-input
+          v-model="queryParams.totalAmount"
+          placeholder="请输入总额"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="删除标签" prop="delLable">
+        <el-input
+          v-model="queryParams.delLable"
+          placeholder="请输入删除标签"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item> -->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -90,11 +135,15 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="消费单 ID" align="center" prop="consumptionListId" />
       <el-table-column label="客户 ID" align="center" prop="clientId" />
-      <el-table-column label="商品 ID" align="center" prop="goodsId" />
+      <el-table-column label="客户名字" align="center" prop="clientName" />
+      <el-table-column label="商品id" align="center" prop="goodsId" />
+      <el-table-column label="商品名字" align="center" prop="goodsName" />
       <el-table-column label="商品量" align="center" prop="quantity" />
+      <!-- <el-table-column label="商品照片" align="center" prop="img" /> -->
       <el-table-column label="订单状态" align="center" prop="state" />
       <el-table-column label="销售员 ID" align="center" prop="salesmanId" />
       <el-table-column label="总额" align="center" prop="totalAmount" />
+      <el-table-column label="删除标签" align="center" prop="delLable" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -127,11 +176,20 @@
         <el-form-item label="客户 ID" prop="clientId">
           <el-input v-model="form.clientId" placeholder="请输入客户id" />
         </el-form-item>
+        <el-form-item label="客户名字" prop="clientName">
+          <el-input v-model="form.clientName" placeholder="请输入客户名字" />
+        </el-form-item>
         <el-form-item label="商品 ID" prop="goodsId">
           <el-input v-model="form.goodsId" placeholder="请输入商品id" />
         </el-form-item>
+        <el-form-item label="商品名字" prop="goodsName">
+          <el-input v-model="form.goodsName" placeholder="请输入商品名字" />
+        </el-form-item>
         <el-form-item label="商品量" prop="quantity">
           <el-input v-model="form.quantity" placeholder="请输入商品量" />
+        </el-form-item>
+        <el-form-item label="商品照片" prop="img">
+          <el-input v-model="form.img" placeholder="请输入商品照片" />
         </el-form-item>
         <el-form-item label="订单状态" prop="state">
           <el-input v-model="form.state" placeholder="请输入订单状态" />
@@ -142,9 +200,9 @@
         <el-form-item label="总额" prop="totalAmount">
           <el-input v-model="form.totalAmount" placeholder="请输入总额" />
         </el-form-item>
-        <!-- <el-form-item label="删除标签" prop="delLable">
+        <el-form-item label="删除标签" prop="delLable">
           <el-input v-model="form.delLable" placeholder="请输入删除标签" />
-        </el-form-item> -->
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -186,21 +244,25 @@ export default {
         pageNum: 1,
         pageSize: 10,
         clientId: null,
+        clientName: null,
         goodsId: null,
+        goodsName: null,
         quantity: null,
+        img: null,
         state: null,
         salesmanId: null,
         totalAmount: null,
+        delLable: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         clientId: [
-          { required: true, message: "客户id不能为空", trigger: "blur" }
+          { required: true, message: "客户 ID 不能为空", trigger: "blur" }
         ],
         goodsId: [
-          { required: true, message: "商品id不能为空", trigger: "blur" }
+          { required: true, message: "商品 ID 不能为空", trigger: "blur" }
         ],
         quantity: [
           { required: true, message: "商品量不能为空", trigger: "blur" }
@@ -209,10 +271,16 @@ export default {
           { required: true, message: "订单状态不能为空", trigger: "blur" }
         ],
         salesmanId: [
-          { required: true, message: "销售员id不能为空", trigger: "blur" }
+          { required: true, message: "销售员 ID 不能为空", trigger: "blur" }
         ],
         totalAmount: [
           { required: true, message: "总额不能为空", trigger: "blur" }
+        ],
+        createTime: [
+          { required: true, message: "创建时间不能为空", trigger: "blur" }
+        ],
+        createBy: [
+          { required: true, message: "创建人不能为空", trigger: "blur" }
         ],
       }
     };
@@ -240,8 +308,11 @@ export default {
       this.form = {
         consumptionListId: null,
         clientId: null,
+        clientName: null,
         goodsId: null,
+        goodsName: null,
         quantity: null,
+        img: null,
         state: null,
         salesmanId: null,
         totalAmount: null,
@@ -333,19 +404,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-  @font-face {
-    font-family:AliRegular;
-    src:url('../../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
-  }
-  @font-face {
-    font-family:AliBold;
-    src:url('../../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
-  }
-  
-  .app-container {
-    font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
-  }
-  
-  </style>

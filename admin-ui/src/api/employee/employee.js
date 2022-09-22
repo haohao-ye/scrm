@@ -69,3 +69,12 @@ export function resetPassword(data) {
     data:data
   })
 }
+
+export function getEmployeeSum(query) {
+  return request({
+    url: '/api/employee/employee/count',
+    method: 'get',
+    params: query
+
+  })
+}

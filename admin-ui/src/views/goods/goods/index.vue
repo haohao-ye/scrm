@@ -398,7 +398,7 @@ export default {
       rules: {
         name: [{ required: true, message: "名称不能为空", trigger: "blur" }],
         type: [{ required: true, message: "类型不能为空", trigger: "change" }],
-        price: [{ validator: checkPrice, trigger: "change" }],
+        price: [{ require: true, validator: checkPrice, trigger: "change" }],
         brand: [{ required: true, message: "品牌不能为空", trigger: "blur" }],
         inventory: [
           { required: true, message: "库存不能为空", trigger: "blur" },

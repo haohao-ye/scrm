@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="goodsName!=null">and goods_name=#{goodsName}</if>
             <if test="delLable != null  and delLable != ''"> and del_lable = #{delLable}</if>
         </where>
-        order by consumption_list_id desc
+            order by consumption_list_id
     </select>
     
     <select id="selectOrdersById" parameterType="Long" resultMap="OrdersResult">
@@ -94,8 +94,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where consumption_list_id = #{consumptionListId}
     </update>
-
-
 
     <delete id="deleteOrdersById" parameterType="Long">
         delete from t_orders where consumption_list_id = #{consumptionListId}
