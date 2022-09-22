@@ -55,20 +55,20 @@ export const constantRoutes = [
     }]
   },
 
-  {
-    path: '/tool',
-    component: Layout,
-    name: 'Tool',
-    // meta: { title: '系统工具', icon: 'el-icon-s-tools' },
-    children: [
-      {
-        path: 'gen',
-        name: 'Gen',
-        component: () => import('@/views/tool/gen'),
-        meta: { title: '代码生成', icon: 'gongju' }
-      }
-    ]
-  },
+  // {
+  //   path: '/tool',
+  //   component: Layout,
+  //   name: 'Tool',
+  //   // meta: { title: '系统工具', icon: 'el-icon-s-tools' },
+  //   children: [
+  //     {
+  //       path: 'gen',
+  //       name: 'Gen',
+  //       component: () => import('@/views/tool/gen'),
+  //       meta: { title: '代码生成', icon: 'gongju' }
+  //     }
+  //   ]
+  // },
 
   /*
     {
