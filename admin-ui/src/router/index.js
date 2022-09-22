@@ -209,20 +209,20 @@ export const asyncRoutes = [
     ]
   },
 
-  {
-    path: '/activity',
-    component: Layout,
-    name: 'Activity',
-    // meta: { title: '营销活动', icon: 'el-icon-s-goods' },
-    children: [
-      {
-        path: 'activity',
-        name: '营销',
-        component: () => import('@/views/activity/activity'),
-        meta: { title: '营销活动', icon: 'yingxiao', roles: ['admin', 'sales'] }
-      }
-    ]
-  },
+  // {
+  //   path: '/activity',
+  //   component: Layout,
+  //   name: 'Activity',
+  //   // meta: { title: '营销活动', icon: 'el-icon-s-goods' },
+  //   children: [
+  //     {
+  //       path: 'activity',
+  //       name: '营销',
+  //       component: () => import('@/views/activity/activity'),
+  //       meta: { title: '营销活动', icon: 'yingxiao', roles: ['admin', 'sales'] }
+  //     }
+  //   ]
+  // },
 
   {
     path: '/orders',

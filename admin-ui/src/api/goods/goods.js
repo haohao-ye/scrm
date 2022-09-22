@@ -67,4 +67,11 @@ export function updateByOrder(data) {
   })
 }
 
+export function getGoodSum(query) {
+  return request({
+    url: '/api/goods/goods/count',
+    method: 'get',
+    params: query
 
+  })
+}

@@ -369,4 +369,14 @@ public class EmployeeController
 
         return R.ok(20000, null);
     }
+
+    /**
+     * 查询员工总个数
+     */
+    @GetMapping("/count")
+    public R count(Employee employee)
+    {
+        List<Employee> list = employeeService.selectEmployeeList(employee);
+        return R.ok(20000,list.size());//返回分页对象
+    }
 }

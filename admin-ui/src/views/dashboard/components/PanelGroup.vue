@@ -9,7 +9,7 @@
             <div class="card-panel-text">
               总营收（W）
             </div>
-            <count-to :start-val="0" :end-val="10086" :duration="2600" class="card-panel-num" />
+            <count-to :end-val="turnover" :duration="2600" class="card-panel-num" />
           </div>
         </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             订单（个）
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="orderSum" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             员工（人）
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="peopleSum" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -48,7 +48,7 @@
           <div class="card-panel-text">
             货物库存（件）
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="goodSum" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -57,15 +57,109 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import { getMoney, getOrderSum } from '@/api/orders/orders'
+import { getGoodSum } from '@/api/goods/goods'
+import { getEmployeeSum } from '@/api/employee/employee'
 
 export default {
   components: {
     CountTo
   },
+  data() {
+    return {
+      turnover: null,
+      orderSum: null,
+      peopleSum: null,
+      goodSum: null
+    }
+  },
+  watch: {
+    turnover: {
+      handler(newVal, oldVal) {
+        this.timer()
+        this.destroyed()
+      },
+      deep: true   //对象内部属性的监听
+    },
+    orderSum: {
+      handler(newVal, oldVal) {
+        this.timer()
+        this.destroyed()
+      },
+      deep: true   //对象内部属性的监听
+    },
+    peopleSum: {
+      handler(newVal, oldVal) {
+        this.timer()
+        this.destroyed()
+      },
+      deep: true   //对象内部属性的监听
+    },
+    goodSum: {
+      handler(newVal, oldVal) {
+        this.timer()
+        this.destroyed()
+      },
+      deep: true   //对象内部属性的监听
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.getData()
+    })
+  },
   methods: {
     handleSetLineChartData(type) {
       this.$emit('handleSetLineChartData', type)
+    },
 
+    getData() {
+      getMoney().then(res => {
+        let code = res["code"]
+        if (code == 20000) {
+          this.turnover = res["data"]
+        } else {
+          alert("营业额更新失败，请检查！")
+        }
+      }),
+
+      getOrderSum().then(res => {
+        let code = res["code"]
+        if (code == 20000) {
+          this.orderSum = res["data"]
+        } else {
+          alert("订单数更新失败，请检查！")
+        }
+      }),
+
+      getEmployeeSum().then(res => {
+        let code = res["code"]
+        if (code == 20000) {
+          this.peopleSum = res["data"]
+        } else {
+          alert("员工数更新失败，请检查！")
+        }
+      }),
+
+      getGoodSum().then(res => {
+        let code = res["code"]
+        if (code == 20000) {
+          this.goodSum = res["data"]
+        } else {
+          alert("库存数更新失败，请检查！")
+        }
+      })
+    },
+
+    timer () {
+      return setTimeout(() => {
+        this.getData()
+      }, 5000)
+    },
+
+    // 销毁定时器
+    destroyed () {
+      clearTimeout(this.timer())
     }
   }
 }

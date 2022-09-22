@@ -172,4 +172,34 @@ public class OrdersController
         }
         return R.ok(20000, null);
     }
+
+    /**
+     * 统计订单数
+     * @param orders
+     * @return
+     */
+    @GetMapping("/count")
+    public R count( Orders orders)
+    {
+        System.out.println(orders);
+        List<Orders> list = ordersService.selectOrdersList(orders);
+        return  R.ok(20000,list.size());
+    }
+
+    /**
+     * 统计总金额
+     * @param orders
+     * @return
+     */
+    @GetMapping("/money")
+    public R money( Orders orders)
+    {
+        List<Orders> list = ordersService.selectOrdersList(orders);
+        int sum=0;
+        for (int i=0;i<list.size();i++){
+            sum+=list.get(i).getTotalAmount();
+        }
+        System.out.println(sum);
+        return  R.ok(20000,sum);
+    }
 }
