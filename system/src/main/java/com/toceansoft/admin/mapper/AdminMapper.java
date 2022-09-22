@@ -39,4 +39,8 @@ public interface AdminMapper {
 
     public void changePassword(@Param("id") Long id,@Param("newPassword") String newPassword);
 
+    /**
+     * 为权限管理用
+     */
+    public Admin selectEByUsername(String username);
 }

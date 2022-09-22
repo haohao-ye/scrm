@@ -55,11 +55,15 @@ public interface AdminService {
         public Admin selectById(Long id);
         public Admin selectByUsername(String username);
 
-
         /**
          * 修改密码
          * @param id,username
          * @return
          */
         public void changePassword(Long id,String newPassword);
+
+        /**
+         * 为权限管理用
+         */
+        public Admin selectEByUsername(String username);
 }

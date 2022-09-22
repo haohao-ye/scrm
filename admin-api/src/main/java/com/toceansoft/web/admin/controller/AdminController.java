@@ -45,23 +45,21 @@ public class AdminController {
      */
     @RequestMapping("/login")
     public R login(@RequestBody Admin admin){
-        Admin tmp=adminService.selectByUsername(admin.getUsername());
+        Admin tmp = adminService.selectByUsername(admin.getUsername());
+        Admin tmp1 = adminService.selectEByUsername(admin.getUsername());
 
-
-//        System.out.println(admin.getPassword());
-//        System.out.println(tmp.getPassword());
-        //验证用户名和密码
-        /*if(  null==tmp  || !encoder.matches(admin.getPassword(),tmp.getPassword())){
-            return R.fail(50001,"用户名或密码错误");
-        }*/
-
-        if(  null==tmp  || !admin.getPassword().equals(tmp.getPassword())){
+        if (null != tmp && admin.getPassword().equals(tmp.getPassword())) {  // 说明该用户是管理员
+            tmp.setRole("admin");
+            redisTemplate.opsForValue().set("LoginInfo_" + admin.getUsername(), tmp);
+        } else if (null != tmp1 && admin.getPassword().equals(tmp1.getPassword())) {  // 说明该用户是员工
+            if(tmp1.getDeptId() == 1)  // 销售部
+                tmp1.setRole("sales");
+            else  // 资产部
+                tmp1.setRole("assets");
+            redisTemplate.opsForValue().set("LoginInfo_" + admin.getUsername(), tmp1);
+        } else {
             return R.fail(50001,"用户名或密码错误");
         }
-
-        //将登陆管理员的信息存放在Redis缓存
-        redisTemplate.opsForValue().set("LoginInfo_"+admin.getUsername(),tmp);
-
 
         //验证成功，生成token
         Map<String,Object> claims=new HashMap<>();
@@ -116,11 +114,13 @@ public class AdminController {
 
         //读取登录用户信息
         Map<String,Object> data=new HashMap<>();
-        data.put("introdution",admin.getRemark()) ;
         data.put("name",admin.getNickname())   ;
         data.put("avatar",admin.getAvatar()) ;
-        data.put("roles",admin.getUsername());
-        return  R.ok(20000,data); 
+        data.put("introdution",admin.getRemark()) ;
+
+        String[] roles = {admin.getRole()};  // 权限管理判断角色时，采用数组格式的数据
+        data.put("roles", roles);
+        return  R.ok(20000,data);
     }
 
     /**

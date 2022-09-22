@@ -1,9 +1,9 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" 
-      :model="loginForm" 
-      :rules="loginRules" 
-      class="login-form" 
+    <el-form ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
       auto-complete="on"
       label-position="left">
 
@@ -30,10 +30,10 @@
         </span>
       </el-form-item>
 
-      <el-button 
-        v-loading.fullscreen.lock="loading" 
+      <el-button
+        v-loading.fullscreen.lock="loading"
         element-loading-spinner="el-icon-magic-stick"
-        type="primary" 
+        type="primary"
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin">登录</el-button>
       <div class="tips">
@@ -51,11 +51,12 @@ export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
-      } else {
-        callback()
-      }
+      // if (!validUsername(value)) {
+      //   callback(new Error('请输入正确的用户名'))
+      // } else {
+      //   callback()
+      // }
+      callback()
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -66,7 +67,7 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        username: '',
         password: ''
       },
       loginRules: {
@@ -103,6 +104,7 @@ export default {
           this.loading = true
           this.$store.dispatch('admin/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
+            this.$message.success('登录成功')
             this.loading = false
           }).catch(() => {
             this.loading = false

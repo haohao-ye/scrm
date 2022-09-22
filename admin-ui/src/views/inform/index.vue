@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import { listInform, getInform, delInform, addInform, updateInform, exportInform } from "@/api/Inform/inform";
+import { listInform, getInform, delInform, addInform, updateInform } from "@/api/Inform/inform";
 
 export default {
   name: "通知",
@@ -216,6 +216,7 @@ export default {
       this.loading = true;
       listInform(this.queryParams).then(response => {
         this.informList = response.data.list;
+        console.log(response)
         this.total = response.data.total;
         this.loading = false;
       });
@@ -309,19 +310,19 @@ export default {
           this.$message("删除成功");
         })
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有通知数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportInform(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
-    }
+    // /** 导出按钮操作 */
+    // handleExport() {
+    //   const queryParams = this.queryParams;
+    //   this.$confirm('是否确认导出所有通知数据项?', "警告", {
+    //       confirmButtonText: "确定",
+    //       cancelButtonText: "取消",
+    //       type: "warning"
+    //     }).then(function() {
+    //       return exportInform(queryParams);
+    //     }).then(response => {
+    //       this.download(response.msg);
+    //     })
+    // }
   }
 };
 </script>

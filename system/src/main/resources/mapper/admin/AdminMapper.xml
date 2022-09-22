@@ -18,16 +18,32 @@
         <result property="remark"         column="remark"          />
     </resultMap>
 
+    <resultMap type="Admin" id="EmployeeResult">
+        <result property="password"     column="password"    />
+        <result property="deptId"     column="dept_id"     />
+    </resultMap>
+
     <sql id="selectVo">
         select id, username,password, nickname, phone_number, avatar,
         del_flag, create_by, create_time, update_by, update_time,remark
         from t_admin
     </sql>
+
     <select id="selectList" resultMap="AdminResult" parameterType="Admin">
         <include refid="selectVo"/>
         <where>
             <if test="username != null and username != ''">
                 and username = #{username}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectEByUsername" resultMap="EmployeeResult" parameterType="Admin">
+        SELECT password, dept_id
+        FROM t_employee
+        <where>
+            <if test="username != null and username != ''">
+                and id = #{username}
             </if>
         </where>
     </select>
