@@ -35,7 +35,7 @@
 			wxlogin(openid) {
 				console.log(openid)
 				wx.request({
-					url: 'http://localhost:8080/api/employee/employee/wxlogin',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/employee/employee/wxlogin',
 					method: "post",
 					header: {
 						"Content-Type": "application/x-www-form-urlencoded"
@@ -86,7 +86,7 @@
 									//向后端发起网络请求
 									console.log("ok1");
 									wx.request({
-										url: 'http://localhost:8080/testopenid',
+										url: 'http://admin.dkhaohao.shop/prod-api/testopenid',
 										data: {
 											code: res.code
 										},

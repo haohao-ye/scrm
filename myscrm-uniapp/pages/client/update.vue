@@ -2,7 +2,7 @@
 	<view>
 		<u-navbar title="修改客户" @rightClick="rightClick" :autoBack="true" :border="true">
 		</u-navbar>
-		<view style="padding-left: 5%;padding-top: 15%;">
+		<view style="padding-left: 5%;padding-top: 30%;">
 			<u--form class="form" labelPosition="left" :model="model1" :rules="rules" ref="form1">
 
 				<u-form-item labelWidth="80px" label="姓名" prop="userInfo.clientName" borderBottom ref="item1">
@@ -39,13 +39,14 @@
 					</view>
 				</u-form-item>
 
-			
 
-				<u-grid>
+				<view style="padding-top: 5%;padding-left: 15%;padding-right: 20%;">
 					<u-button type="primary" class="yes-btn" text="确定" @click="yesbtnclick"></u-button>
+				</view>
+				<view style="padding-top: 5%;padding-left: 15%;padding-right: 20%;">
 					<u-button class="no-btn" text="取消" @click="nobtnclick"></u-button>
+				</view>
 
-				</u-grid>
 
 			</u--form>
 		</view>
@@ -129,7 +130,7 @@
 
 				//更新到数据库
 				uni.request({
-					url: 'http://localhost:8080/api/client',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/client',
 					method: 'put',
 					data: this.model1.userInfo,
 					header: {
@@ -137,13 +138,13 @@
 						//"X-Token": uni.getStorageSync("token");
 
 					},
-					success(res){
-						if(res.data.code == 20000){
+					success(res) {
+						if (res.data.code == 20000) {
 							return uni.$u.toast("修改成功");
 							uni.redirectTo({
-								url:'/pages/client/client'
+								url: '/pages/client/client'
 							})
-						}else{
+						} else {
 							return uni.$u.toast("修改失败")
 						}
 					}
@@ -157,7 +158,7 @@
 			},
 			nobtnclick() {
 				uni.redirectTo({
-					url:'/pages/client/client'
+					url: '/pages/client/client'
 				});
 			},
 			nameinput(text) {
@@ -200,7 +201,7 @@
 			getGroupArray() {
 				let that = this;
 				uni.request({
-					url: 'http://localhost:8080/api/employee/employee/lists',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/employee/employee/lists',
 					method: 'get',
 					success: (res) => {
 						if (res.data.code == 20000) {
@@ -215,7 +216,7 @@
 			},
 			getEmployee() {
 				uni.request({
-					url: 'http://localhost:8080/api/employee/employee/' + this.client.clientGroup,
+					url: 'http://admin.dkhaohao.shop/prod-api/api/employee/employee/' + this.client.clientGroup,
 					method: "GET",
 					data: this.client,
 					header: {

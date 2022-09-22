@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view style="padding-top: 7%;padding-left: 10%;">
+		<view style="padding-top: 17%;padding-left: 10%;">
 			<u-row gutter=80>
 				<u-col span=4>
 					<u--image src="/static/default_avatar.jpg" shape="circle" width=120 height=120 mode="aspectFill"></u--image>
@@ -190,7 +190,7 @@
 			     let that = this;
 				 console.log(this.form.id);
 			     uni.request({
-			      url: 'http://localhost:8080/api/employee/employee/'+this.form.id,
+			      url: 'http://admin.dkhaohao.shop/prod-api/api/employee/employee/'+this.form.id,
 			      data: {},
 			      success: (res) => {
 			       if (res.data.code == 20000) {

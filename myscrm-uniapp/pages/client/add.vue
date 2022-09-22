@@ -2,7 +2,7 @@
 	<view>
 		<u-navbar title="添加客户" @rightClick="rightClick" :autoBack="true" :border="true">
 		</u-navbar>
-		<view style="padding-left: 5%;padding-top: 15%;">
+		<view style="padding-left: 5%;padding-top: 30%;">
 		<u--form class="form" labelPosition="left" :model="model1" :rules="rules" ref="form1">
 
 			<u-form-item labelWidth="80px" label="姓名" prop="userInfo.name" borderBottom ref="item1">
@@ -59,12 +59,14 @@
 				</view>
 			</u-form-item>
 
-			<u-grid>
-				<u-button type="primary" class="yes-btn" text="确定" @click="yesbtnclick"></u-button>
-				<u-button class="no-btn" text="取消" @click="nobtnclick"></u-button>
-
-			</u-grid>
+			
 		</u--form>
+		</view>
+		<view style="padding-top: 5%;padding-left: 15%;padding-right: 20%;">
+			<u-button type="primary" class="yes-btn" text="确定" @click="yesbtnclick"></u-button>
+		</view>
+		<view style="padding-top: 5%;padding-left: 15%;padding-right: 20%;">
+			<u-button class="no-btn" text="取消" @click="nobtnclick"></u-button>
 		</view>
 	</view>
 </template>
@@ -111,7 +113,7 @@
 				selectGroup: '',
 				selectLevel: '',
 				levelArray: [
-					"A类客户", "B类客户","C类客户"
+					"A", "B","C"
 				],
 			};
 		},
@@ -123,13 +125,20 @@
 
 				//更新到数据库
 				uni.request({
-					url: 'http://localhost:8080/api/client',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/client/add',
 					method: 'post',
 					data: this.model1.userInfo,
 					header: {
 						"X-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW9iYW8tdXNlciIsImlhdCI6MTY2MzYzODAyMiwiZXhwIjoxNjYzNzI0NDIyLCJ1c2VybmFtZSI6ImFkbWluIn0.bnkemNGfSbjPuSmMPP0LIGQpodB2xUhq9-qgJQfdRCE"
 						//"X-Token": uni.getStorageSync("token");
 
+					},
+					success(res) {
+						if(res.data.code == 20000){
+							return uni.$u.toast("添加成功")
+						}else{
+							return uni.$u.toast("添加失败")
+						}
 					}
 				});
 				//返回到上一页
@@ -189,7 +198,7 @@
 			getGroupArray() {
 				let that = this;
 				uni.request({
-					url: 'http://localhost:8080/api/employee/employee/lists',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/employee/employee/lists',
 					method: 'get',
 					success: (res) => {
 //						console.log(res, '--------------------------------------')

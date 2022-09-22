@@ -2,7 +2,7 @@
 	<view>
 		<u-navbar title="客户信息" @rightClick="rightClick" :autoBack="true" :border="true">
 		</u-navbar>
-		<view style="padding-left: 5%;padding-top: 15%;">
+		<view style="padding-left: 5%;padding-top: 30%;">
 			<u--form class="form" labelPosition="left" :model="model1" :rules="rules" ref="form1">
 
 				<u-form-item labelWidth="80px" label="ID" prop="userInfo.id" borderBottom ref="item1">
@@ -205,7 +205,7 @@
 				let that = this;
 				let id = this.model1.userInfo.id;
 				uni.request({
-					url: 'http://localhost:8080/api/record/record/lists',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/record/record/lists',
 					method: 'GET',
 					data: {
 						id
@@ -232,7 +232,7 @@
 
 				//更新到数据库
 				uni.request({
-					url: 'http://localhost:8080/api/client/' + this.client.id,
+					url: 'http://admin.dkhaohao.shop/prod-api/api/client/' + this.client.id,
 					method: 'DELETE',
 					data:{
 						client :this.client,
@@ -250,7 +250,7 @@
 			},
 			getEmployee() {
 				uni.request({
-					url: 'http://localhost:8080/api/employee/employee/' + this.model1.userInfo.clientGroup,
+					url: 'http://admin.dkhaohao.shop/prod-api/api/employee/employee/' + this.model1.userInfo.clientGroup,
 					method: "GET",
 					data: {},
 					header: {
@@ -272,14 +272,14 @@
 			hasConnected(){
 				this.model1.userInfo.contactLabel = 1;
 				uni.request({
-					url: 'http://localhost:8080/api/client',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/client/edit',
 					method: "PUT",
 					data: {
 						id: this.model1.userInfo.id,
 						contactLabel: this.model1.userInfo.contactLabel,
 					},
 					header: {
-						"X-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW9iYW8tdXNlciIsImlhdCI6MTY2MzY2MzcyOCwiZXhwIjoxNjYzNzUwMTI4LCJ1c2VybmFtZSI6ImFkbWluIn0.fHzecAPFY2NvSOaEikbKHAmTEn4DlckXkkyAcoXWp4s"
+						// "X-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW9iYW8tdXNlciIsImlhdCI6MTY2MzY2MzcyOCwiZXhwIjoxNjYzNzUwMTI4LCJ1c2VybmFtZSI6ImFkbWluIn0.fHzecAPFY2NvSOaEikbKHAmTEn4DlckXkkyAcoXWp4s"
 						//"X-Token": uni.getStorageSync("token");
 				
 					},
@@ -294,15 +294,18 @@
 				})
 			},
 			addRecord(){
-				this.newRecord.mode = this.newRecord.mode,
-				this.newRecord.remark = this.newRecord.remark,
-				this.newRecord.clientid = this.model1.userInfo.id,
-				this.newRecord.employeeid = this.model1.userInfo.clientGroup,
-				console.log(JSON.stringify(this.newRecord));
+				// console.log(JSON.stringify(this.newRecord));
 				uni.request({
-					url: 'http://localhost:8080/api/record/record',
+					// url: 'http://localhost:8080/api/record/record',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/record/record',
 					method: "POST",
-					data: this.newRecord,
+					data: {
+						mode : this.newRecord.mode,
+						remark : this.newRecord.remark,
+						clientid : this.model1.userInfo.id,
+						employeeid : this.model1.userInfo.clientGroup,
+						createBy: this.employee.name,
+					},
 					header: {
 						"X-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW9iYW8tdXNlciIsImlhdCI6MTY2MzY2MzcyOCwiZXhwIjoxNjYzNzUwMTI4LCJ1c2VybmFtZSI6ImFkbWluIn0.fHzecAPFY2NvSOaEikbKHAmTEn4DlckXkkyAcoXWp4s"
 						//"X-Token": uni.getStorageSync("token");
@@ -311,7 +314,8 @@
 					success: (res) => {
 				
 						if (res.data.code == 20000) {
-							return uni.$u.toast("修改成功！")
+							return uni.$u.toast("添加成功！");
+							this.show = false;
 						} else {
 							return uni.$u.toast("连接失败！")
 						}

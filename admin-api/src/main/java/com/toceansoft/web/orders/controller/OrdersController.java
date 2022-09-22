@@ -110,9 +110,7 @@ public class OrdersController
 //        Admin admin = (Admin) redisTemplate.opsForValue().get("LoginInfo_"+username);
 //
 //        orders.setCreateBy(admin.getUsername());
-        orders.setCreateBy("admin");
-        Long id=new Long(1);
-        orders.setSalesmanId(id);
+        orders.setCreateBy(orders.getSalesmanId().toString());
 
         if(orders.getState().equals("待付款"))
             orders.setTypes(1);

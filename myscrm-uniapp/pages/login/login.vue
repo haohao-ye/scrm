@@ -36,7 +36,7 @@
 				let name = e.detail.value.username;
 				let pass = e.detail.value.password;
 				wx.request({
-					url: "http://localhost:8080/api/employee/employee/doLogin",
+					url: "http://admin.dkhaohao.shop/prod-api/api/employee/employee/doLogin",
 					method: "post",
 					header: {
 						"Content-Type": "application/x-www-form-urlencoded"
@@ -82,7 +82,7 @@
 				console.log(openid)
 				console.log(name)
 				wx.request({
-					url: 'http://localhost:8080/api/employee/employee/wxbind',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/employee/employee/wxbind',
 					method: "post",
 					header: {
 						"Content-Type": "application/x-www-form-urlencoded"
@@ -140,7 +140,7 @@
 									//向后端发起网络请求
 									console.log("ok1");
 									wx.request({
-										url: 'http://localhost:8080/testopenid',
+										url: 'http://admin.dkhaohao.shop/prod-api/testopenid',
 										data: {
 											code: res.code
 										},

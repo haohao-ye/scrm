@@ -54,7 +54,7 @@
 			getMessageList(){
 				let that = this;
 				uni.request({
-					url: 'http://localhost:8080/api/inform/inform/lists',
+					url: 'http://admin.dkhaohao.shop/prod-api/api/inform/inform/lists',
 					method: 'get',
 					data: [],
 					success: (res) => {

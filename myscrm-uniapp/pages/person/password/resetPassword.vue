@@ -133,7 +133,7 @@
 				let that = this;
 				console.log(JSON.stringify(that.userInfo));
 				uni.request({
-				 url: 'http://localhost:8080/api/employee/employee/resetPassword',
+				 url: 'http://admin.dkhaohao.shop/prod-api/api/employee/employee/resetPassword',
 				 method:"GET",
 				 data: {
 									  id: that.userInfo.id,
