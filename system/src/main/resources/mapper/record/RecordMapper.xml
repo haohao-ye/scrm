@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="Record" id="RecordResult">
         <result property="id"    column="id"    />
-        <result property="clientid"    column="clientId"    />
-        <result property="employeeid"    column="employeeId"    />
+        <result property="clientid"    column="clientid"    />
+        <result property="employeeid"    column="employeeid"    />
         <result property="mode"    column="mode"    />
         <result property="remark"    column="remark"    />
         <result property="createBy"    column="create_by"    />
@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectRecordVo">
-        select id, clientId, employeeId, mode, remark,update_time from t_record
+        select id, clientId, employeeId, mode, remark,create_time,update_time from t_record
     </sql>
 
     <select id="selectRecordList" parameterType="Record" resultMap="RecordResult">
@@ -27,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="employeeid != null "> and employeeId = #{employeeid}</if>
             <if test="mode != null  and mode != ''"> and mode = #{mode}</if>
         </where>
+        order by update_time desc
     </select>
     
     <select id="selectRecordById" parameterType="Long" resultMap="RecordResult">
