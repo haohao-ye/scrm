@@ -5,6 +5,7 @@
 
     <groupId>com.toceansoft</groupId>
     <artifactId>myscrm</artifactId>
+<!--    maven父项目 packing标签必须为pom 并且删除src目录-->
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
@@ -29,7 +30,7 @@
         <commons.io.version>2.5</commons.io.version>
 
     </properties>
-
+<!--父工程加强管理子工程，消除依赖包的冗余-->
     <dependencyManagement>
         <dependencies>
 

@@ -46,6 +46,7 @@ public class AdminController {
      */
     @RequestMapping("/login")
     public R login(@RequestBody Admin admin){
+        System.out.println(admin.toString());
         Admin tmp = adminService.selectByUsername(admin.getUsername());
         Admin tmp1 = adminService.selectEByUsername(admin.getUsername());
 

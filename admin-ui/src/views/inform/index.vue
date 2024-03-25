@@ -54,9 +54,6 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="序号" align="center" prop="id" />
       <el-table-column label="通知标题" align="center" prop="infoTitle" />
-      <el-table-column label="通知管理" align="center" prop="infoAdm" />
-      <el-table-column label="通知销售" align="center" prop="infoSol" />
-      <el-table-column label="通知仓管" align="center" prop="infoInv" />
       <el-table-column label="具体内容" align="center" prop="infoBody" />
       <el-table-column label="通知消失的时间" align="center" prop="deadline" width="180">
         <template slot-scope="scope">
@@ -94,24 +91,6 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="通知标题" prop="infoTitle">
           <el-input v-model="form.infoTitle" placeholder="请输入通知标题" />
-        </el-form-item>
-        <el-form-item label="通知管理">
-          <el-radio-group v-model="form.infoAdm">
-            <el-radio label="否">否</el-radio>
-            <el-radio label="是">是</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="通知销售">
-          <el-radio-group v-model="form.infoSol">
-            <el-radio label="否">否</el-radio>
-            <el-radio label="是">是</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="通知仓管">
-          <el-radio-group v-model="form.infoInv">
-            <el-radio label="否">否</el-radio>
-            <el-radio label="是">是</el-radio>
-          </el-radio-group>
         </el-form-item>
         <el-form-item label="具体内容" prop="infoBody">
           <el-input v-model="form.infoBody" type="textarea" placeholder="请输入内容" />
@@ -173,15 +152,6 @@ export default {
       rules: {
         infoTitle: [
           { required: true, message: "通知标题不能为空", trigger: "blur" }
-        ],
-        infoAdm: [
-          { required: true, message: "通知管理不能为空", trigger: "blur" }
-        ],
-        infoSol: [
-          { required: true, message: "通知销售不能为空", trigger: "blur" }
-        ],
-        infoInv: [
-          { required: true, message: "通知仓管不能为空", trigger: "blur" }
         ],
         infoBody: [
           { required: true, message: "具体内容不能为空", trigger: "blur" }

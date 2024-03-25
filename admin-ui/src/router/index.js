@@ -69,59 +69,59 @@ export const constantRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/tool',
-  //   component: Layout,
-  //   name: 'Tool',
-  //   // meta: { title: '系统工具', icon: 'el-icon-s-tools' },
-  //   children: [
-  //     {
-  //       path: 'gen',
-  //       name: 'Gen',
-  //       component: () => import('@/views/tool/gen'),
-  //       meta: { title: '代码生成', icon: 'gongju' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/tool',
+    component: Layout,
+    name: 'Tool',
+    // meta: { title: '系统工具', icon: 'el-icon-s-tools' },
+    children: [
+      {
+        path: 'gen',
+        name: 'Gen',
+        component: () => import('@/views/tool/gen/index'),
+        meta: { title: '代码生成', icon: 'gongju' }
+      }
+    ]
+  },
 
-  /*
-    {
-      path: '/example',
-      component: Layout,
-      redirect: '/example/table',
-      name: 'Example',
-      meta: { title: 'Example', icon: 'el-icon-s-help' },
-      children: [
-        {
-          path: 'table',
-          name: 'Table',
-          component: () => import('@/views/table/index'),
-          meta: { title: 'Table', icon: 'table' }
-        },
-        {
-          path: 'tree',
-          name: 'Tree',
-          component: () => import('@/views/tree/index'),
-          meta: { title: 'Tree', icon: 'tree' }
-        }
-      ]
-    },
-  */
+  
+    // {
+    //   path: '/example',
+    //   component: Layout,
+    //   redirect: '/example/table',
+    //   name: 'Example',
+    //   meta: { title: 'Example', icon: 'el-icon-s-help' },
+    //   children: [
+    //     {
+    //       path: 'table',
+    //       name: 'Table',
+    //       component: () => import('@/views/table/index'),
+    //       meta: { title: 'Table', icon: 'table' }
+    //     },
+    //     {
+    //       path: 'tree',
+    //       name: 'Tree',
+    //       component: () => import('@/views/tree/index'),
+    //       meta: { title: 'Tree', icon: 'tree' }
+    //     }
+    //   ]
+    // },
+  
 
-  // {
-  //   path: '/salecount',
-  //   component: Layout,
-  //   name: 'Salescount',
-  //   meta: { title: '销售统计', icon: 'el-icon-s-tools' },
-  //   children: [
-  //     {
-  //       path: 'salescount',
-  //       name: 'Salescount',
-  //       component: () => import('@/views/salescount/salescount'),
-  //       meta: { title: '销售统计', icon: 'el-icon-document-copy' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/salecount',
+    component: Layout,
+    name: 'Salescount',
+    meta: { title: '销售统计', icon: 'el-icon-s-tools' },
+    children: [
+      {
+        path: 'salescount',
+        name: 'Salescount',
+        component: () => import('@/views/salescount/salescount'),
+        meta: { title: '销售统计', icon: 'el-icon-document-copy' }
+      }
+    ]
+  },
 
   {
     path: '/gen',

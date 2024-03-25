@@ -7,8 +7,8 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    introduction:'',
-    roles:[],
+    introduction: '',
+    roles: []
   }
 }
 
@@ -63,7 +63,7 @@ const actions = {
         const { name, avatar, introduction, roles } = data
 
         // 必须保证不是一个空的数组
-        if(!roles || roles.length<=0 ){
+        if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array')
         }
 

@@ -1,24 +1,19 @@
 <template>
   <div class="app-container">
-  <el-card>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="商品 ID" prop="goodsId">
-        <el-input
-          v-model="queryParams.goodsId"
-          placeholder="请输入商品 ID"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
-</el-card>
-<el-card class="mt-15">
-    <!-- <el-row :gutter="10" class="mb8">
+    <el-card>
+      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+        <el-form-item label="商品 ID" prop="goodsId">
+          <el-input v-model="queryParams.goodsId" placeholder="请输入商品 ID" clearable size="small"
+            @keyup.enter.native="handleQuery" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+    <el-card class="mt-15">
+      <!-- <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
           type="primary"
@@ -50,36 +45,21 @@
       </el-col>
     </el-row> -->
 
-    <el-table v-loading="loading" :data="salescountList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="商品id" align="center" prop="goodsId" />
-      <el-table-column label="总销售额" align="center" prop="totalSales" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-          >删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
-</el-card>
+      <el-table v-loading="loading" :data="salescountList" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column label="商品id" align="center" prop="goodsId" />
+        <el-table-column label="总销售额" align="center" prop="totalSales" />
+        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+          <template slot-scope="scope">
+            <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">修改</el-button>
+            <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+        @pagination="getList" />
+    </el-card>
     <!-- 添加或修改销售统计对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
@@ -174,7 +154,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.goodsId)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -217,45 +197,45 @@ export default {
     handleDelete(row) {
       const goodsIds = row.goodsId || this.ids;
       this.$confirm('是否确认删除销售统计编号为"' + goodsIds + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delSalescount(goodsIds);
-        }).then(() => {
-          this.getList();
-          this.$message("删除成功");
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return delSalescount(goodsIds);
+      }).then(() => {
+        this.getList();
+        this.$message("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
       this.$confirm('是否确认导出所有销售统计数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportSalescount(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return exportSalescount(queryParams);
+      }).then(response => {
+        this.download(response.msg);
+      })
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-  @font-face {
-    font-family:AliRegular;
-    src:url('../../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
-  }
-  @font-face {
-    font-family:AliBold;
-    src:url('../../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
-  }
-  
-  .app-container {
-    font-family: "AliRegular","Source Han Sans CN","Microsoft YaHei";
-  }
-  
-  </style>
+@font-face {
+  font-family: AliRegular;
+  src: url('../../../assets/font/Alibaba-PuHuiTi-Regular.ttf')
+}
+
+@font-face {
+  font-family: AliBold;
+  src: url('../../../assets/font/Alibaba-PuHuiTi-Bold.ttf')
+}
+
+.app-container {
+  font-family: "AliRegular", "Source Han Sans CN", "Microsoft YaHei";
+}
+</style>

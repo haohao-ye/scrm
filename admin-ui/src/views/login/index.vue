@@ -1,11 +1,13 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm"
+    <el-form
+      ref="loginForm"
       :model="loginForm"
       :rules="loginRules"
       class="login-form"
       auto-complete="on"
-      label-position="left">
+      label-position="left"
+    >
 
       <div class="title-container">
         <h3 class="title">MyScrm</h3>
@@ -15,16 +17,32 @@
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input ref="username" v-model="loginForm.username" placeholder="请输入用户名" name="username" type="text"
-          tabindex="1" auto-complete="on" />
+        <el-input
+          ref="username"
+          v-model="loginForm.username"
+          placeholder="请输入用户名"
+          name="username"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
       </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
-          placeholder="请输入密码" name="password" tabindex="2" auto-complete="on" @keyup.enter.native="handleLogin" />
+        <el-input
+          :key="passwordType"
+          ref="password"
+          v-model="loginForm.password"
+          :type="passwordType"
+          placeholder="请输入密码"
+          name="password"
+          tabindex="2"
+          auto-complete="on"
+          @keyup.enter.native="handleLogin"
+        />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
@@ -35,7 +53,8 @@
         element-loading-spinner="el-icon-magic-stick"
         type="primary"
         style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin">登录</el-button>
+        @click.native.prevent="handleLogin"
+      >登录</el-button>
       <div class="tips">
         <span>如忘记账户信息，请联系公司管理员。</span>
       </div>
@@ -81,7 +100,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (route) {
+      handler: function(route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true

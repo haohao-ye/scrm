@@ -198,7 +198,7 @@
 				// console.log(client1);
 				//跳转到更新页面
 				uni.navigateTo({
-					url: '/pages/client/update?item=' + encodeURIComponent(JSON.stringify(client1)),
+					url: '/pages/client/update?item=' + encodeURIComponent(JSON.stringify(this.model1.userInfo)),
 				});
 			},
 			getClientRecord() {
@@ -294,6 +294,7 @@
 				})
 			},
 			addRecord(){
+				let that = this;
 				// console.log(JSON.stringify(this.newRecord));
 				uni.request({
 					// url: 'http://localhost:8080/api/record/record',
@@ -314,8 +315,11 @@
 					success: (res) => {
 				
 						if (res.data.code == 20000) {
-							return uni.$u.toast("添加成功！");
-							this.show = false;
+							that.show = false;
+							that.newRecord.mode = '',
+							that.newRecord.remark = '',
+							that.getClientRecord();
+							return uni.$u.toast("添加成功！")
 						} else {
 							return uni.$u.toast("连接失败！")
 						}

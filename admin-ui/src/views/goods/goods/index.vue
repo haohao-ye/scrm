@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-card>
       <el-form
-        :model="queryParams"
-        ref="queryForm"
-        :inline="true"
         v-show="showSearch"
+        ref="queryForm"
+        :model="queryParams"
+        :inline="true"
         label-width="68px"
       >
         <el-form-item label="名称" prop="name">
@@ -118,11 +118,12 @@
             icon="el-icon-search"
             size="mini"
             @click="handleQuery"
-            >搜索</el-button
-          >
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-            >重置</el-button
-          >
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            size="mini"
+            @click="resetQuery"
+          >重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -135,8 +136,7 @@
             icon="el-icon-plus"
             size="mini"
             @click="handleAdd"
-            >新增</el-button
-          >
+          >新增</el-button>
         </el-col>
         <el-col :span="1.5">
           <el-button
@@ -146,8 +146,7 @@
             size="mini"
             :disabled="single"
             @click="handleUpdate"
-            >修改</el-button
-          >
+          >修改</el-button>
         </el-col>
         <el-col :span="1.5">
           <el-button
@@ -157,8 +156,7 @@
             size="mini"
             :disabled="multiple"
             @click="handleDelete"
-            >删除</el-button
-          >
+          >删除</el-button>
         </el-col>
         <!-- <el-col :span="1.5">
           <el-button
@@ -210,15 +208,13 @@
               type="text"
               icon="el-icon-edit"
               @click="handleUpdate(scope.row)"
-              >修改</el-button
-            >
+            >修改</el-button>
             <el-button
               size="mini"
               type="text"
               icon="el-icon-delete"
               @click="handleDelete(scope.row)"
-              >删除</el-button
-            >
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -336,25 +332,25 @@ import {
   addGoods,
   updateGoods,
   exportGoods,
-  updateByOrder,
-} from "@/api/goods/goods";
-import { listActivity } from "@/api/activity/activity";
+  updateByOrder
+} from '@/api/goods/goods'
+import { listActivity } from '@/api/activity/activity'
 export default {
-  name: "Goods",
+  name: 'Goods',
   components: {},
   data() {
     var checkPrice = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error("价格不能为空"));
+        return callback(new Error('价格不能为空'))
       }
       setTimeout(() => {
         if (isNaN(value)) {
-          callback(new Error("请输入数字值"));
+          callback(new Error('请输入数字值'))
         } else {
-          callback();
+          callback()
         }
-      }, 100);
-    };
+      }, 100)
+    }
     return {
       // 遮罩层
       loading: true,
@@ -372,13 +368,13 @@ export default {
       // 商品表格数据
       goodsList: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 5,
         name: null,
         type: null,
         price: null,
@@ -388,45 +384,45 @@ export default {
         color: null,
         activity_id: null,
         creatTime: null,
-        creatBy: null,
+        creatBy: null
       },
       // 表单参数
       form: {},
-      //订单表单参数
+      // 订单表单参数
       orderForm: {},
       // 表单校验
       rules: {
-        name: [{ required: true, message: "名称不能为空", trigger: "blur" }],
-        type: [{ required: true, message: "类型不能为空", trigger: "change" }],
-        price: [{ require: true, validator: checkPrice, trigger: "change" }],
-        brand: [{ required: true, message: "品牌不能为空", trigger: "blur" }],
+        name: [{ required: true, message: '名称不能为空', trigger: 'blur' }],
+        type: [{ required: true, message: '类型不能为空', trigger: 'change' }],
+        price: [{ require: true, validator: checkPrice, trigger: 'change' }],
+        brand: [{ required: true, message: '品牌不能为空', trigger: 'blur' }],
         inventory: [
-          { required: true, message: "库存不能为空", trigger: "blur" },
+          { required: true, message: '库存不能为空', trigger: 'blur' }
         ],
-        activity_id: [{ type: "number" }],
+        activity_id: [{ type: 'number' }]
       },
       rules1: {},
-      activityList: {},
-    };
+      activityList: {}
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     /** 查询商品管理列表 */
 
     getList() {
-      this.loading = true;
+      this.loading = true
       listGoods(this.queryParams).then((response) => {
-        this.goodsList = response.data.list;
-        this.total = response.data.total;
-        this.loading = false;
-      });
+        this.goodsList = response.data.list
+        this.total = response.data.total
+        this.loading = false
+      })
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
@@ -444,8 +440,8 @@ export default {
         creatBy: null,
         updateTime: null,
         updateBy: null,
-        delFlag: null,
-      };
+        delFlag: null
+      }
       this.orderForm = {
         orderNo: null,
         name: null,
@@ -459,24 +455,24 @@ export default {
         creatBy: null,
         updateTime: null,
         updateBy: null,
-        delFlag: null,
-      };
-      this.resetForm("form");
-      this.resetForm("orderForm");
+        delFlag: null
+      }
+      this.resetForm('form')
+      this.resetForm('orderForm')
     },
     test() {
-      this.console.log("-----------");
+      this.console.log('-----------')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
-      this.optionSelect();
+      this.queryParams.pageNum = 1
+      this.getList()
+      this.optionSelect()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // updateSelect() {
     //   this.getList();
@@ -484,104 +480,104 @@ export default {
     // },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map((item) => item.id);
-      this.single = selection.length !== 1;
-      this.multiple = !selection.length;
+      this.ids = selection.map((item) => item.id)
+      this.single = selection.length !== 1
+      this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加商品";
-      this.optionSelect();
+      this.reset()
+      this.open = true
+      this.title = '添加商品'
+      this.optionSelect()
     },
-    /**订单入库 */
+    /** 订单入库 */
     handleEntry() {
-      this.reset();
-      this.open1 = true;
-      this.title = "订单";
+      this.reset()
+      this.open1 = true
+      this.title = '订单'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids;
+      this.reset()
+      const id = row.id || this.ids
       getGoods(id).then((response) => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改商品";
-      });
-      this.optionSelect();
+        this.form = response.data
+        this.open = true
+        this.title = '修改商品'
+      })
+      this.optionSelect()
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate((valid) => {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
           if (this.form.id != null) {
             updateGoods(this.form).then((response) => {
-              this.$message("修改成功");
-              this.open = false;
-              this.getList();
-            });
+              this.$message('修改成功')
+              this.open = false
+              this.getList()
+            })
           } else {
             addGoods(this.form).then((response) => {
-              this.$message("新增成功");
-              this.open = false;
-              this.getList();
-            });
+              this.$message('新增成功')
+              this.open = false
+              this.getList()
+            })
           }
         }
-      });
+      })
     },
-    /**确认订单按钮 */
+    /** 确认订单按钮 */
     submitOrder() {
-      this.$refs["orderForm"].validate((valid) => {
+      this.$refs['orderForm'].validate((valid) => {
         if (valid) {
           updateByOrder(this.orderForm).then((response) => {
-            this.$message("入库成功");
-            this.open = false;
-            this.getList();
-          });
+            this.$message('入库成功')
+            this.open = false
+            this.getList()
+          })
         }
-      });
+      })
     },
     optionSelect() {
       listActivity(this.queryParams).then((response) => {
-        this.activityList = response.data.list;
-      });
+        this.activityList = response.data.list
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
+      const ids = row.id || this.ids
 
-      this.$confirm('是否确认删除商品编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      this.$confirm('是否确认删除商品编号为"' + ids + '"的数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
-        .then(function () {
-          return delGoods(ids);
+        .then(function() {
+          return delGoods(ids)
         })
         .then(() => {
-          this.getList();
-          this.$message("删除成功");
-        });
+          this.getList()
+          this.$message('删除成功')
+        })
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
+      const queryParams = this.queryParams
 
-      this.$confirm("是否确认导出所有商品数据项?", "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      this.$confirm('是否确认导出所有商品数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
-        .then(function () {
-          return exportGoods(queryParams);
+        .then(function() {
+          return exportGoods(queryParams)
         })
         .then((response) => {
-          this.download(response.msg);
-        });
-    },
-  },
-};
+          this.download(response.msg)
+        })
+    }
+  }
+}
 </script>

@@ -116,8 +116,8 @@
 		},
 		onLoad(param) {
 			this.getGroupArray();
-			this.client = JSON.parse(param.item);
-			this.model1.userInfo = JSON.parse(param.item);
+			this.client = JSON.parse( decodeURIComponent(param.item));
+			this.model1.userInfo = JSON.parse( decodeURIComponent(param.item));
 			console.log(this.model1.userInfo);
 			this.selectGroup = this.model1.userInfo.clientGroup;
 			this.getEmployee();
@@ -136,7 +136,6 @@
 					header: {
 						"X-Token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW9iYW8tdXNlciIsImlhdCI6MTY2MzY2MzcyOCwiZXhwIjoxNjYzNzUwMTI4LCJ1c2VybmFtZSI6ImFkbWluIn0.fHzecAPFY2NvSOaEikbKHAmTEn4DlckXkkyAcoXWp4s"
 						//"X-Token": uni.getStorageSync("token");
-
 					},
 					success(res) {
 						if (res.data.code == 20000) {

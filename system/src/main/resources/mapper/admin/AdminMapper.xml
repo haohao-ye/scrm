@@ -39,9 +39,9 @@
         </where>
     </select>
 
-    <select id="selectEByUsername" resultMap="EmployeeResult" parameterType="Admin">
-        SELECT password, dept_id, avatar
-        FROM t_employee
+    <select id="selectEByUsername" resultMap="AdminResult" parameterType="Admin">
+        SELECT password
+        FROM t_admin
         <where>
             <if test="username != null and username != ''">
                 and id = #{username}

@@ -64,6 +64,9 @@
 					data: {
 						clientGroup: this.salemanId,
 					},
+					header:{
+						token:uni.getStorageSync("token")
+					},
 					success: (res) => {
 						if (res.data.code == 20000) {
 							console.log(res.data, '--------------------')

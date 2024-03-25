@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-card>
       <el-form
-        :model="queryParams"
-        ref="queryForm"
-        :inline="true"
         v-show="showSearch"
+        ref="queryForm"
+        :model="queryParams"
+        :inline="true"
         label-width="68px"
       >
         <el-form-item label="名字" prop="name">
@@ -29,8 +29,7 @@
               :key="item.id"
               :label="item.deptName"
               :value="item.id"
-            >
-            </el-option>
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -39,11 +38,12 @@
             icon="el-icon-search"
             size="mini"
             @click="handleQuery"
-            >搜索</el-button
-          >
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-            >重置</el-button
-          >
+          >搜索</el-button>
+          <el-button
+            icon="el-icon-refresh"
+            size="mini"
+            @click="resetQuery"
+          >重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -56,8 +56,7 @@
             icon="el-icon-plus"
             size="mini"
             @click="handleAdd"
-            >新增</el-button
-          >
+          >新增</el-button>
         </el-col>
         <el-col :span="1.5">
           <el-button
@@ -67,8 +66,7 @@
             size="mini"
             :disabled="single"
             @click="handleUpdate"
-            >修改</el-button
-          >
+          >修改</el-button>
         </el-col>
         <el-col :span="1.5">
           <el-button
@@ -78,8 +76,7 @@
             size="mini"
             :disabled="multiple"
             @click="handleDelete"
-            >删除</el-button
-          >
+          >删除</el-button>
         </el-col>
         <el-col :span="1.5">
           <el-upload
@@ -93,13 +90,13 @@
             :on-exceed="handleExceed"
             :file-list="fileList"
           >
-          <el-button
-          type="info"
-          plain
-          icon="el-icon-upload2"
-          size="mini"
-          @click="handleImport"
-        >导入</el-button>
+            <el-button
+              type="info"
+              plain
+              icon="el-icon-upload2"
+              size="mini"
+              @click="handleImport"
+            >导入</el-button>
           </el-upload>
           <!-- <el-button
           type="info"
@@ -110,16 +107,16 @@
           @click="handleImport"
         >导入</el-button> -->
         </el-col>
-    <el-col :span="1.5">
-      <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="setGuaz"
-        >下载模板</el-button>
-    </el-col>
-  </el-row>
+        <el-col :span="1.5">
+          <el-button
+            type="warning"
+            plain
+            icon="el-icon-download"
+            size="mini"
+            @click="setGuaz"
+          >下载模板</el-button>
+        </el-col>
+      </el-row>
 
       <el-table
         v-loading="loading"
@@ -142,22 +139,19 @@
               type="text"
               icon="el-icon-edit"
               @click="handleUpdate(scope.row)"
-              >修改</el-button
-            >
+            >修改</el-button>
             <el-button
               size="mini"
               type="text"
               icon="el-icon-delete"
               @click="handleDelete(scope.row)"
-              >删除</el-button
-            >
+            >删除</el-button>
             <el-button
               size="mini"
               type="text"
               icon="el-icon-warning-outline"
               @click="resetPw(scope.row)"
-              >重置密码</el-button
-            >
+            >重置密码</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -189,8 +183,7 @@
               :key="item.id"
               :label="item.deptName"
               :value="item.id"
-            >
-            </el-option>
+            />
           </el-select>
         </el-form-item>
       </el-form>
@@ -210,11 +203,11 @@ import {
   addEmployee,
   updateEmployee,
   importEmployee,
-  resetPassword,
-} from "@/api/employee/employee";
-import { listDept } from "@/api/dept/dept";
+  resetPassword
+} from '@/api/employee/employee'
+import { listDept } from '@/api/dept/dept'
 export default {
-  name: "Employee",
+  name: 'Employee',
   components: {},
   data() {
     return {
@@ -233,7 +226,7 @@ export default {
       // 员工管理表格数据
       employeeList: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -241,55 +234,55 @@ export default {
         pageNum: 1,
         pageSize: 10,
         name: null,
-        deptId: null,
+        deptId: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        name: [{ required: true, message: "名字不能为空", trigger: "blur" }],
+        name: [{ required: true, message: '名字不能为空', trigger: 'blur' }],
         idNum: [
-          { required: true, message: "员工身份证不能为空", trigger: "blur" },
+          { required: true, message: '员工身份证不能为空', trigger: 'blur' }
         ],
         phoneNumber: [
-          { required: true, message: "手机号码不能为空", trigger: "blur" },
+          { required: true, message: '手机号码不能为空', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: "系统登录密码不能为空", trigger: "blur" },
+          { required: true, message: '系统登录密码不能为空', trigger: 'blur' }
         ],
         deptName: [
-          { required: true, message: "员工部门不能为空", trigger: "blur" },
-        ],
+          { required: true, message: '员工部门不能为空', trigger: 'blur' }
+        ]
       },
       deptList: [],
-      importMsg:{ fileName : 'C:\\Users\\Administrator\\Desktop\\test\.xls'},
-    };
+      importMsg: { fileName: 'C:\\Users\\Administrator\\Desktop\\test\.xls' }
+    }
   },
   created() {
-    this.getList();
-    this.getDeptList();
+    this.getList()
+    this.getDeptList()
   },
   methods: {
-    /**查询部门列表 */
+    /** 查询部门列表 */
     getDeptList() {
       listDept(this.queryParams).then((response) => {
         // console.log(this.deptList);
-        this.deptList = response.data.list;
-      });
+        this.deptList = response.data.list
+      })
     },
     /** 查询员工管理列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listEmployee(this.queryParams).then((response) => {
-        this.employeeList = response.data.list;
-        this.total = response.data.total;
-        this.loading = false;
-      });
+        this.employeeList = response.data.list
+        this.total = response.data.total
+        this.loading = false
+      })
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
@@ -299,142 +292,141 @@ export default {
         idNum: null,
         phoneNumber: null,
         password: null,
-        deptName: "0",
-      };
-      this.resetForm("form");
+        deptName: '0'
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
+      this.queryParams.pageNum = 1
       // console.log(this.queryParams);
-      this.getList();
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryParams");
-      this.queryParams.deptId = "";
-      this.handleQuery();
+      this.resetForm('queryParams')
+      this.queryParams.deptId = ''
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map((item) => item.id);
-      this.single = selection.length !== 1;
-      this.multiple = !selection.length;
+      this.ids = selection.map((item) => item.id)
+      this.single = selection.length !== 1
+      this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加员工管理";
-      this.getDeptList();
+      this.reset()
+      this.open = true
+      this.title = '添加员工管理'
+      this.getDeptList()
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids;
+      this.reset()
+      const id = row.id || this.ids
       getEmployee(id).then((response) => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改员工管理";
-        this.getDeptList();
-      });
+        this.form = response.data
+        this.open = true
+        this.title = '修改员工管理'
+        this.getDeptList()
+      })
     },
     /** 重置密码按钮操作 */
     resetPw(row) {
-      const id = row.id || this.id;
-      console.log(id);
-      this.$confirm('是否确认重置员工管理编号为"' + id + '"的密码?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      const id = row.id || this.id
+      console.log(id)
+      this.$confirm('是否确认重置员工管理编号为"' + id + '"的密码?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           getEmployee(id).then((response) => {
-            this.form = response.data;
-            console.log(this.form);
-            resetPassword(this.form);
-          });
+            this.form = response.data
+            console.log(this.form)
+            resetPassword(this.form)
+          })
         })
         .then(() => {
-          this.$message("重置成功");
-        });
+          this.$message('重置成功')
+        })
     },
 
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate((valid) => {
+      this.$refs['form'].validate((valid) => {
         if (valid) {
           if (this.form.id != null) {
             updateEmployee(this.form).then((response) => {
               // console.log(this.form);
-              this.$message("修改成功");
-              this.open = false;
-              this.getList();
-            });
+              this.$message('修改成功')
+              this.open = false
+              this.getList()
+            })
           } else {
             addEmployee(this.form).then((response) => {
-              this.$message("新增成功");
-              this.open = false;
-              this.getList();
-            });
+              this.$message('新增成功')
+              this.open = false
+              this.getList()
+            })
           }
         }
-      });
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
+      const ids = row.id || this.ids
       this.$confirm(
         '是否确认删除员工管理编号为"' + ids + '"的数据项?',
-        "警告",
+        '警告',
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         }
       )
-        .then(function () {
-          return delEmployee(ids);
+        .then(function() {
+          return delEmployee(ids)
         })
         .then(() => {
-          this.getList();
-          this.$message("删除成功");
-        });
+          this.getList()
+          this.$message('删除成功')
+        })
     },
     /** 导入按钮操作 */
     handleImport() {
-      const queryParams = this.queryParams;
-      let msg = this.importMsg;
-      this.$confirm('是否导入该文件"' , {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      // eslint-disable-next-line no-unused-vars
+      const queryParams = this.queryParams
+      const msg = this.importMsg
+      this.$confirm('是否导入该文件"', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
 
       })
-        .then(function () {
-          console.log(msg);
-          return importEmployee(msg);
-
+        .then(function() {
+          console.log(msg)
+          return importEmployee(msg)
         })
         .then((response) => {
-          this.getList();
-          this.download(response.msg);
-        });
+          this.getList()
+          this.download(response.msg)
+        })
     },
     /** 下载按钮操作 */
     setGuaz() {
-      let a = document.createElement('a');
-      let evt = document.createEvent('MouseEvents');
-      a.download = '样本.xls';
-      a.href = '/样本.xls';
-      evt.initEvent('click',true,true);
-      a.dispatchEvent(evt);
-      window.URL.revokeObjectURL(a.href);
-    },
+      const a = document.createElement('a')
+      const evt = document.createEvent('MouseEvents')
+      a.download = '样本.xls'
+      a.href = '/样本.xls'
+      evt.initEvent('click', true, true)
+      a.dispatchEvent(evt)
+      window.URL.revokeObjectURL(a.href)
+    }
 
-
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>

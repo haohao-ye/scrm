@@ -18,7 +18,7 @@ public class AdminApplication {
         SpringApplication.run(AdminApplication.class,args);
     }
 
-    @Bean
+@Bean
     public BCryptPasswordEncoder encoder(){
         return new BCryptPasswordEncoder();
     }

@@ -23,17 +23,17 @@ export function logout() {
   })
 }
 
-export function listAdmin(params){
+export function listAdmin(params) {
   return request({
     url: '/api/admin',
-    method:'get',
+    method: 'get',
     params
   })
 }
-export function getAdmin(id){
+export function getAdmin(id) {
   return request({
-    url: '/api/admin/'+id,
-    method:'get'
+    url: '/api/admin/' + id,
+    method: 'get'
   })
 }
 
@@ -55,11 +55,10 @@ export function editAdmin(data) {
 
 export function delAdmin(ids) {
   return request({
-    url: '/api/admin/'+ids,
+    url: '/api/admin/' + ids,
     method: 'delete'
   })
 }
-
 
 export function resetPw(data) {
   return request({

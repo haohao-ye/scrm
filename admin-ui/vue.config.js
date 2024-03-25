@@ -39,15 +39,15 @@ module.exports = {
     // before: require('./mock/mock-server.js')
     proxy: {
       '/dev-api/api': {
-          target: 'http://localhost:8080',  // 后台接口地址
-          // ws: true,        //如果要代理 websockets，配置这个参数
-          // secure: false,  // 如果是https接口，需要配置这个参数
-          changeOrigin: true,  //是否跨域
-          pathRewrite:{    // 重写路径
-              '^/dev-api/api':'/api'
-          }
+        target: 'http://localhost:8080', // 后台接口地址
+        // ws: true,        //如果要代理 websockets，配置这个参数
+        // secure: false,  // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 是否跨域
+        pathRewrite: { // 重写路径
+          '^/dev-api/api': '/api'
+        }
       }
-  }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

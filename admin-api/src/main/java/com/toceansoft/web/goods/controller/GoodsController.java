@@ -39,8 +39,9 @@ public class GoodsController
     /**
      * 查询商品管理列表
      */
+    //spring可以自动将请求参数赋值给形参，但形参名需要和请求参数名保持一直，否则接收数据为null,该方法无视数据类型，可以用String接收所有参数，也可以根据所需类型
     @GetMapping("/list")
-    public R list(Goods goods, @RequestParam int pageNum, @RequestParam int pageSize)
+    public R list(Goods goods, @RequestParam("pageNum") int pageNum, @RequestParam int pageSize)//@RequestParam用于与前端数据绑定(参数为请求参数名，若一致可以不写)
     {
         PageHelper.startPage(pageNum, pageSize); //指定分页
         List<Goods> list = goodsService.selectGoodsList(goods);
